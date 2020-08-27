@@ -1,0 +1,19 @@
+.navbar{
+         background-color: transparent;
+        display: flex;
+        align-items:center;
+        position:sticky;
+        top: 0;
+        z-index: 100;
+}
+
+.navbar__logo{
+    width: 200px;
+    object-fit: contain;
+    margin-top:5x;
+    margin-right: 20px;
+    padding-left: 25px;
+}
+.navbar__login{
+    
+}
