@@ -1,19 +1,67 @@
-.navbar{
-         background-color: transparent;
+.navbar-landing{
+        background-color: transparent;
         display: flex;
         align-items:center;
         position:sticky;
         top: 0;
         z-index: 100;
+        justify-content: space-between;
+        height: 50px;
+        width: 100%;
 }
-
+.navbar-login{
+    background-color: #002980;
+    display: flex;
+    align-items:center;
+    position:sticky;
+    top: 0;
+    z-index: 100;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+}
 .navbar__logo{
-    width: 200px;
+    width: 130px;
     object-fit: contain;
-    margin-top:5x;
+    margin:5x;
     margin-right: 20px;
     padding-left: 25px;
 }
-.navbar__login{
-    
+.navbar__loginlinkElements{
+    margin-right: 20px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
 }
+
+.navbar__loginlinkElementsOne
+{
+    font-family: 'Neue Titles';
+    color: #C5F8CE;
+}
+.navbar__loginlinkElementsTwo
+{
+    font-family: 'Neue Titles';
+    color: #C5F8CE;
+}
+
+.navbar__loginlink{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+
+}
+.navbar__loginlink > .MuiAvatar-root{
+    color: #C5F8CE;
+    background-color: lightgray;
+    height: 30px;
+    width: 30px;
+
+}
+
+
+.navbar-login__hideElements{
+    display: none;
+}
+

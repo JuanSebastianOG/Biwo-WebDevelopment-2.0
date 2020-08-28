@@ -1,3 +1,6 @@
+@import url(//db.onlinewebfonts.com/c/51fdf8021065497210ca54837e1601e9?family=Neue+Einstellung);
+@import url(//db.onlinewebfonts.com/c/95cecf452d3208890088a5b4c19c7ecf?family=Helvetica+Neue+ME);
+
 *{
   margin:0;
 }
@@ -14,3 +17,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {font-family: "Neue Titles"; src: url("//db.onlinewebfonts.com/t/51fdf8021065497210ca54837e1601e9.eot"); src: url("//db.onlinewebfonts.com/t/51fdf8021065497210ca54837e1601e9.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/51fdf8021065497210ca54837e1601e9.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/51fdf8021065497210ca54837e1601e9.woff") format("woff"), url("//db.onlinewebfonts.com/t/51fdf8021065497210ca54837e1601e9.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/51fdf8021065497210ca54837e1601e9.svg#Neue Einstellung") format("svg"); }
+
+@font-face {font-family: "Helvetica Text"; src: url("//db.onlinewebfonts.com/t/95cecf452d3208890088a5b4c19c7ecf.eot"); src: url("//db.onlinewebfonts.com/t/95cecf452d3208890088a5b4c19c7ecf.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/95cecf452d3208890088a5b4c19c7ecf.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/95cecf452d3208890088a5b4c19c7ecf.woff") format("woff"), url("//db.onlinewebfonts.com/t/95cecf452d3208890088a5b4c19c7ecf.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/95cecf452d3208890088a5b4c19c7ecf.svg#Helvetica Neue ME") format("svg"); }

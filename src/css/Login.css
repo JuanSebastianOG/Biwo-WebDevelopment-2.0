@@ -1,0 +1,80 @@
+.login{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    background-image: url("https://i.ibb.co/hV09PpM/Imagen-10.png")  ;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 30%;
+}
+.login__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    height: 70vh;
+    width: 70vw;
+}
+.login__container >h2{
+    color:#002980;
+    border-bottom: solid 3px #002980;
+
+}
+.login__containerForm{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.login__containerFormUser{
+    border: none;
+    border-bottom: solid 3px #002980;
+    padding: 8px;
+    width: 300px;
+}
+.login__containerFormPassword{
+    border: none;
+    border-bottom: solid 3px #002980;
+    padding: 8px;
+    width: 300px;
+
+
+}
+.login__containerFormLoginButton{
+    color: white;
+    background-color: #002980;
+    border:none;
+    padding: 10px 20px;
+}
+.login__containerFormRegisterButton{
+    color: #002980;
+    background-color: white;
+    padding: 10px 20px;
+    margin-top: 20px ;
+    border: solid 3px #002980;
+    
+}
+.login__containerFormPassForg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login__containerFormPassForg > label{
+    font-size: small;
+    color: #00298078;
+    margin-top: 10px;
+    border-bottom: solid 1px #002980;
+
+}
+.login__containerButtons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media only screen and (max-width: 446px) {
+    .login{
+        background: none;
+    }
+}
