@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from './components/Login'
-
+import Login from './components/Login';
+import Register from './components/Register'
 
 function App() {
   return (
@@ -12,11 +12,12 @@ function App() {
         <Switch>
           <Route path="/iniciarsesion">
             <NavBar color />
-
             <Login/>
           </Route>
           <Route path="/registrarse">
-            <h1>Registrarse</h1>
+           <NavBar color />
+           <Register/>
+
           </Route>
           <Route path="/misreservas">
             <h1>Mis Reservas</h1>

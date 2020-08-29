@@ -6,7 +6,7 @@ import { Avatar } from "@material-ui/core"
 
 
 function NavBar({ color }) {
-
+    
     let className = 'navbar-landing'
     let className2 = 'navbar__loginlink'
     if (color) {
