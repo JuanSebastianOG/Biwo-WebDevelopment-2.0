@@ -14,7 +14,7 @@ function Register() {
                         <input type="float" placeholder="Número Celular" className="reg__containerInput" />
                     </form>
                 </div>
-                <div class="reg__containerLine"></div>
+                <div className="reg__containerLine"></div>
                 <div className="reg__container2">
                     <form className="reg__container2" action="">
                         <input type="text" placeholder="Email" className="reg__containerInput" />

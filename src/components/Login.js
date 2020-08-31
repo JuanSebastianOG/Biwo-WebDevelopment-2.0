@@ -9,16 +9,21 @@ function Login() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("")
-    const userRegister = (e) => {
+    const userLogIn = (e) => {
         e.preventDefault();
         console.log('holaa', username, password)
         history.push("/misreservas");
+    }
+    const userRegister = (e) => {
+        e.preventDefault();
+        console.log('holaa', username, password)
+        history.push("/registrarse");
     }
     return (
         <div className="login">
 
             <div className="login__container">
-                <h2>Iniciar Sesion</h2>
+                <h2>Iniciar Sesión</h2>
                 <form action="" className="login__containerForm">
                     <input
                         className="login__containerFormUser"
@@ -28,15 +33,15 @@ function Login() {
                     <div className="login__containerFormPassForg">
                         <input
                             className="login__containerFormPassword"
-                            type="password" placeholder="Constraseña"
+                            type="password" placeholder="Contraseña"
                             value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <label for="fname">Olvide mi contraseña</label>
+                        <label for="fname">Olvidé mi contraseña</label>
                     </div>
                     <div className="login__containerButtons">
-                        <input onClick={userRegister} className="login__containerFormLoginButton" type="submit" value="Iniciar Sesion" />
-                        <Link to="/registrarse">
-                            <input className="login__containerFormRegisterButton" type="button" value="Registrarse" />
-                        </Link>
+                        <input onClick={userLogIn} className="login__containerFormLoginButton" type="submit" value="Iniciar Sesion" />
+                       
+                        <input onClick={userRegister} className="login__containerFormRegisterButton" type="button" value="Registrarse" />
+                        
                     </div>
 
                 </form>

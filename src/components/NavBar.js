@@ -16,10 +16,10 @@ function NavBar({ color }) {
     return (
 
         <nav className={className}>
-            <img
+            <Link to="/"><img
                 className="navbar__logo"
                 src="https://i.ibb.co/wwNdLm1/biwo-logo.png">
-            </img>
+            </img></Link>
             <Link to="/iniciarsesion" className={className2}>
                 <Avatar />
                 <div className="navbar__loginlinkElements">
