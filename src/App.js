@@ -12,30 +12,35 @@ function App() {
         <Switch>
           <Route path="/iniciarsesion">
             <NavBar color />
-            <Login/>
+            <Login />
           </Route>
           <Route path="/registrarse">
-           <NavBar color />
-           <Register/>
-
+            <NavBar color />
+            <Register />
           </Route>
           <Route path="/misreservas">
-            <h1>Mis Reservas</h1>
+          <NavBar user active="misreservas" />
+
+            <h1>Holis mis reservas</h1>
           </Route>
           <Route path="/reservar">
+            <NavBar user active="reservar" />
             <h1>Reservar</h1>
           </Route>
           <Route path="/administar">
+            <NavBar user active="administrar" />
             <h1>Administar</h1>
           </Route>
           <Route path="/editarreserva">
             <h1>Editar reserva</h1>
           </Route>
           <Route path="/ayuda">
+          <NavBar user active="ayuda" />
+
             <h1>Ayuda</h1>
           </Route>
           <Route path="/">
-            <NavBar/>
+            <NavBar />
             <img className="app__background" src="https://i.ibb.co/WKDYk04/Grupo-37.png" alt="Grupo-37" border="0"></img>
           </Route>
         </Switch>

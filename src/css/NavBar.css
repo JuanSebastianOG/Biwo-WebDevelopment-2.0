@@ -57,11 +57,46 @@
     background-color: lightgray;
     height: 30px;
     width: 30px;
-
 }
 
 
 .navbar-login__hideElements{
     display: none;
 }
+.navbar-login__links{
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+    text-decoration: none;
+}
+.navbar-login__link{
+    color: white;
+    background-color: #002980;
+    padding: 10px;
+    text-decoration: none;
+}
+.navbar-login__link:hover{
+  
+    color: rgb(129, 156, 216);
+    
+}
+.navbar-login__linkActive{
+    color: #002980;
+    background-color: white;
+    padding:30px;
+    text-decoration: none;
+    height:100%;
+}
 
+.navbar-login__link> h1{
+    font-size:medium;
+}
+.navbar-login__linkActive> h1{
+    font-size:medium;
+}
+.navbar-login__links > .MuiSvgIcon-root{
+    color: #C5F8CE;
+    margin-left: 10px;
+    height: 30px;
+    width: 30px;
+}
