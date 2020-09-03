@@ -9,9 +9,7 @@
     display: grid;
     place-items: center;
 
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: 30%;
+    
 }
 .login__container{
     display: flex;
@@ -96,9 +94,4 @@
     flex-direction: column;
     align-items: center;
     width:100%;
-}
-@media only screen and (max-width: 446px) {
-    .login{
-        background: none;
-    }
 }

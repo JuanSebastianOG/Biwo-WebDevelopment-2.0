@@ -40,8 +40,8 @@ function Register() {
                             <input type="checkbox"  id="filled-in-box" />
                             <a href=""><label > Acepto Términos y Condiciones</label></a>
                         </div>  
-
                         <button type="button" onClick ={submitRegister} className="reg__containerButton">Registrarse</button>
+
                     </form>
                 </div>
 

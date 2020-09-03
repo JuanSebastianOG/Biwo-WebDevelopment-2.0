@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register'
+import Booking from './components/Booking';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           </Route>
           <Route path="/reservar">
             <NavBar user active="reservar" />
-            <h1>Reservar</h1>
+            <Booking/>
           </Route>
           <Route path="/administar">
             <NavBar user active="administrar" />
@@ -36,7 +37,6 @@ function App() {
           </Route>
           <Route path="/ayuda">
           <NavBar user active="ayuda" />
-
             <h1>Ayuda</h1>
           </Route>
           <Route path="/">
