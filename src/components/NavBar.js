@@ -4,7 +4,7 @@ import "../css/NavBar.css"
 import { Link } from 'react-router-dom';
 import { Avatar } from "@material-ui/core"
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import Burger from './Burger';
 function NavBar({ color, user, active }) {
 
 
@@ -55,6 +55,7 @@ function NavBar({ color, user, active }) {
         }
 
         return (
+            
             <nav className='navbar-login'>
                 <Link to="/"><img
                     className="navbar__logo"
@@ -76,9 +77,15 @@ function NavBar({ color, user, active }) {
                     </Link>
                     <ExitToAppIcon/>
                     
+                    
                 </div>
+                <Burger />
+               
 
             </nav>
+            
+            
+            
         )
     }
 
