@@ -3,9 +3,12 @@ import React from 'react'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Ul = styled.ul`
+
+const BurgerNavBar = styled.div`
   display : none;
   @media (max-width: 768px) {
+    font-family: 'Helvetica Text';
+    text-decoration: none;
     display:block;
     visibility: visible;
     list-style: none;
@@ -24,6 +27,8 @@ const Ul = styled.ul`
       color: #fff;
       padding: 25px 10px;
       font-family: 'Neue Titles';
+      font-size: 1em;
+      
       
     }
     hr{
@@ -32,7 +37,9 @@ const Ul = styled.ul`
         margin-right:25px;
         opacity: 30%;
     }
-    Link:hover { color: #00FF00; }
+    Link{ 
+        color: #00FF00; 
+        }
 
     img{
         opacity:60%;
@@ -41,33 +48,37 @@ const Ul = styled.ul`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 const RightNavBar = ({ open }) => {
     return (
-        <Ul open={open}>
-            <Link to="/reservar"   >
+        <BurgerNavBar open={open}>
+            <StyledLink to="/reservar" >
                 <h1>Reservar</h1>
-            </Link>
-            <hr/>
-            <Link to="/misreservas" >
+            </StyledLink>
+            <hr />
+            <StyledLink to="/misreservas" >
                 <h1>Mis Reservas</h1>
-            </Link>
-            <hr/>
-            <Link to="/administar"  >
+            </StyledLink>
+            <hr />
+            <StyledLink to="/administar"  >
                 <h1>Administrar</h1>
-            </Link>
-            <hr/>
-            <Link to="/ayuda"  >
+            </StyledLink>
+            <hr />
+            <StyledLink to="/ayuda"  >
                 <h1>Ayuda</h1>
-            </Link>
-            <hr/>
-            <Link to="/"  >
+            </StyledLink>
+            <hr />
+            <StyledLink to="/"  >
                 <h1>Cerrar Sesión</h1>
-            </Link>
+            </StyledLink>
 
-            <img  src="https://i.ibb.co/2d8pLGZ/BIWO-ISOTIPO-VERDE.png" alt="Logo" border="0" />
+            <img src="https://i.ibb.co/2d8pLGZ/BIWO-ISOTIPO-VERDE.png" alt="Logo" border="0" />
 
 
-        </Ul>
+        </BurgerNavBar>
 
 
     )
