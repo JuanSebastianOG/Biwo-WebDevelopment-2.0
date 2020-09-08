@@ -3,7 +3,7 @@ import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from './components/Login';
-import Register from './components/Register'
+import Register from './components/Register';
 import Booking from './components/Booking';
 
 function App() {
@@ -20,9 +20,8 @@ function App() {
             <Register />
           </Route>
           <Route path="/misreservas">
-          <NavBar user active="misreservas" />
-
-            <h1>Holis mis reservas</h1>
+          <NavBar user active="misreservas"/>
+            <h1>Mis reservas</h1>
           </Route>
           <Route path="/reservar">
             <NavBar user active="reservar" />

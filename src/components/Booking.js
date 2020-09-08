@@ -106,15 +106,12 @@ function Booking() {
                             <label>Tarifa:</label>
                             <label> $ 12600</label>
 
-                            <button type="button" className="bking__Button">Reservar</button>
+                            <button type="button" className="bking__Button" onClick={submitRegister}>Reservar</button>
                         </div>
                     </form>
                     <div></div>
                 </div>
-                <h1 ></h1>
-
-
-
+                
 
             </div>
 

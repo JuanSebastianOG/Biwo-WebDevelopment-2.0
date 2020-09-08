@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import "../css/NavBar.css"
 //import "../img/biwo-logo.png"
 import { Link } from 'react-router-dom';
@@ -17,10 +17,13 @@ function NavBar({ color, user, active }) {
         }
         return (
             <nav className={className}>
-                <Link to="/"><img
-                    className="navbar__logo"
-                    src="https://i.ibb.co/wwNdLm1/biwo-logo.png">
-                </img></Link>
+                <Link to="/">
+                    <img
+                        alt=""
+                        className="navbar__logo"
+                        src="https://i.ibb.co/wwNdLm1/biwo-logo.png">
+                    </img>
+                </Link>
 
                 <Link to="/iniciarsesion" className={className2}>
                     <Avatar />
@@ -55,12 +58,15 @@ function NavBar({ color, user, active }) {
         }
 
         return (
-            
+
             <nav className='navbar-login'>
-                <Link to="/"><img
-                    className="navbar__logo"
-                    src="https://i.ibb.co/wwNdLm1/biwo-logo.png">
-                </img></Link>
+                <Link to="/">
+                    <img
+                        alt=""
+                        className="navbar__logo"
+                        src="https://i.ibb.co/wwNdLm1/biwo-logo.png">
+                    </img>
+                </Link>
 
                 <div className="navbar-login__links">
                     <Link to="/reservar" className={linkClassReservar}  >
@@ -75,17 +81,17 @@ function NavBar({ color, user, active }) {
                     <Link to="/ayuda" className={linkClassAyuda} >
                         <h1>Ayuda</h1>
                     </Link>
-                    <ExitToAppIcon/>
-                    
-                    
+                    <ExitToAppIcon />
+
+
                 </div>
                 <Burger />
-               
+
 
             </nav>
-            
-            
-            
+
+
+
         )
     }
 
