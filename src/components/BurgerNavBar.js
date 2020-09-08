@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { useState }   from 'react'
 
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ const BurgerNavBar = styled.div`
     flex-flow: column nowrap;
     background-color: #012063;
     position: fixed;
-    transform: ${({ open }) => open ? 'translateX(10%)' : 'translateX(120%)'};
+    transform: ${({ open}) => (open) ? 'translateX(10%)' : 'translateX(120%)'};
     top: 50px;
     right: 0;
     height: 100vh;
@@ -52,9 +52,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
-const RightNavBar = ({ open }) => {
+const RightNavBar = ({ open , handle }) => {
+
+
     return (
-        <BurgerNavBar open={open}>
+        <BurgerNavBar open={open}  onClick={handle} >
             <StyledLink to="/reservar" >
                 <h1>Reservar</h1>
             </StyledLink>

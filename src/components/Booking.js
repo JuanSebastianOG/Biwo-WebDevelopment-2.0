@@ -111,7 +111,7 @@ function Booking() {
                     </form>
                     <div></div>
                 </div>
-                <h1 className bking__containerFeedback></h1>
+                <h1 ></h1>
 
 
 

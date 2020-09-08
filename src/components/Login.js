@@ -35,7 +35,7 @@ function Login() {
                             className="login__containerFormPassword"
                             type="password" placeholder="Contraseña"
                             value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <label for="fname">Olvidé mi contraseña</label>
+                        <label htmlFor="fname">Olvidé mi contraseña</label>
                     </div>
                     <div className="login__containerButtons">
                         <input onClick={userLogIn} className="login__containerFormLoginButton" type="submit" value="Iniciar Sesion" />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import RightNavBar from './RightNavBar';
+import BurgerNavBar from './BurgerNavBar';
 import "../css/Burger.css"
 import styled from 'styled-components';
 
@@ -45,17 +45,22 @@ const StyledBurger = styled.div`
 `;
 
 function Burger() {
+
     const [open, setOpen] = useState(false)
+
+    function handleClick () {
+      setOpen(!open);
+    }
     return (
         <>
-            <StyledBurger open={open} onClick={() => setOpen(!open)}>
+            <StyledBurger open={open}  onClick={() => setOpen(!open)} >
 
                 <div className="burger__Item" />
                 <div className="burger__Item" />
                 <div className="burger__Item" />
 
             </StyledBurger>
-            <RightNavBar open={open} />
+            <BurgerNavBar open={open} handle={handleClick}/>
         </>
 
     )
