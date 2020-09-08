@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from './components/Login';
 import Register from './components/Register'
 import Booking from './components/Booking';
+import AdminBookings from './components/AdminBookings';
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           </Route>
           <Route path="/administar">
             <NavBar user active="administrar" />
-            <h1>Administar</h1>
+            <AdminBookings/>
           </Route>
           <Route path="/editarreserva">
             <h1>Editar reserva</h1>
