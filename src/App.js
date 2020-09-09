@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Booking from './components/Booking';
 import AdminBookings from './components/AdminBookings';
+import Help from './components/Help';
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
           </Route>
           <Route path="/ayuda">
           <NavBar user active="ayuda" />
-            <h1>Ayuda</h1>
+            <Help/>
           </Route>
           <Route path="/">
             <NavBar />
