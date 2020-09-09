@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Booking from './components/Booking';
 import AdminBookings from './components/AdminBookings';
+import Landing from './components/Landing';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
           </Route>
           <Route path="/">
             <NavBar />
-            <img className="app__background" src="https://i.ibb.co/WKDYk04/Grupo-37.png" alt="Grupo-37" border="0"></img>
+            <Landing/>
           </Route>
         </Switch>
       </div>
