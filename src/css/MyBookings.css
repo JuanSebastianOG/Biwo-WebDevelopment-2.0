@@ -19,16 +19,25 @@
     border-color:#707070;
     border-radius: 30px;
     border-style: solid;
+    overflow: auto;
+}
+.mybookings__middleContBookings::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+.mybookings__middleContBookings::-webkit-scrollbar-thumb {
+    background: #707070;
+    opacity: 0.7;
 }
 
 .mybookings__middleCont{
     display: flex;
     flex-direction: column;
+    place-items: center;
     justify-content: space-evenly;
 }
 .mybookings__middleCont>h4{
     color: #002980;
-    margin-left: 5px;
 }
 .mybookings__middleContTimeCost{
     display: grid;
