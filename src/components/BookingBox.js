@@ -1,5 +1,6 @@
 import React from 'react'
-import styled from 'styled-components';
+
+import styled from 'styled-components/macro';
 
 const BookingContainer = styled.div`
     {
@@ -11,8 +12,50 @@ const BookingContainer = styled.div`
         width: fit-content;
         border-radius: 15px 0 0 15px;
         height: 7em;
+   
 
     }`
+
+const ResponsiveContainer = styled.div`
+{
+    display: flex;
+    flex-direction: row; 
+    
+    @media (max-width: 860px) {
+        flex-direction: column; 
+       
+         }
+
+}`
+
+const ResponsiveCont1 = styled.div`
+{
+    display: flex;
+    flex-direction: row; 
+    height:100%;
+    
+    @media (max-width: 550px) {
+       
+        flex-direction: column; 
+    
+    }
+    
+    
+}`
+
+
+const ResponsiveCont2 = styled.div`
+{
+    display:none;
+   
+    @media (max-width: 550px) {
+        display:flex;
+        justify-content: space-between;
+        border-top: 1px solid  white;
+        
+       
+    }
+}`
 
 const DateField = styled.div`
     {
@@ -27,6 +70,18 @@ const DateField = styled.div`
         font-size: 20px;
         border-radius: 15px 0 0 15px;
         border-right: 2px solid  white;
+        @media (max-width: 860px) {
+            
+            padding: 10px;
+            
+         }
+         @media (max-width: 460px) {
+            
+            padding: 10px;
+            
+
+            
+         }
        
     }`
 
@@ -42,7 +97,29 @@ const LocationField = styled.div`
         background-color: #002980;
         color:white;
         border-right: 2px solid  white;
+        span { display:inline-block; 
+        line-height:1.2; }
+        @media (max-width: 860px) {
+            height:100%;
+            padding: 10px;
+            font-size: 18px;
+
+         }
+         @media (max-width: 550px) {
+            border-right: 0px solid  white;
+            border-radius: 0  15px 0 0;
+            height:80%;
+            padding: 6px;
+            font-size: 18px;
+            span { display:inline-block; line-height:1.2; }
+         }
+         @media (max-width: 330px) {
+            font-size: 15px;
+         }
+       
+        
     }`
+
 const TimeField = styled.div`
     {
         display: flex;
@@ -52,11 +129,22 @@ const TimeField = styled.div`
         align-items:center;
         background-color: #002980;
         color:white;
+        width:fit-content;
         h2{
             font-family: 'Helvetica Text';
             font-size: 25px;
             padding: 25px;
         }
+        @media (max-width: 930px) {
+            h2{
+            font-family: 'Helvetica Text';
+            font-size: 25px;
+            padding: 5px;
+        }
+         }
+        @media (max-width: 860px) {
+            display:none;
+         }
       
       
         
@@ -82,7 +170,37 @@ const EditButton = styled.div`
             width:100%;
             height: 100%;
         }
+        @media (max-width: 550px) {
+  
+        
+            width:50%;
+            font-size: 12px;
+            
+        
+        }
+
     }`
+
+const TimeResponsive = styled.div`{
+    display: none;
+    @media (max-width: 860px) {
+            display:flex;
+            margin-top: 6px;
+            font-family: 'Helvetica Text';
+            font-size: 12px;
+            margin:0;
+         }
+
+}`
+
+const DisplayButtons = styled.div`
+{
+    display:flex;
+    flex-direction: row; 
+    @media (max-width: 550px) {
+        display:none;
+    }
+}`
 
 const DropButton = styled.div`
     {
@@ -109,44 +227,68 @@ const DropButton = styled.div`
 
 
         }
+        @media (max-width: 550px) {
+  
+            border-radius: 0  0 15px 0;
+            width:50%;
+            font-size: 12px;
+            border-top: 1px;
+        }
+
+}
         
     }`
+
+
 
 function BookingBox() {
     return (
         <BookingContainer>
             <DateField>
-
                 <span>24</span>
                 <span month >Agosto</span>
-
+                <TimeResponsive>
+                    <span> 11:20 - 12:20</span>
+                </TimeResponsive>
             </DateField>
+            <ResponsiveContainer>
+                <ResponsiveCont1>
+                    <LocationField>
+                        <span>Edificio Reservas del Cedro</span>
+                        <span>Módulo 3</span>
+                    </LocationField>
+                    <TimeField>
+                        <h2>10:20</h2>
+                        <h2> - </h2>
+                        <h2>11:20</h2>
+                    </TimeField>
+                    <ResponsiveCont2>
+                        <EditButton>
+                            <button>Editar</button>
+                        </EditButton>
+                        <DropButton>
+                            <button>Liberar</button>
+                        </DropButton>
+                    </ResponsiveCont2>
+                </ResponsiveCont1>
 
-            <LocationField>
-
-                <span>Edificio Reserva del Cedro</span>
-                <span>Módulo 3</span>
-
-            </LocationField>
-
-            <TimeField>
-
-                <h2>10:20</h2>
-                <h2> - </h2>
-                <h2>11:20</h2>
+            </ResponsiveContainer>
 
 
-            </TimeField>
 
-            <EditButton>
+            <DisplayButtons>
+                <EditButton>
+                    <button>Editar</button>
+                </EditButton>
 
-                <button>Edit</button>
+                <DropButton>
+                    <button>Liberar</button>
+                </DropButton>
+            </DisplayButtons>
 
-            </EditButton>
 
-            <DropButton>
-                <button>Liberar</button>
-            </DropButton>
+
+
 
         </BookingContainer>
     )

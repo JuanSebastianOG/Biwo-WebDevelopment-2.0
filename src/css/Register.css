@@ -38,6 +38,12 @@
     
     
 }
+.error {
+    color:#db2269;
+    font-size: 0.625em;
+    display: relative;
+  }
+  
 
 .reg__container2{
     display:flex;
@@ -77,6 +83,13 @@
     
    
 }
+
+
+.reg__containerButton:disabled {
+    background: #999;
+    color: #555;
+    cursor: not-allowed;
+  }
 
 @media only screen and (max-width: 670px) {
     .reg__container{

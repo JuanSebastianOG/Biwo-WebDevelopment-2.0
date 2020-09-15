@@ -44,6 +44,30 @@
   </head>
   <body>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAzcrcXdZVgkANMDi4VRE5oXg0-ydJJpIA",
+    authDomain: "biwowebapp.firebaseapp.com",
+    databaseURL: "https://biwowebapp.firebaseio.com",
+    projectId: "biwowebapp",
+    storageBucket: "biwowebapp.appspot.com",
+    messagingSenderId: "542982172403",
+    appId: "1:542982172403:web:17a958fa22665ca1599186",
+    measurementId: "G-BWX80CB6LH"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
  
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
