@@ -8,6 +8,7 @@ import Booking from './components/Booking';
 import AdminBookings from './components/AdminBookings';
 import MyBookings from './components/MyBookings';
 import Landing from './components/Landing';
+import Help from './components/Help';
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
           </Route>
           <Route path="/ayuda">
           <NavBar user active="ayuda" />
-            <h1>Ayuda</h1>
+            <Help/>
           </Route>
           <Route path="/">
             <NavBar />
