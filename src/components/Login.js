@@ -8,7 +8,7 @@ function Login() {
     const history = useHistory();
 
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("")
+    const [password, setPassword] = useState("");
     const userLogIn = (e) => {
         e.preventDefault();
         console.log('holaa', username, password)
