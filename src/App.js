@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Booking from './components/Booking';
 import AdminBookings from './components/AdminBookings';
+import MyBookings from './components/MyBookings';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           </Route>
           <Route path="/misreservas">
           <NavBar user active="misreservas"/>
-            <h1>Mis reservas</h1>
+            <MyBookings/>
           </Route>
           <Route path="/reservar">
             <NavBar user active="reservar" />
