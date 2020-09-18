@@ -1,7 +1,7 @@
 .lastBookingsactive{
     height: 33%;
     margin-bottom:5px ;
-    border-radius: 30px;
+    border-radius: 25px;
     display: flex;
     place-items: center;
     justify-content: space-evenly; 

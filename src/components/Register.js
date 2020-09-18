@@ -76,7 +76,7 @@ function Register() {
     }
 
     function validForm() {
-        if (phoneError.length == 0 && passwordError.length == 0 && emailError.length == 0 && existEmail.length == 0) {
+        if (phoneError.length === 0 && passwordError.length === 0 && emailError.length === 0 && existEmail.length === 0) {
 
             if (userData.name.length > 0 && userData.lastname.length > 0 && userData.date.length > 0 && userData.phonenumber.length > 0 && userData.password.length > 0 && userData.email.length > 0 && (document.getElementById("myCheck").checked)) {
                 console.log("Ready to Submit");

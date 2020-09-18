@@ -244,7 +244,7 @@ function BookingBox({ day, month, building, module, hour }) {
         <BookingContainer>
             <DateField>
                 <span>{day}</span>
-                <span month >{month}</span>
+                <span >{month}</span>
                 <TimeResponsive>
                 <span> {hour}</span>
                 </TimeResponsive>

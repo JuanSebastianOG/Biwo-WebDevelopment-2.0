@@ -11,12 +11,12 @@ function Login() {
     const [password, setPassword] = useState("");
     const userLogIn = (e) => {
         e.preventDefault();
-        console.log('holaa', username, password)
+        console.log( username, password)
         history.push("/misreservas");
     }
     const userRegister = (e) => {
         e.preventDefault();
-        console.log('holaa', username, password)
+        console.log( username, password)
         history.push("/registrarse");
     }
     return (
