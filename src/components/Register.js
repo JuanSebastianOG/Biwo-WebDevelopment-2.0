@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import "../css/Register.css"
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import { useHistory } from "react-router-dom";
 
 function Register() {
-
+    const history = useHistory();
 
     const [userData, setUserData] = useState({
         name: '',
@@ -25,8 +26,7 @@ function Register() {
         RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
     const changeHandler = e => {
-        setUserData({ ...userData, [e.target.name]: e.target.value })
-        console.log(document.getElementById("myCheck").checked);
+        setUserData({ ...userData, [e.target.name]: e.target.value });
 
         switch (e.target.name) {
 
@@ -38,9 +38,6 @@ function Register() {
                         : 'El numero de celular debe tener 10 carácteres'
 
                 )
-
-
-
                 break;
             case 'email':
                 var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
@@ -95,6 +92,22 @@ function Register() {
         }
 
     }
+
+    function validEmail() {
+        var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+
+        if (arraycontainsemail) {
+            setExistEmail('');
+            return true;
+
+        }
+        else {
+            setExistEmail('El correo no existe. Comuniquese con el administrador');
+            return false;
+        }
+
+
+    }
     const [validEmails, setValidEmails] = useState([]);
     // Runs code in specific conditions   
     useEffect(() => {
@@ -106,14 +119,17 @@ function Register() {
 
     const submitRegister = e => {
         e.preventDefault();
+        if(validEmail()){
 
-        var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+            var err=true;
 
-        if (arraycontainsemail) {
-            setExistEmail('')
-        } else
-            setExistEmail('El correo no existe. Comuniquese con el administrador')
-
+            auth.createUserWithEmailAndPassword(userData.email, userData.password)
+                .then((auth)=>{
+                    history.push("/reservar");
+                })
+                .catch((e)=> setEmailError("Ya existe una cuenta asociada a este correo"));
+                
+        }
     }
 
 
@@ -129,7 +145,7 @@ function Register() {
                         <input onChange={changeHandler} required name="name" type="text" placeholder="Nombre" className="reg__containerInput" />
                         <input onChange={changeHandler} name="lastname" type="text" placeholder="Apellido" className="reg__containerInput" />
                         <input onChange={changeHandler} required name="date" type="date" placeholder="Fecha de Nacimiento" className="reg__containerInput" />
-                        <input onChange={changeHandler} name="phonenumber" type="number" maxlength="10" placeholder="Número Celular" className="reg__containerInput" />
+                        <input onChange={changeHandler} name="phonenumber" type="number" maxLength="10" placeholder="Número Celular" className="reg__containerInput" />
                         {phoneError.length > 0 &&
                             <span className='error'>{phoneError}</span>}
 
