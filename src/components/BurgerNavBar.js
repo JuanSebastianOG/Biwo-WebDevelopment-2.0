@@ -1,6 +1,7 @@
 import React    from 'react'
+import {  auth } from '../firebase';
+import styled from 'styled-components'; 
 
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 
@@ -52,9 +53,18 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
+
 const RightNavBar = ({ open , handle }) => {
 
-
+const signOutUser = () =>{
+    auth.signOut().then(function() {
+        // Sign-out successful.
+      }).catch(function(error) {
+        alert(error.message)
+      });
+    
+}
+    
     return (
         <BurgerNavBar open={open}  onClick={handle} >
             <StyledLink to="/reservar" >
@@ -73,7 +83,7 @@ const RightNavBar = ({ open , handle }) => {
                 <h1>Ayuda</h1>
             </StyledLink>
             <hr />
-            <StyledLink to="/"  >
+            <StyledLink onClick = {signOutUser} to="/"  >
                 <h1>Cerrar Sesión</h1>
             </StyledLink>
 

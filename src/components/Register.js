@@ -120,11 +120,17 @@ function Register() {
     const submitRegister = e => {
         e.preventDefault();
         if(validEmail()){
-
-            var err=true;
-
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
-                .then((auth)=>{
+                .then(()=>{
+                    db.collection("usuarios").add(
+                        userData
+                    )
+                        .then(function (docRef) {
+                            console.log("Document written with ID: ", docRef.id);
+                        })
+                        .catch(function (error) {
+                            console.error("Error adding document: ", error);
+                        });
                     history.push("/reservar");
                 })
                 .catch((e)=> setEmailError("Ya existe una cuenta asociada a este correo"));

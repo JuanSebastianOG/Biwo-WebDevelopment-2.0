@@ -5,10 +5,21 @@ import { Link } from 'react-router-dom';
 import { Avatar } from "@material-ui/core"
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Burger from './Burger';
-function NavBar({ color, user, active }) {
+import {useStateValue} from "./StateProvider";
+import {  auth } from '../firebase';
 
+function NavBar({ color, users, active }) {
 
-    if (!user) {
+    const signOutUser = () =>{
+        auth.signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            alert(error.message)
+          });
+        
+    }
+    const [{user}] = useStateValue();
+    if (!users) {
         let className = 'navbar-landing'
         let className2 = 'navbar__loginlink'
         if (color) {
@@ -25,11 +36,11 @@ function NavBar({ color, user, active }) {
                     </img>
                 </Link>
 
-                <Link to="/iniciarsesion" className={className2}>
+                <Link to={user ? '/reservar' : '/iniciarsesion'} className={className2}>
                     <Avatar />
                     <div className="navbar__loginlinkElements">
-                        <span className="navbar__loginlinkElementsOne">Iniciar </span>
-                        <span className="navbar__loginlinkElementsTwo">Sesion</span>
+                        <span className="navbar__loginlinkElementsOne">{user ? 'Mis' : 'Iniciar'} </span>
+                        <span className="navbar__loginlinkElementsTwo">{user ? 'Reservas' : 'Sesión'}</span>
                     </div>
                 </Link>
             </nav>
@@ -81,7 +92,7 @@ function NavBar({ color, user, active }) {
                     <Link to="/ayuda" className={linkClassAyuda} >
                         <h1>Ayuda</h1>
                     </Link>
-                    <ExitToAppIcon />
+                    <Link to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
 
 
                 </div>

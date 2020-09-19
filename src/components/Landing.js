@@ -1,7 +1,9 @@
 import React from 'react'
 import "../css/Landing.css"
 
+
 function Landing() {
+
     return (
         <div className="landing">
             <img className="landing__background" src="https://i.ibb.co/WKDYk04/Grupo-37.png" alt="Grupo-37" border="0"></img>
