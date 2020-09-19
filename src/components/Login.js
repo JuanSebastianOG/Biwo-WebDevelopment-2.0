@@ -2,21 +2,29 @@
 import React, { useState } from 'react'
 import "../css/Login.css"
 import { useHistory } from "react-router-dom";
+import { auth } from '../firebase';
 
 
 function Login() {
     const history = useHistory();
 
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("")
+    const [password, setPassword] = useState("");
     const userLogIn = (e) => {
         e.preventDefault();
-        console.log('holaa', username, password)
-        history.push("/misreservas");
+        console.log( username, password)
+        auth.signInWithEmailAndPassword(username, password)
+        .then(()=>{
+            history.push("/misreservas");
+        })
+        .catch((e)=> alert(e.message));
+
+        
     }
     const userRegister = (e) => {
         e.preventDefault();
-        console.log('holaa', username, password)
+        console.log( username, password)
+
         history.push("/registrarse");
     }
     return (

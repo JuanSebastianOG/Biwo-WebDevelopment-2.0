@@ -43,7 +43,6 @@ const ResponsiveCont1 = styled.div`
     
 }`
 
-
 const ResponsiveCont2 = styled.div`
 {
     display:none;
@@ -240,27 +239,24 @@ const DropButton = styled.div`
     }`
 
 
-
-function BookingBox() {
+function BookingBox({ day, month, building, module, hour }) {
     return (
         <BookingContainer>
             <DateField>
-                <span>24</span>
-                <span month >Agosto</span>
+                <span>{day}</span>
+                <span >{month}</span>
                 <TimeResponsive>
-                    <span> 11:20 - 12:20</span>
+                <span> {hour}</span>
                 </TimeResponsive>
             </DateField>
             <ResponsiveContainer>
                 <ResponsiveCont1>
                     <LocationField>
-                        <span>Edificio Reservas del Cedro</span>
-                        <span>Módulo 3</span>
+                        <span>{building}</span>
+                        <span>{module}</span>
                     </LocationField>
                     <TimeField>
-                        <h2>10:20</h2>
-                        <h2> - </h2>
-                        <h2>11:20</h2>
+                        <span> {hour}</span>
                     </TimeField>
                     <ResponsiveCont2>
                         <EditButton>

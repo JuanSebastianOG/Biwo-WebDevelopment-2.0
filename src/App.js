@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,8 +9,37 @@ import AdminBookings from './components/AdminBookings';
 import MyBookings from './components/MyBookings';
 import Landing from './components/Landing';
 import Help from './components/Help';
+import {auth} from "./firebase"
+import {useStateValue} from "./components/StateProvider";
 
 function App() {
+
+  const [user,dispatch] = useStateValue ();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) =>{
+      if(authUser)
+      {
+        dispatch({
+          type: "USER_SIGN_IN/OUT",
+          user: authUser
+        })
+      }
+      else{
+        dispatch({
+          type: "USER_SIGN_IN/OUT",
+          user: null
+        })
+      }
+    })
+    return () => {
+
+      unsubscribe();
+      
+    }
+  }, []);
+  console.log ( 'user is: ', user);
+
   return (
     <Router>
       <div className="app">
@@ -24,22 +53,22 @@ function App() {
             <Register />
           </Route>
           <Route path="/misreservas">
-          <NavBar user active="misreservas"/>
+          <NavBar users active="misreservas"/>
             <MyBookings/>
           </Route>
           <Route path="/reservar">
-            <NavBar user active="reservar" />
+            <NavBar users active="reservar" />
             <Booking/>
           </Route>
           <Route path="/administar">
-            <NavBar user active="administrar" />
+            <NavBar users active="administrar" />
             <AdminBookings/>
           </Route>
           <Route path="/editarreserva">
             <h1>Editar reserva</h1>
           </Route>
           <Route path="/ayuda">
-          <NavBar user active="ayuda" />
+          <NavBar users active="ayuda" />
             <Help/>
           </Route>
           <Route path="/">

@@ -1,0 +1,18 @@
+.catch(function (error) {
+                // Handle Errors here.
+                err=false;
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log( "errorCode: ", errorCode,"errorMesg: ", errorMessage);
+                
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            {
+                                setEmailError("Ya existe una cuenta asociada a este correo");
+                            } break;
+                        default:
+                            break;
+                    }
+                });
+                if(err)
+                 history.push("/reservar");

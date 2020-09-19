@@ -32,10 +32,27 @@ function AdminBookings() {
 
             <h1> Administrar Reservas</h1>
 
-            <BookingBox/>
-            <BookingBox/>
-            <BookingBox/>
-       
+            <BookingBox
+                day={24}
+                month="Agosto"
+                building="Edificio Reservas del Cedro"
+                module="Modulo 1"
+                hour="14:00 - 16:00" />
+            <BookingBox
+                day={24}
+                month="Agosto"
+                building="Edificio Reservas del Cedro"
+                module="Modulo 1"
+                hour="14:00 - 16:00"
+            />
+            <BookingBox
+                day={24}
+                month="Agosto"
+                building="Edificio Reservas del Cedro"
+                module="Modulo 1"
+                hour="14:00 - 16:00"
+            />
+
 
         </Admin>
     )
