@@ -92,7 +92,7 @@ function NavBar({ color, users, active }) {
                     <Link to="/ayuda" className={linkClassAyuda} >
                         <h1>Ayuda</h1>
                     </Link>
-                    <Link to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
+                    <Link className="navbar-login__linksIcon" to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
 
 
                 </div>

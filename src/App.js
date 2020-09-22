@@ -33,11 +33,9 @@ function App() {
       }
     })
     return () => {
-
       unsubscribe();
-      
     }
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
   console.log ( 'user is: ', user);
 
   return (

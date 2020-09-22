@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "../css/Register.css"
 import { db, auth } from '../firebase';
 import { useHistory } from "react-router-dom";
-
+/* eslint-disable */
 function Register() {
     const history = useHistory();
 
@@ -14,6 +14,7 @@ function Register() {
         email: '',
         password: ''
     });
+
 
     const [phoneError, setPhoneError] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -119,22 +120,33 @@ function Register() {
 
     const submitRegister = e => {
         e.preventDefault();
-        if(validEmail()){
+
+        if (validEmail()) {
+
+
+            var userDataF = {
+                name: userData.name,
+                lastname: userData.lastname,
+                date: userData.date,
+                phonenumber: userData.phonenumber,
+                email: userData.email,
+            };
+            console.log(userData.name, 'holiii')
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
-                .then(()=>{
+                .then(() => {
                     db.collection("usuarios").add(
-                        userData
+                        userDataF
                     )
                         .then(function (docRef) {
                             console.log("Document written with ID: ", docRef.id);
+                            history.push("/reservar");
                         })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
-                    history.push("/reservar");
                 })
-                .catch((e)=> setEmailError("Ya existe una cuenta asociada a este correo"));
-                
+                .catch((e) => setEmailError("Ya existe una cuenta asociada a este correo"));
+
         }
     }
 

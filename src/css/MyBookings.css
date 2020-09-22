@@ -1,6 +1,7 @@
 .mybookings{
     display: flex;
     flex-direction: column;
+    height: 70vh;
 }
 .mybookings>h1{
     margin-top:40px;
@@ -11,6 +12,7 @@
     display: flex;
     margin-top: 40px;
     justify-content: space-around;
+    height: 60vh;
 }
 .mybookings__middleContBookings{
     margin-top: 10px;
