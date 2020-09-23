@@ -12,15 +12,17 @@ function Register() {
         date: '',
         phonenumber: '',
         email: '',
-        password: ''
+        password: '',
     });
 
+    const [buildCode, setBuildCode] = useState('');
 
     const [phoneError, setPhoneError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [existEmail, setExistEmail] = useState('');
     const [allowSubmit, setAllowSubmit] = useState(false);
+    const [bcode, setBcode] = useState('');
 
 
     const validEmailRegex =
@@ -95,12 +97,40 @@ function Register() {
     }
 
     function validEmail() {
-        var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+        console.log(validEmails[0],'BUENAAS')
+        
+        //Saca los correos del arreglo de maps
+        let correos = validEmails[0].map(({correo}) => ({correo}));
+        let edificios = validEmails[0].map(({edificio}) => ({edificio}));
+       
+        //Crea el arreglo para meter los correos y posteriormente validar
+        const arrCorreos = new Array();
+
+        //Llena el arreglo para validar
+        correos.map(correo => {        
+            arrCorreos.push(correo.correo);
+        })
+        //Crea el arreglo para meter los correos y posteriormente validar
+        const arrEdificios = new Array();
+
+        //Llena el arreglo para validar
+        edificios.map(edificio => {        
+            arrEdificios.push(edificio.edificio);
+        })
+       
+        var arraycontainsemail = (arrCorreos.indexOf(userData.email) > -1);
+        console.log(arrEdificios,'este es el codeeee1',arrEdificios[arrCorreos.indexOf(userData.email)])
+        
+        var code=arrEdificios[arrCorreos.indexOf(userData.email)]
+        console.log(code,'este es el code')
+
+        setBcode(arrEdificios[arrCorreos.indexOf(userData.email)])
+        console.log(bcode,'este es el buildcode')
 
         if (arraycontainsemail) {
+            
             setExistEmail('');
             return true;
-
         }
         else {
             setExistEmail('El correo no existe. Comuniquese con el administrador');
@@ -120,7 +150,7 @@ function Register() {
 
     const submitRegister = e => {
         e.preventDefault();
-
+        
         if (validEmail()) {
 
 
@@ -130,6 +160,7 @@ function Register() {
                 date: userData.date,
                 phonenumber: userData.phonenumber,
                 email: userData.email,
+                buildingCode: bcode,
             };
             console.log(userData.name, 'holiii')
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
