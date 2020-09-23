@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 /* eslint-disable */
 function Register() {
     const history = useHistory();
-
+    var edificioCode=null;
     const [userData, setUserData] = useState({
         name: '',
         lastname: '',
@@ -97,38 +97,33 @@ function Register() {
     }
 
     function validEmail() {
-        console.log(validEmails[0],'BUENAAS')
-        
+
         //Saca los correos del arreglo de maps
-        let correos = validEmails[0].map(({correo}) => ({correo}));
-        let edificios = validEmails[0].map(({edificio}) => ({edificio}));
-       
+        let correos = validEmails[0].map(({ correo }) => ({ correo }));
+        let edificios = validEmails[0].map(({ edificio }) => ({ edificio }));
+
         //Crea el arreglo para meter los correos y posteriormente validar
         const arrCorreos = new Array();
 
         //Llena el arreglo para validar
-        correos.map(correo => {        
+        correos.map(correo => {
             arrCorreos.push(correo.correo);
         })
         //Crea el arreglo para meter los correos y posteriormente validar
         const arrEdificios = new Array();
 
         //Llena el arreglo para validar
-        edificios.map(edificio => {        
+        edificios.map(edificio => {
             arrEdificios.push(edificio.edificio);
         })
-       
-        var arraycontainsemail = (arrCorreos.indexOf(userData.email) > -1);
-        console.log(arrEdificios,'este es el codeeee1',arrEdificios[arrCorreos.indexOf(userData.email)])
-        
-        var code=arrEdificios[arrCorreos.indexOf(userData.email)]
-        console.log(code,'este es el code')
 
-        setBcode(arrEdificios[arrCorreos.indexOf(userData.email)])
-        console.log(bcode,'este es el buildcode')
+        var arraycontainsemail = (arrCorreos.indexOf(userData.email) > -1);
+        var code = arrEdificios[arrCorreos.indexOf(userData.email)]
+        edificioCode=code;
+
 
         if (arraycontainsemail) {
-            
+
             setExistEmail('');
             return true;
         }
@@ -150,9 +145,7 @@ function Register() {
 
     const submitRegister = e => {
         e.preventDefault();
-        
         if (validEmail()) {
-
 
             var userDataF = {
                 name: userData.name,
@@ -160,9 +153,8 @@ function Register() {
                 date: userData.date,
                 phonenumber: userData.phonenumber,
                 email: userData.email,
-                buildingCode: bcode,
+                buildingCode: edificioCode,
             };
-            console.log(userData.name, 'holiii')
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
                     db.collection("usuarios").add(
