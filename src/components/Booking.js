@@ -1,32 +1,43 @@
 import React, { useState } from 'react'
 import "../css/Booking.css"
 import { db } from '../firebase';
-
+import {useStateValue} from "./StateProvider";
+ 
 function Booking() {
-
+    const [{user}] = useStateValue();
     const [date, setDate] = useState('')
     var nonvalidHours = [];
-
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
     const AddStartHours = startHours.map(Add => Add)
-
     const [endHours, setEndHours] = useState(["2. Ingrese hora inicio"])
     const AddFinHours = endHours.map(Add => Add)
 
     const submitRegister = e => {
     }
-
     const dateChangeHandler = e => {
+        console.log(user.uid)
         setDate(e.target.value);
         var bookingRef = db.collection("reservas");
         setStartHours(["1. Ingrese Fecha"])
         setEndHours(["2. Ingrese hora inicio"])
+        var userRef = db.collection("usuarios");
+        var query = bookingRef.where("fecha", "==", e.target.value).get()
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                
+            });
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        });
+
         //Takes all bookings on a specific dat ****NO FOR BUILD AND MODULE (NEED)****
         var query = bookingRef.where("fecha", "==", e.target.value).get()
             .then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
                     // doc.data() is never undefined for query doc snapshots
                     var startHours = doc.data().horaInicio;
+
                     var endH = doc.data().horaFin;
                     //For each booking registered, look for the non valid hours
                     //And push it on the nonvalidHours array
@@ -50,7 +61,6 @@ function Booking() {
                         }
                     }
                     setStartHours(validHours)
-
                 });
             })
             .catch(function (error) {
@@ -62,9 +72,7 @@ function Booking() {
         for (let i = startHours[e.target.value] + 1; i <= 22; i++) {
             validEndHours.push(i)
         }
-
         setEndHours(validEndHours)
-
         console.log(endHours);
     }
 
@@ -91,7 +99,7 @@ function Booking() {
                                 }
                             </select>
                             <h1> - </h1>
-                            <select value={endHours} className="bking__time" id="out_time_hr" name="out_time_hr">
+                            <select  className="bking__time" id="out_time_hr" name="out_time_hr">
                                 {
                                     AddFinHours.map((hourFin, key) => <option value={key}>{hourFin}</option>)
                                 }

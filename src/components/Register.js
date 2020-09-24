@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react'
 import "../css/Register.css"
 import { db, auth } from '../firebase';
 import { useHistory } from "react-router-dom";
+import {useStateValue} from "./StateProvider";
+
+
 /* eslint-disable */
 function Register() {
+    const [{user}] = useStateValue();
+
     const history = useHistory();
     var edificioCode=null;
     const [userData, setUserData] = useState({
@@ -43,7 +48,9 @@ function Register() {
                 )
                 break;
             case 'email':
-                var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+                if(validEmails){
+                    var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+                }
 
                 if (!arraycontainsemail) {
                     setExistEmail('')
@@ -157,7 +164,7 @@ function Register() {
             };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
-                    db.collection("usuarios").add(
+                    db.collection("usuarios").set(
                         userDataF
                     )
                         .then(function (docRef) {
