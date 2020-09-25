@@ -7,8 +7,8 @@ import {useStateValue} from "./StateProvider";
 
 /* eslint-disable */
 function Register() {
-    const [{user}] = useStateValue();
 
+    const [{userInfo},dispatch] = useStateValue();
     const history = useHistory();
     var edificioCode=null;
     const [userData, setUserData] = useState({
@@ -20,14 +20,12 @@ function Register() {
         password: '',
     });
 
-    const [buildCode, setBuildCode] = useState('');
-
     const [phoneError, setPhoneError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [existEmail, setExistEmail] = useState('');
     const [allowSubmit, setAllowSubmit] = useState(false);
-    const [bcode, setBcode] = useState('');
+
 
 
     const validEmailRegex =
@@ -164,18 +162,23 @@ function Register() {
             };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
-                    db.collection("usuarios").set(
+                    db.collection("usuarios").add(
                         userDataF
                     )
                         .then(function (docRef) {
+                            dispatch({
+                                type: "USER_REGISTER",
+                                userInfo: userDataF
+                              })
                             console.log("Document written with ID: ", docRef.id);
-                            history.push("/reservar");
+                            
                         })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
+                        history.push("/reservar");
                 })
-                .catch((e) => setEmailError("Ya existe una cuenta asociada a este correo"));
+                .catch((e) =>  alert(e.message));
 
         }
     }

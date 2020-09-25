@@ -15,6 +15,8 @@ import {useStateValue} from "./components/StateProvider";
 function App() {
 
   const [user,dispatch] = useStateValue ();
+  const [{userInfo}] = useStateValue();
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) =>{
@@ -37,7 +39,7 @@ function App() {
     }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
   console.log ( 'user is: ', user);
-
+  console.log ( 'user is: ', userInfo);
   return (
     <Router>
       <div className="app">

@@ -5,12 +5,14 @@ import {useStateValue} from "./StateProvider";
  
 function Booking() {
     const [{user}] = useStateValue();
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState('');
     var nonvalidHours = [];
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
     const AddStartHours = startHours.map(Add => Add)
     const [endHours, setEndHours] = useState(["2. Ingrese hora inicio"])
     const AddFinHours = endHours.map(Add => Add)
+
+    
 
     const submitRegister = e => {
     }
