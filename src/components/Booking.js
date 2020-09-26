@@ -1,37 +1,50 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react';
 import "../css/Booking.css"
-import { db } from '../firebase';
-import {useStateValue} from "./StateProvider";
- 
+import { auth, db } from '../firebase';
+import { useStateValue } from "./StateProvider";
+
 function Booking() {
-    const [{user}] = useStateValue();
+    const [{ user }] = useStateValue();
     const [date, setDate] = useState('');
     var nonvalidHours = [];
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
     const AddStartHours = startHours.map(Add => Add)
     const [endHours, setEndHours] = useState(["2. Ingrese hora inicio"])
     const AddFinHours = endHours.map(Add => Add)
+    var usersi = auth.currentUser;
+    const [userID, setUserID] = useState(["2. Ingrese hora inicio"])
 
-    
+    useEffect(() => {
+
+        if (usersi) {
+            // User is signed in.
+            console.log("Soooy",usersi)
+            setUserID(usersi.uid)
+        } else {
+            // No user is signed in.
+        }
+    }, [usersi]);
+
 
     const submitRegister = e => {
     }
     const dateChangeHandler = e => {
-        console.log(user.uid)
+        console.log(userID,"SE LOGROOO")
         setDate(e.target.value);
         var bookingRef = db.collection("reservas");
         setStartHours(["1. Ingrese Fecha"])
         setEndHours(["2. Ingrese hora inicio"])
         var userRef = db.collection("usuarios");
         var query = bookingRef.where("fecha", "==", e.target.value).get()
-        .then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
             });
-        })
-        .catch(function (error) {
-            console.log("Error getting documents: ", error);
-        });
 
         //Takes all bookings on a specific dat ****NO FOR BUILD AND MODULE (NEED)****
         var query = bookingRef.where("fecha", "==", e.target.value).get()
@@ -101,7 +114,7 @@ function Booking() {
                                 }
                             </select>
                             <h1> - </h1>
-                            <select  className="bking__time" id="out_time_hr" name="out_time_hr">
+                            <select className="bking__time" id="out_time_hr" name="out_time_hr">
                                 {
                                     AddFinHours.map((hourFin, key) => <option value={key}>{hourFin}</option>)
                                 }
