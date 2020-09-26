@@ -14,13 +14,26 @@ function Booking() {
     const AddFinHours = endHours.map(Add => Add)
     var usersi = auth.currentUser;
     const [userID, setUserID] = useState(["2. Ingrese hora inicio"])
+    const [edificioID, setEdificioID] = useState(["2. Ingrese hora inicio"])
 
     useEffect(() => {
 
         if (usersi) {
             // User is signed in.
-            console.log("Soooy",usersi)
+            console.log("Soooy", usersi.uid)
             setUserID(usersi.uid)
+            var docRef = db.collection("usuarios").doc(usersi.uid);
+            docRef.get().then(function (doc) {
+                if (doc.exists) {
+                    setEdificioID(doc.data().buildingCode)
+                    console.log("Document data:", doc.data());
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function (error) {
+                console.log("Error getting document:", error);
+            });
         } else {
             // No user is signed in.
         }
@@ -30,7 +43,7 @@ function Booking() {
     const submitRegister = e => {
     }
     const dateChangeHandler = e => {
-        console.log(userID,"SE LOGROOO")
+        console.log(userID, "SE LOGROOO",edificioID)
         setDate(e.target.value);
         var bookingRef = db.collection("reservas");
         setStartHours(["1. Ingrese Fecha"])
@@ -47,12 +60,12 @@ function Booking() {
             });
 
         //Takes all bookings on a specific dat ****NO FOR BUILD AND MODULE (NEED)****
-        var query = bookingRef.where("fecha", "==", e.target.value).get()
+        var query = bookingRef.where("fecha", "==", e.target.value).where("idEdificio", "==", edificioID).get()
             .then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
                     // doc.data() is never undefined for query doc snapshots
                     var startHours = doc.data().horaInicio;
-
+                    console.log("aca dentro",doc.data())
                     var endH = doc.data().horaFin;
                     //For each booking registered, look for the non valid hours
                     //And push it on the nonvalidHours array
