@@ -15,6 +15,8 @@ function Booking() {
     var usersi = auth.currentUser;
     const [userID, setUserID] = useState(["2. Ingrese hora inicio"])
     const [edificioID, setEdificioID] = useState(["2. Ingrese hora inicio"])
+    const [bookingsModuleBuilding, setBookingsModuleBuilding] = useState([])
+
 
     useEffect(() => {
 
@@ -27,6 +29,19 @@ function Booking() {
                 if (doc.exists) {
                     setEdificioID(doc.data().buildingCode)
                     console.log("Document data:", doc.data());
+                    db.collection('reservas').where("idEdificio", "==", doc.data().buildingCode).get()
+                        .then(function (querySnapshot) {
+                            var bookings = []
+                            querySnapshot.forEach(function (doc) {
+                                console.log("Document data effect:", doc.data());
+                                bookings.push(doc.data())
+                            });
+                            setBookingsModuleBuilding(bookings)
+                        })
+                        .catch(function (error) {
+                            console.log("Error getting documents: ", error);
+                        });
+
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");
@@ -43,63 +58,95 @@ function Booking() {
     const submitRegister = e => {
     }
     const dateChangeHandler = e => {
-        console.log(userID, "SE LOGROOO",edificioID)
-        setDate(e.target.value);
+        console.log(userID, "SE LOGROOO", edificioID)
+        console.log(bookingsModuleBuilding, "SE LOGROOOx2")
+
         var bookingRef = db.collection("reservas");
         setStartHours(["1. Ingrese Fecha"])
         setEndHours(["2. Ingrese hora inicio"])
-        var userRef = db.collection("usuarios");
-        var query = bookingRef.where("fecha", "==", e.target.value).get()
-            .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-
-                });
-            })
-            .catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
-
+        var date = e.target.value
         //Takes all bookings on a specific dat ****NO FOR BUILD AND MODULE (NEED)****
-        var query = bookingRef.where("fecha", "==", e.target.value).where("idEdificio", "==", edificioID).get()
-            .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    var startHours = doc.data().horaInicio;
-                    console.log("aca dentro",doc.data())
-                    var endH = doc.data().horaFin;
-                    //For each booking registered, look for the non valid hours
-                    //And push it on the nonvalidHours array
-                    for (let i = 7; i < 22; i++) {
-                        if (i >= startHours && i < endH) {
-                            if (nonvalidHours.indexOf(i) === -1) {
-                                nonvalidHours.push(i);
-                                console.log(i);
-                            }
-                        }
-                    }
-                    console.log(nonvalidHours, 'nosepuede')
-                    console.log(doc.id, " => ", doc.data());
-                    /*Create the array and push all the valid hours 
-                    (the ones that does'nt exist on nonvalidHours array)*/
-                    let validHours = []
-                    validHours.push("-")
-                    for (let i = 7; i < 22; i++) {
+        bookingsModuleBuilding.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            if (doc.fecha === e.target.value) {
+
+                var startHours = doc.horaInicio;
+                console.log("aca dentro", doc)
+                var endH = doc.horaFin;
+                //For each booking registered, look for the non valid hours
+                //And push it on the nonvalidHours array
+                for (let i = 7; i < 22; i++) {
+                    if (i >= startHours && i < endH) {
                         if (nonvalidHours.indexOf(i) === -1) {
-                            validHours.push(i)
+                            nonvalidHours.push(i);
+                            console.log(i);
                         }
                     }
-                    setStartHours(validHours)
-                });
-            })
-            .catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
+                }
+                console.log(nonvalidHours, 'nosepuede')
+                /*Create the array and push all the valid hours 
+                (the ones that does'nt exist on nonvalidHours array)*/
+                let validHours = []
+                validHours.push("-")
+                for (let i = 7; i < 22; i++) {
+                    if (nonvalidHours.indexOf(i) === -1) {
+                        validHours.push(i)
+                    }
+                }
+                setStartHours(validHours)
+            }
+        });
+        /* var query = bookingRef.where("fecha", "==", e.target.value).where("idEdificio", "==", edificioID).get()
+             .then(function (querySnapshot) {
+                 querySnapshot.forEach(function (doc) {
+                     // doc.data() is never undefined for query doc snapshots
+                     var startHours = doc.data().horaInicio;
+                     console.log("aca dentro", doc.data())
+                     var endH = doc.data().horaFin;
+                     //For each booking registered, look for the non valid hours
+                     //And push it on the nonvalidHours array
+                     for (let i = 7; i < 22; i++) {
+                         if (i >= startHours && i < endH) {
+                             if (nonvalidHours.indexOf(i) === -1) {
+                                 nonvalidHours.push(i);
+                                 console.log(i);
+                             }
+                         }
+                     }
+                     console.log(nonvalidHours, 'nosepuede')
+                     console.log(doc.id, " => ", doc.data());
+                     /*Create the array and push all the valid hours 
+                     (the ones that does'nt exist on nonvalidHours array)*/
+        /*let validHours = []
+        validHours.push("-")
+        for (let i = 7; i < 22; i++) {
+            if (nonvalidHours.indexOf(i) === -1) {
+                validHours.push(i)
+            }
+        }
+        setStartHours(validHours)
+    });
+})
+.catch(function (error) {
+    console.log("Error getting documents: ", error);
+});*/
     }
     const selectStartHourChangeHandler = e => {
         let validEndHours = []
+        var j = e.target.value;
         for (let i = startHours[e.target.value] + 1; i <= 22; i++) {
-            validEndHours.push(i)
+            console.log(startHours[j]+1, 'equals', i);
+            if (startHours[j]+1 === i) {
+                validEndHours.push(i)
+                
+            }
+            j++;
         }
+
+        startHours.forEach(function (doc) {
+            console.log(doc, 'vamosclaros')
+
+        })
         setEndHours(validEndHours)
         console.log(endHours);
     }
