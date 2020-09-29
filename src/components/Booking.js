@@ -16,7 +16,9 @@ function Booking() {
     const [userID, setUserID] = useState(["2. Ingrese hora inicio"])
     const [edificioID, setEdificioID] = useState(["2. Ingrese hora inicio"])
     const [bookingsModuleBuilding, setBookingsModuleBuilding] = useState([])
-
+    const [buildingModuleCost, setBuildingModuleCost] = useState("")
+    const [bookingCost, setBookingCost] = useState("-")
+    const [cantHours, setCantHours] = useState("-")
 
     useEffect(() => {
 
@@ -29,6 +31,20 @@ function Booking() {
                 if (doc.exists) {
                     setEdificioID(doc.data().buildingCode)
                     console.log("Document data:", doc.data());
+                    db.collection('edificios').doc(doc.data().buildingCode).get()
+                        .then(function (doc) {
+                            if (doc.exists) {
+                                console.log("Document Building data:", doc.data());
+                                setBuildingModuleCost(doc.data().tarifa)
+                            } else {
+                                // doc.data() will be undefined in this case
+                                console.log("No such document!");
+                            }
+                        }).catch(function (error) {
+                            console.log("Error getting document:", error);
+                        });
+
+
                     db.collection('reservas').where("idEdificio", "==", doc.data().buildingCode).get()
                         .then(function (querySnapshot) {
                             var bookings = []
@@ -37,10 +53,12 @@ function Booking() {
                                 bookings.push(doc.data())
                             });
                             setBookingsModuleBuilding(bookings)
+
                         })
                         .catch(function (error) {
                             console.log("Error getting documents: ", error);
                         });
+
 
                 } else {
                     // doc.data() will be undefined in this case
@@ -55,7 +73,16 @@ function Booking() {
     }, [usersi]);
 
 
-    const submitRegister = e => {
+    const submitBooking = e => {
+        let estado=true;
+        let fecha=date;
+        let horaFin=endHours[document.getElementById('out_time_hr').value]
+        let horaInicio=startHours[document.getElementById('in_time_hr').value]
+        let idEdificio=edificioID;
+        let idUsuario= userID;
+        let tiempoTotal=cantHours;
+        console.log('finalizando la maravilla',estado,fecha,horaFin,horaInicio,idEdificio,idUsuario,tiempoTotal)
+
     }
     const dateChangeHandler = e => {
         console.log(userID, "SE LOGROOO", edificioID)
@@ -94,6 +121,7 @@ function Booking() {
                     }
                 }
                 setStartHours(validHours)
+                setDate(e.target.value)
             }
         });
         /* var query = bookingRef.where("fecha", "==", e.target.value).where("idEdificio", "==", edificioID).get()
@@ -133,24 +161,28 @@ function Booking() {
     }
     const selectStartHourChangeHandler = e => {
         let validEndHours = []
+        setEndHours("2.Ingrese hora inicio")
+
+        validEndHours.push("-")
+
         var j = e.target.value;
         for (let i = startHours[e.target.value] + 1; i <= 22; i++) {
-            console.log(startHours[j]+1, 'equals', i);
-            if (startHours[j]+1 === i) {
+            if (startHours[j] + 1 === i) {
                 validEndHours.push(i)
-                
             }
             j++;
         }
-
-        startHours.forEach(function (doc) {
-            console.log(doc, 'vamosclaros')
-
-        })
         setEndHours(validEndHours)
-        console.log(endHours);
     }
-
+    const selectEndHourChangeHandler = e => {
+        let startHour = startHours[document.getElementById('in_time_hr').value]
+        let endHour = endHours[e.target.value]
+        console.log('start',startHour,'end',endHour)
+        let cantHours= endHour-startHour;
+        console.log('son tantas horas',cantHours)
+        setBookingCost(cantHours*buildingModuleCost)
+        setCantHours(cantHours)
+    }
     return (
 
         <div className="bking">
@@ -168,13 +200,14 @@ function Booking() {
                         </div>
                         <div className="bking__containerTimes">
 
-                            <select id="in_time_hr" name="out_time_hr" onChange={selectStartHourChangeHandler}>
+
+                            <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
                                 {
                                     AddStartHours.map((hourStart, key) => <option value={key}>{hourStart}</option>)
                                 }
                             </select>
                             <h1> - </h1>
-                            <select className="bking__time" id="out_time_hr" name="out_time_hr">
+                            <select className="bking__time" id="out_time_hr" name="out_time_hr" onChange={selectEndHourChangeHandler}>
                                 {
                                     AddFinHours.map((hourFin, key) => <option value={key}>{hourFin}</option>)
                                 }
@@ -184,9 +217,9 @@ function Booking() {
                         <div className="bking__containerButton">
 
                             <label>Tarifa:</label>
-                            <label> $ 12600</label>
+                            <label> <span>$</span>{bookingCost}</label>
 
-                            <button type="button" className="bking__Button" onClick={submitRegister}>Reservar</button>
+                            <button type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
                         </div>
                     </form>
                     <div></div>
