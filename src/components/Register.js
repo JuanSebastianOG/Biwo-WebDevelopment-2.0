@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import "../css/Register.css"
 import { db, auth } from '../firebase';
 import { useHistory } from "react-router-dom";
-import {useStateValue} from "./StateProvider";
+import { useStateValue } from "./StateProvider";
 
 
 /* eslint-disable */
 function Register() {
 
-    const [{userInfo},dispatch] = useStateValue();
+    const [{ userInfo }, dispatch] = useStateValue();
     const history = useHistory();
-    var edificioCode=null;
+    var edificioCode = null;
     const [userData, setUserData] = useState({
         name: '',
         lastname: '',
@@ -46,7 +46,7 @@ function Register() {
                 )
                 break;
             case 'email':
-                if(validEmails){
+                if (validEmails) {
                     var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
                 }
 
@@ -124,7 +124,7 @@ function Register() {
 
         var arraycontainsemail = (arrCorreos.indexOf(userData.email) > -1);
         var code = arrEdificios[arrCorreos.indexOf(userData.email)]
-        edificioCode=code;
+        edificioCode = code;
 
 
         if (arraycontainsemail) {
@@ -158,27 +158,30 @@ function Register() {
                 date: userData.date,
                 phonenumber: userData.phonenumber,
                 email: userData.email,
-                buildingCode: edificioCode,
+                idEdificio: edificioCode,
             };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
-                    db.collection("usuarios").add(
-                        userDataF
-                    )
+                    db.collection("usuarios").doc(auth.currentUser.uid).set({
+                        name: userData.name,
+                        lastname: userData.lastname,
+                        date: userData.date,
+                        phonenumber: userData.phonenumber,
+                        email: userData.email,
+                        idEdificio: edificioCode,
+                    })
                         .then(function (docRef) {
                             dispatch({
                                 type: "USER_REGISTER",
                                 userInfo: userDataF
-                              })
-                            console.log("Document written with ID: ", docRef.id);
-                            
+                            })
                         })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
-                        history.push("/reservar");
+                    history.push("/reservar");
                 })
-                .catch((e) =>  alert(e.message));
+                .catch((e) => alert(e.message));
 
         }
     }
