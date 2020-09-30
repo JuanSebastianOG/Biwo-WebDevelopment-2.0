@@ -38,8 +38,7 @@ function App() {
       unsubscribe();
     }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
-  console.log ( 'user is: ', user);
-  console.log ( 'user is: ', userInfo);
+  
   return (
     <Router>
       <div className="app">

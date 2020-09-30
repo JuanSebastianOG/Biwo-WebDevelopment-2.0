@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import "../css/Booking.css"
 import { auth, db } from '../firebase';
-import { useStateValue } from "./StateProvider";
-import { useHistory } from "react-router-dom";
+
 
 function Booking() {
-    const history = useHistory();
     const [date, setDate] = useState('');
     var nonvalidHours = [];
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
@@ -22,7 +20,6 @@ function Booking() {
     const [cantHours, setCantHours] = useState("-")
 
     useEffect(() => {
-
         if (usersi) {
             // User is signed in.
             console.log("Soooy", usersi.uid)
@@ -44,8 +41,6 @@ function Booking() {
                         }).catch(function (error) {
                             console.log("Error getting document:", error);
                         });
-
-
                     db.collection('reservas').where("idEdificio", "==", doc.data().idEdificio).get()
                         .then(function (querySnapshot) {
                             var bookings = []
@@ -54,13 +49,10 @@ function Booking() {
                                 bookings.push(doc.data())
                             });
                             setBookingsModuleBuilding(bookings)
-
                         })
                         .catch(function (error) {
                             console.log("Error getting documents: ", error);
                         });
-
-
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");
@@ -94,9 +86,7 @@ function Booking() {
             tiempoTotal: tiempoTotal,
         }).then(function (docRef) {
             alert("Su reserva ha sido existosa")
-            
             window.location.reload();
-
         }).catch(function (error) {
                 console.error("Error adding document: ", error);
         });
@@ -106,20 +96,14 @@ function Booking() {
 
 }
 const dateChangeHandler = e => {
-    console.log(userID, "SE LOGROOO", edificioID)
-    console.log(bookingsModuleBuilding, "SE LOGROOOx2")
-
-    var bookingRef = db.collection("reservas");
+    
     setStartHours(["1. Ingrese Fecha"])
     setEndHours(["2. Ingrese hora inicio"])
-    var date = e.target.value
-    //Takes all bookings on a specific dat ****NO FOR BUILD AND MODULE (NEED)****
+    //Takes all bookings on a specific dat ****NO FOR MODULE (NEED)****
     bookingsModuleBuilding.forEach(function (doc) {
-        // doc.data() is never undefined for query doc snapshots
+        // Take only the ones that are on the specific day
         if (doc.fecha === e.target.value) {
-
             var startHours = doc.horaInicio;
-            console.log("aca dentro", doc)
             var endH = doc.horaFin;
             //For each booking registered, look for the non valid hours
             //And push it on the nonvalidHours array
@@ -127,11 +111,9 @@ const dateChangeHandler = e => {
                 if (i >= startHours && i < endH) {
                     if (nonvalidHours.indexOf(i) === -1) {
                         nonvalidHours.push(i);
-                        console.log(i);
                     }
                 }
             }
-            console.log(nonvalidHours, 'nosepuede')
             /*Create the array and push all the valid hours 
             (the ones that does'nt exist on nonvalidHours array)*/
             let validHours = []
@@ -145,45 +127,10 @@ const dateChangeHandler = e => {
             setDate(e.target.value)
         }
     });
-    /* var query = bookingRef.where("fecha", "==", e.target.value).where("idEdificio", "==", edificioID).get()
-         .then(function (querySnapshot) {
-             querySnapshot.forEach(function (doc) {
-                 // doc.data() is never undefined for query doc snapshots
-                 var startHours = doc.data().horaInicio;
-                 console.log("aca dentro", doc.data())
-                 var endH = doc.data().horaFin;
-                 //For each booking registered, look for the non valid hours
-                 //And push it on the nonvalidHours array
-                 for (let i = 7; i < 22; i++) {
-                     if (i >= startHours && i < endH) {
-                         if (nonvalidHours.indexOf(i) === -1) {
-                             nonvalidHours.push(i);
-                             console.log(i);
-                         }
-                     }
-                 }
-                 console.log(nonvalidHours, 'nosepuede')
-                 console.log(doc.id, " => ", doc.data());
-                 /*Create the array and push all the valid hours 
-                 (the ones that does'nt exist on nonvalidHours array)*/
-    /*let validHours = []
-    validHours.push("-")
-    for (let i = 7; i < 22; i++) {
-        if (nonvalidHours.indexOf(i) === -1) {
-            validHours.push(i)
-        }
-    }
-    setStartHours(validHours)
-});
-})
-.catch(function (error) {
-console.log("Error getting documents: ", error);
-});*/
 }
 const selectStartHourChangeHandler = e => {
     let validEndHours = []
     setBookingCost(" - ")
-
     validEndHours.push("-")
     var j = e.target.value;
     for (let i = startHours[e.target.value] + 1; i <= 22; i++) {
@@ -236,7 +183,7 @@ return (
                     </div>
                     <div className="bking__containerButton">
 
-                        <label>Tarifa:</label>
+                        <label>Costo:</label>
                         <label> <span>$</span>{bookingCost}</label>
 
                         <button type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
