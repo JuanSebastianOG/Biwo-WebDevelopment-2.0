@@ -86,7 +86,7 @@ function Booking() {
             tiempoTotal: tiempoTotal,
         }).then(function (docRef) {
             alert("Su reserva ha sido existosa")
-            window.location.reload();
+            //window.location.reload();
         }).catch(function (error) {
                 console.error("Error adding document: ", error);
         });
