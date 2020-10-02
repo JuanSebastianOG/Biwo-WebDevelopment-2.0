@@ -19,7 +19,6 @@ function Login() {
         })
         .catch((e)=> alert(e.message));
 
-        
     }
     const userRegister = (e) => {
         e.preventDefault();

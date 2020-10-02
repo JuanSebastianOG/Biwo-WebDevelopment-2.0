@@ -19,7 +19,7 @@ function Booking() {
     const [bookingCost, setBookingCost] = useState("-")
     const [cantHours, setCantHours] = useState("-")
 
-    useEffect(() => {
+useEffect(() => {
         if (usersi) {
             // User is signed in.
             console.log("Soooy", usersi.uid)
@@ -65,8 +65,7 @@ function Booking() {
         }
     }, [usersi]);
 
-
-    const submitBooking = e => {
+const submitBooking = e => {
         let estado = true;
         let fecha = date;
         let horaFin = endHours[document.getElementById('out_time_hr').value]
