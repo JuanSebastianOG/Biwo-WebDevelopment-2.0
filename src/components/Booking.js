@@ -45,7 +45,6 @@ useEffect(() => {
                         .then(function (querySnapshot) {
                             var bookings = []
                             querySnapshot.forEach(function (doc) {
-                                console.log("Document data effect:", doc.data());
                                 bookings.push(doc.data())
                             });
                             setBookingsModuleBuilding(bookings)
@@ -67,7 +66,6 @@ useEffect(() => {
 
 const submitBooking = e => {
         let estado = true;
-        let fecha = date;
         let horaFin = endHours[document.getElementById('out_time_hr').value]
         let horaInicio = startHours[document.getElementById('in_time_hr').value]
         let idEdificio = edificioID;
@@ -85,23 +83,22 @@ const submitBooking = e => {
             costoReserva: bookingCost,
         }).then(function (docRef) {
             alert("Su reserva ha sido existosa")
-            //window.location.reload();
+            window.location.reload();
         }).catch(function (error) {
                 console.error("Error adding document: ", error);
         });
     
-
-
-
 }
 const dateChangeHandler = e => {
-    
     setStartHours(["1. Ingrese Fecha"])
     setEndHours(["2. Ingrese hora inicio"])
     //Takes all bookings on a specific dat ****NO FOR MODULE (NEED)****
+    var bookingsOnDay=false;
     bookingsModuleBuilding.forEach(function (doc) {
         // Take only the ones that are on the specific day
         if (doc.fecha === e.target.value) {
+            bookingsOnDay=true;
+
             var startHours = doc.horaInicio;
             var endH = doc.horaFin;
             //For each booking registered, look for the non valid hours
@@ -126,6 +123,18 @@ const dateChangeHandler = e => {
             setDate(e.target.value)
         }
     });
+    if(!bookingsOnDay){
+        let validHours = []
+        validHours.push("-")
+
+        for (let i = 7; i < 22; i++) {
+                validHours.push(i)
+        }
+        setDate(e.target.value)
+
+        setStartHours(validHours)
+        console.log("NO HAY RESERVAS PA")
+    }
 }
 const selectStartHourChangeHandler = e => {
     let validEndHours = []
