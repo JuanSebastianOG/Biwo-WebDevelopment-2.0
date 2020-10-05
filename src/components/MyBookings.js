@@ -7,6 +7,9 @@ import Booking from './Booking';
 function MyBookings() {
 
     const [mybookings, setMyBookings] = useState([]);
+    const [totalTime, setTotalTime] = useState([]);
+    const [totalCost, setTotalCost] = useState([]);
+
     var usersi = auth.currentUser;
     useEffect(() => {
         if (usersi) {
@@ -15,11 +18,18 @@ function MyBookings() {
             db.collection('reservas').where("idUsuario", "==", usersi.uid).get()
                 .then(function (querySnapshot) {
                     var myBookings = []
+                    var totalTime=0;
+                    var totalCost=0;
                     querySnapshot.forEach(function (doc) {
-                        console.log("Document data effect:", doc.data());
+                        console.log("My bookings:", doc.data());
                         myBookings.push(doc.data())
+                        totalTime=totalTime+doc.data().tiempoTotal;
+                        totalCost=totalCost+doc.data().costoReserva;
                     });
                     setMyBookings(myBookings)
+                    setTotalTime(totalTime)
+                    setTotalCost(totalCost)
+
                 })
                 .catch(function (error) {
                     console.log("Error getting documents: ", error);
@@ -47,7 +57,6 @@ function MyBookings() {
                                     module={booking.idModulo}
                                     hour={booking.horaFin}
                                 />))*/
-
                         }
                         <LastBookings
                             active={true}
@@ -82,13 +91,13 @@ function MyBookings() {
                 <div className="mybookings__middleCont">
                     <h4>Tiempo de uso</h4>
                     <div className="mybookings__middleContTimeCost">
-                        <h1>8 Horas</h1>
+                        <h1>{totalTime} Hora(s)</h1>
                     </div>
                 </div>
                 <div className="mybookings__middleCont">
                     <h4>Gasto total</h4>
                     <div className="mybookings__middleContTimeCost">
-                        <h1>$100.000 <span>COP</span></h1>
+                        <h1>${totalCost} <span>COP</span></h1>
                     </div>
                 </div>
             </div>

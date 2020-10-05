@@ -73,7 +73,6 @@ const submitBooking = e => {
         let idEdificio = edificioID;
         let idUsuario = userID;
         let tiempoTotal = cantHours;
-        console.log('finalizando la maravilla', estado, fecha, horaFin, horaInicio, idEdificio, idUsuario, tiempoTotal)
         db.collection("reservas").add({
             estado: estado,
             fecha: date,
@@ -83,6 +82,7 @@ const submitBooking = e => {
             idModulo: "hEei5z0Lg2zJwjQHzUXY",
             idUsuario: idUsuario,
             tiempoTotal: tiempoTotal,
+            costoReserva: bookingCost,
         }).then(function (docRef) {
             alert("Su reserva ha sido existosa")
             //window.location.reload();
