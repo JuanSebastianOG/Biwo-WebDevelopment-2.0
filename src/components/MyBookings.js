@@ -15,7 +15,9 @@ function MyBookings() {
         if (usersi) {
             // User is signed in.
             console.log("Soooy", usersi.uid)
-            db.collection('reservas').where("idUsuario", "==", usersi.uid).get()
+
+            const bookingRef=db.collection('reservas').where("idUsuario", "==", usersi.uid)
+            bookingRef.get()
                 .then(function (querySnapshot) {
                     var myBookings = []
                     var totalTime=0;
@@ -26,7 +28,7 @@ function MyBookings() {
                         totalTime=totalTime+doc.data().tiempoTotal;
                         totalCost=totalCost+doc.data().costoReserva;
                     });
-                    setMyBookings(myBookings)
+                    setMyBookings(myBookings.reverse())
                     setTotalTime(totalTime)
                     setTotalCost(totalCost)
 
@@ -47,18 +49,18 @@ function MyBookings() {
                 <div className="mybookings__middleCont">
                     <h4>Reservas previas</h4>
                     <div className="mybookings__middleContBookings">
-                        {/*
+                        {
                             mybookings.map(booking =>
                                 (<LastBookings
                                     active={booking.estado}
-                                    day={booking.fecha}
-                                    month={booking.horaFin}
-                                    building={booking.idEdificio}
-                                    module={booking.idModulo}
-                                    hour={booking.horaFin}
-                                />))*/
+                                    day={booking.dia}
+                                    month={booking.mes}
+                                    building={booking.nombreEdificio}
+                                    module={booking.nombreModulo}
+                                    hour={booking.horaInicioFin}
+                                />))
                         }
-                        <LastBookings
+                        {/*<LastBookings
                             active={true}
                             day={24}
                             month="Agosto"
@@ -85,8 +87,7 @@ function MyBookings() {
                             month="Agosto"
                             building="Edificio Reservas del Cedro"
                             module="Modulo 1"
-                            hour="14:00 - 16:00" />
-                    </div>
+                            hour="14:00 - 16:00" />*/ }                   </div>
                 </div>
                 <div className="mybookings__middleCont">
                     <h4>Tiempo de uso</h4>
