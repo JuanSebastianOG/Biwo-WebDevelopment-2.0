@@ -1,6 +1,8 @@
 import React from 'react'
-
+import { useReducer, useCallback } from 'react'
 import styled from 'styled-components/macro';
+import { auth, db } from '../firebase';
+import { useHistory } from "react-router-dom";
 
 const BookingContainer = styled.div`
     {
@@ -239,7 +241,23 @@ const DropButton = styled.div`
     }`
 
 
-function BookingBox({ day, month, building, module, hour }) {
+function BookingBox({ day, month, building, module, hour, id }) {
+
+    const history = useHistory();
+    
+    function releaseBooking (){
+
+        db.collection("reservas").doc(id).delete().then(function() {
+            window.location.reload();
+            console.log("Document successfully deleted!");
+            
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+
+
+
+    }
     return (
         <BookingContainer>
             <DateField>
@@ -263,7 +281,7 @@ function BookingBox({ day, month, building, module, hour }) {
                             <button>Editar</button>
                         </EditButton>
                         <DropButton>
-                            <button>Liberar</button>
+                            <button onClick={releaseBooking}>Liberar</button>
                         </DropButton>
                     </ResponsiveCont2>
                 </ResponsiveCont1>
@@ -278,7 +296,7 @@ function BookingBox({ day, month, building, module, hour }) {
                 </EditButton>
 
                 <DropButton>
-                    <button>Liberar</button>
+                    <button onClick={releaseBooking}>Liberar</button>
                 </DropButton>
             </DisplayButtons>
 

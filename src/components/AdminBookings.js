@@ -32,8 +32,11 @@ function AdminBookings() {
 
     var currentUser = auth.currentUser;
     const [userBookings, setUserBookings] = useState([]);
+    const [bookingId, setBookingId] = useState([]);
     const history = useHistory();
+
     var tempBookings = [];
+    var idBookings = [];
 
     useEffect(() => {
 
@@ -43,9 +46,13 @@ function AdminBookings() {
 
                     snap.forEach(function (doc) {
                         console.log("Booking Details:", doc.data());
-                        tempBookings.push(doc.data())
+                        
+                        tempBookings.push(doc.data());
+                        idBookings.push(doc.id);
+                        
                     });
                     setUserBookings(tempBookings);
+                    setBookingId(idBookings);
                 })
                 .catch(function (error) {
                     console.log("Error getting documents: ", error);
@@ -72,23 +79,20 @@ function AdminBookings() {
             <h1> Administrar Reservas</h1>
 
             {
-                userBookings.map((booking) => <BookingBox
-                day={booking.fecha}
-                month="Agosto"
-                building="Edificio Reservas del Cedro"
-                module="Modulo 23432434"
-                hour="14:00 - 16:00"
+               
+                userBookings.map((booking,index) =>
+
+                 <BookingBox
+
+                day={booking.dia}
+                month={booking.mes}
+                building={booking.nombreEdificio}
+                module={booking.nombreModulo}
+                hour={booking.horaInicioFin}
+                id={bookingId[index]}
+               
             />)
             }
-
-            <BookingBox
-                day={24}
-                month="Agosto"
-                building="Edificio Reservas del Cedro"
-                module="Modulo 1"
-                hour="14:00 - 16:00"
-            />
-
 
         </Admin>
     )
