@@ -7,7 +7,6 @@ import { auth, db } from '../firebase';
 
 function Help() {
     const [input, setInput] = useState('')
-    const [userId, setUserId] = useState('')
 
     var usersi = auth.currentUser;
     

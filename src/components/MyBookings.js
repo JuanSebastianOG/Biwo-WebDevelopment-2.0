@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "../css/MyBookings.css"
 import LastBookings from './LastBookings'
 import { auth, db } from '../firebase';
-import Booking from './Booking';
+
 
 function MyBookings() {
 
@@ -47,6 +47,7 @@ function MyBookings() {
                         {
                             mybookings.map(booking =>
                                 (<LastBookings
+                                    key={booking.horaInicioFin+booking.dia+booking.mes}
                                     active={booking.estado}
                                     day={booking.dia}
                                     month={booking.mes}

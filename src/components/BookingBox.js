@@ -1,8 +1,6 @@
 import React from 'react'
-import { useReducer, useCallback } from 'react'
 import styled from 'styled-components/macro';
-import { auth, db } from '../firebase';
-import { useHistory } from "react-router-dom";
+import {  db } from '../firebase';
 
 const BookingContainer = styled.div`
     {
@@ -242,8 +240,6 @@ const DropButton = styled.div`
 
 
 function BookingBox({ day, month, building, module, hour, id }) {
-
-    const history = useHistory();
     
     function releaseBooking (){
 

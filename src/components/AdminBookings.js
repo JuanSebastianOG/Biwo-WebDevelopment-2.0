@@ -39,17 +39,16 @@ function AdminBookings() {
     var idBookings = [];
 
     useEffect(() => {
-
         if (currentUser) {
             db.collection('reservas').where("idUsuario", "==", currentUser.uid).get()
                 .then(function (snap) {
 
                     snap.forEach(function (doc) {
                         console.log("Booking Details:", doc.data());
-                        
+
                         tempBookings.push(doc.data());
                         idBookings.push(doc.id);
-                        
+
                     });
                     setUserBookings(tempBookings);
                     setBookingId(idBookings);
@@ -63,14 +62,9 @@ function AdminBookings() {
         }
         else {
             history.push("/reservar");
-
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
-
-
-
-
 
 
     return (
@@ -79,19 +73,19 @@ function AdminBookings() {
             <h1> Administrar Reservas</h1>
 
             {
-               
-                userBookings.map((booking,index) =>
 
-                 <BookingBox
+                userBookings.map((booking, index) =>
 
-                day={booking.dia}
-                month={booking.mes}
-                building={booking.nombreEdificio}
-                module={booking.nombreModulo}
-                hour={booking.horaInicioFin}
-                id={bookingId[index]}
-               
-            />)
+                    <BookingBox
+
+                        day={booking.dia}
+                        month={booking.mes}
+                        building={booking.nombreEdificio}
+                        module={booking.nombreModulo}
+                        hour={booking.horaInicioFin}
+                        id={bookingId[index]}
+
+                    />)
             }
 
         </Admin>

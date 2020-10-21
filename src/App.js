@@ -15,8 +15,7 @@ import {useStateValue} from "./components/StateProvider";
 function App() {
 
   const [user,dispatch] = useStateValue ();
-  const [{userInfo}] = useStateValue();
-  
+  console.log(user)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) =>{
