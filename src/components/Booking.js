@@ -8,6 +8,11 @@ function Booking() {
 
     const [date, setDate] = useState('');
     var nonvalidHours = [];
+    const [modules, setModules] = useState([])
+    const AddModules = modules.map(Add => Add)
+    const [buildingModules, setBuildingModules] = useState([])
+    const [allowSubmit, setAllowSubmit] = useState(false);
+
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
     const AddStartHours = startHours.map(Add => Add)
     const [endHours, setEndHours] = useState(["2. Ingrese hora inicio"])
@@ -20,27 +25,23 @@ function Booking() {
     const [buildingName, setBuildingName] = useState("")
     const [buildingStartHour, setBuildingStartHour] = useState("")
     const [buildingEndHour, setBuildingEndHour] = useState("")
-
-    const [bookingCost, setBookingCost] = useState("-")
+    const [bookingCost, setBookingCost] = useState(" - ")
     const [cantHours, setCantHours] = useState("-")
     var d = new Date();
     const day = d.getDate()
     const month = d.getMonth() + 1
     const year = d.getFullYear()
-
     const dati = year + "-" + month + "-" + day
     d.setMonth(d.getMonth() + 2);
 
     const dayend = d.getDate()
     const monthend = d.getMonth() + 1
     const yearend = d.getFullYear()
-
     const datiend = yearend + "-" + monthend + "-" + dayend
     useEffect(() => {
         if (usersi) {
 
             // User is signed in.
-            console.log("Soooy", usersi.uid)
             setUserID(usersi.uid)
             var docRef = db.collection("usuarios").doc(usersi.uid);
             docRef.get().then(function (doc) {
@@ -51,6 +52,13 @@ function Booking() {
                         .then(function (doc) {
                             if (doc.exists) {
                                 console.log("Document Building data:", doc.data());
+                                setBuildingModules(doc.data().idModulos)
+                                var mod = []
+
+                                for (let i = 0; i < doc.data().idModulos.length; i++) {
+                                    mod.push("Módulo " + (1 + i))
+                                }
+                                setModules(mod)
                                 setBuildingModuleCost(doc.data().tarifa)
                                 setBuildingName(doc.data().nombre)
                                 setBuildingStartHour(doc.data().horaInicio)
@@ -70,7 +78,7 @@ function Booking() {
                             });
                             setBookingsModuleBuilding(bookings)
                         })
-                        
+
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");
@@ -98,14 +106,15 @@ function Booking() {
         var month = parseInt(date.substring(5, 7));
 
         var hourStartEnd = horaInicio + ":00 - " + horaFin + ":00";
-
+        var selectedModuleNumber = document.getElementById("bking__selectedModule");
+        var strselectedModule = selectedModuleNumber.options[selectedModuleNumber.selectedIndex].text;
         db.collection("reservas").add({
             estado: estado,
             fecha: date,
             horaFin: horaFin,
             horaInicio: horaInicio,
             idEdificio: idEdificio,
-            idModulo: "hEei5z0Lg2zJwjQHzUXY",
+            idModulo: buildingModules[selectedModuleNumber.value],
             idUsuario: idUsuario,
             tiempoTotal: tiempoTotal,
             costoReserva: bookingCost,
@@ -113,7 +122,7 @@ function Booking() {
             mes: monthNames[month - 1],
 
             nombreEdificio: buildingName,
-            nombreModulo: "Modulo 1",
+            nombreModulo: strselectedModule,
             horaInicioFin: hourStartEnd,
         }).then(function (docRef) {
             alert("Su reserva ha sido existosa")
@@ -123,26 +132,34 @@ function Booking() {
         });
 
     }
-    const dateChangeHandler = e => {
 
+    function calculateStartHours() {
+        setAllowSubmit(false)
+
+        setBookingCost(" - ")
+        let element = document.getElementById("in_time_hr");
+        element.value = 0;
         setStartHours(["1. Ingrese Fecha"])
         setEndHours(["2. Ingrese hora inicio"])
         //Takes all bookings on a specific dat ****NO FOR MODULE (NEED)****
         var bookingsOnDay = false;
+        const selectedDate = document.getElementById("bking__date").value
 
         var firstHour;
         if (d.getHours() > buildingStartHour) {
-            if (e.target.value.localeCompare(dati)===0)
-                firstHour = d.getHours()+1
+            if (selectedDate.localeCompare(dati) === 0)
+                firstHour = d.getHours() + 1
             else
                 firstHour = buildingStartHour
 
         } else {
             firstHour = buildingStartHour
         }
+
         bookingsModuleBuilding.forEach(function (doc) {
+            var moduleSelected = document.getElementById('bking__selectedModule').value;
             // Take only the ones that are on the specific day
-            if (doc.fecha === e.target.value) {
+            if (doc.fecha === selectedDate && doc.idModulo === buildingModules[moduleSelected]) {
                 bookingsOnDay = true;
                 var startHours = doc.horaInicio;
                 var endH = doc.horaFin;
@@ -165,7 +182,7 @@ function Booking() {
                     }
                 }
                 setStartHours(validHours)
-                setDate(e.target.value)
+                setDate(selectedDate)
             }
         });
         if (!bookingsOnDay) {
@@ -175,22 +192,29 @@ function Booking() {
             for (let i = firstHour; i < buildingEndHour; i++) {
                 validHours.push(i)
             }
-            setDate(e.target.value)
+            setDate(selectedDate)
 
             setStartHours(validHours)
-        }
+        }   // The function returns the product of p1 and p2
+    }
+    const dateChangeHandler = e => {
+        calculateStartHours()
+    }
+    const selectModuleChange = e => {
+        calculateStartHours()
     }
     const selectStartHourChangeHandler = e => {
-
         let validEndHours = []
         setBookingCost(" - ")
         validEndHours.push("-")
         var j = e.target.value;
-        var start=1+parseInt(startHours[e.target.value])
-        console.log('voy por aca',buildingEndHour)
+        var start = 1 + parseInt(startHours[e.target.value])
+        let element = document.getElementById("out_time_hr");
+        element.value = 0;
+        setAllowSubmit(false)
 
         for (let i = start; i <= buildingEndHour; i++) {
-            if (1+parseInt(startHours[j])  === i) {
+            if (1 + parseInt(startHours[j]) === i) {
                 validEndHours.push(i)
             }
             j++;
@@ -200,9 +224,9 @@ function Booking() {
     const selectEndHourChangeHandler = e => {
         let startHour = startHours[document.getElementById('in_time_hr').value]
         let endHour = endHours[e.target.value]
-        console.log('start', startHour, 'end', endHour)
         let cantHours = endHour - startHour;
-        console.log('son tantas horas', cantHours)
+        setAllowSubmit(true)
+        
         setBookingCost(cantHours * buildingModuleCost)
         setCantHours(cantHours)
     }
@@ -216,13 +240,18 @@ function Booking() {
                     <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
                     <form className="bking_containerFlexForm" action="">
                         <label htmlFor="">Fecha</label>
-                        <input type="date" min={dati} max={datiend} onChange={dateChangeHandler} />
+                        <input id="bking__date" type="date" min={dati} max={datiend} onChange={dateChangeHandler} />
+                        <label htmlFor="">Módulo</label>
+                        <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
+                            {
+                                AddModules.map((module, key) => <option value={key}>{module}</option>)
+                            }
+                        </select>
                         <div className="bking_containerFlexFormHours">
                             <label htmlFor="">Hora Inicio</label>
                             <label>Hora Fin</label>
                         </div>
                         <div className="bking__containerTimes">
-
 
                             <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
                                 {
@@ -242,7 +271,7 @@ function Booking() {
                             <label>Costo:</label>
                             <label> <span>$</span>{bookingCost}</label>
 
-                            <button type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
+                            <button disabled={!allowSubmit} type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
                         </div>
                     </form>
                     <div></div>
