@@ -5,6 +5,7 @@ import { auth, db } from '../firebase';
 
 
 function Booking() {
+    
     const [date, setDate] = useState('');
     var nonvalidHours = [];
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
@@ -20,9 +21,25 @@ function Booking() {
 
     const [bookingCost, setBookingCost] = useState("-")
     const [cantHours, setCantHours] = useState("-")
+    var d = new Date();
+    const day= d.getDate()
+    const month= d.getMonth()+1
+    const year= d.getFullYear()
+   
+    const dati=year+"-"+month+"-"+day
+    console.log(dati,"papi vamoo")
+    var d = new Date();
+    d.setMonth(d.getMonth() +2);
 
+    const dayend= d.getDate()
+    const monthend= d.getMonth()+1
+    const yearend= d.getFullYear()
+   
+    const datiend=yearend+"-"+monthend+"-"+dayend
+    console.log(datiend,"papi vamooend")
     useEffect(() => {
         if (usersi) {
+
             // User is signed in.
             console.log("Soooy", usersi.uid)
             setUserID(usersi.uid)
@@ -75,6 +92,7 @@ function Booking() {
         let idEdificio = edificioID;
         let idUsuario = userID;
         let tiempoTotal = cantHours;
+        
         const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
         ];
@@ -190,7 +208,7 @@ function Booking() {
                     <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
                     <form className="bking_containerFlexForm" action="">
                         <label htmlFor="">Fecha</label>
-                        <input type="date" onChange={dateChangeHandler} />
+                        <input type="date" min = {dati} max={datiend} onChange={dateChangeHandler} />
                         <div className="bking_containerFlexFormHours">
                             <label htmlFor="">Hora Inicio</label>
                             <label>Hora Fin</label>

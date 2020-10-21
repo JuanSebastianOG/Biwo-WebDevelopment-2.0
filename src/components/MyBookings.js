@@ -16,25 +16,20 @@ function MyBookings() {
             // User is signed in.
             console.log("Soooy", usersi.uid)
 
-            const bookingRef=db.collection('reservas').where("idUsuario", "==", usersi.uid)
-            bookingRef.get()
-                .then(function (querySnapshot) {
-                    var myBookings = []
+
+            db.collection('reservas').where("idUsuario", "==", usersi.uid)
+                .onSnapshot(function (querySnapshot) {
+                    var myBookings = [];
                     var totalTime=0;
                     var totalCost=0;
                     querySnapshot.forEach(function (doc) {
-                        console.log("My bookings:", doc.data());
-                        myBookings.push(doc.data())
+                        myBookings.push(doc.data());
                         totalTime=totalTime+doc.data().tiempoTotal;
                         totalCost=totalCost+doc.data().costoReserva;
                     });
-                    setMyBookings(myBookings.reverse())
+                    setMyBookings(myBookings.reverse());
                     setTotalTime(totalTime)
                     setTotalCost(totalCost)
-
-                })
-                .catch(function (error) {
-                    console.log("Error getting documents: ", error);
                 });
         } else {
             // doc.data() will be undefined in this case
