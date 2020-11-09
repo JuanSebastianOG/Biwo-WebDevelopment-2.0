@@ -12,7 +12,6 @@ function Booking() {
     const AddModules = modules.map(Add => Add)
     const [buildingModules, setBuildingModules] = useState([])
     const [allowSubmit, setAllowSubmit] = useState(false);
-
     const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
     const AddStartHours = startHours.map(Add => Add)
     const [endHours, setEndHours] = useState(["2. Ingrese hora inicio"])
@@ -27,17 +26,33 @@ function Booking() {
     const [buildingEndHour, setBuildingEndHour] = useState("")
     const [bookingCost, setBookingCost] = useState(" - ")
     const [cantHours, setCantHours] = useState("-")
+
+
     var d = new Date();
-    const day = d.getDate()
-    const month = d.getMonth() + 1
-    const year = d.getFullYear()
+    var day = d.getDate()
+    var month = d.getMonth() + 1
+    var year = d.getFullYear()
+    if(day<10){
+        day='0'+day
+    } 
+    if(month<10){
+        month='0'+month
+    } 
     const dati = year + "-" + month + "-" + day
     d.setMonth(d.getMonth() + 2);
 
-    const dayend = d.getDate()
-    const monthend = d.getMonth() + 1
-    const yearend = d.getFullYear()
+    var dayend = d.getDate()
+    var monthend = d.getMonth() + 1
+    var yearend = d.getFullYear()
+    if(dayend<10){
+        dayend='0'+dayend
+    } 
+    if(monthend<10){
+        monthend='0'+monthend
+    } 
     const datiend = yearend + "-" + monthend + "-" + dayend
+
+
     useEffect(() => {
         if (usersi) {
 
