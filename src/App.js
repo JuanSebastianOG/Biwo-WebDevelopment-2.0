@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,35 +9,36 @@ import AdminBookings from './components/AdminBookings';
 import MyBookings from './components/MyBookings';
 import Landing from './components/Landing';
 import Help from './components/Help';
-import {auth} from "./firebase"
-import {useStateValue} from "./components/StateProvider";
+import { auth } from "./firebase"
+import { useStateValue } from "./components/StateProvider";
 
 function App() {
 
-  const [user,dispatch] = useStateValue ();
+  const [user, dispatch] = useStateValue();
   console.log(user)
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) =>{
-      if(authUser)
-      {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
         dispatch({
           type: "USER_SIGN_IN/OUT",
           user: authUser
         })
       }
-      else{
+      else {
         dispatch({
           type: "USER_SIGN_IN/OUT",
           user: null
         })
       }
     })
+
+  
     return () => {
       unsubscribe();
     }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
-  
+
   return (
     <Router>
       <div className="app">
@@ -51,27 +52,27 @@ function App() {
             <Register />
           </Route>
           <Route path="/misreservas">
-          <NavBar users active="misreservas"/>
-            <MyBookings/>
+            <NavBar users active="misreservas" />
+            <MyBookings />
           </Route>
           <Route path="/reservar">
             <NavBar users active="reservar" />
-            <Booking/>
+            <Booking />
           </Route>
           <Route path="/administar">
             <NavBar users active="administrar" />
-            <AdminBookings/>
+            <AdminBookings />
           </Route>
           <Route path="/editarreserva">
             <h1>Editar reserva</h1>
           </Route>
           <Route path="/ayuda">
-          <NavBar users active="ayuda" />
-            <Help/>
+            <NavBar users active="ayuda" />
+            <Help />
           </Route>
           <Route path="/">
             <NavBar />
-            <Landing/>
+            <Landing />
           </Route>
         </Switch>
       </div>

@@ -210,19 +210,20 @@ const DropButton = styled.div`
         align-items: center;
         width:6em;
         height:100%;
-        background-color: #002980;
         color:white;
-        border-radius: 0  15px 15px 0;
+        border-radius: 15px  0 0 0;
 
         button{
             font-family: 'Helvetica Text';
             font-size: 20px;
             border: 0px;
-            background: none;
+            background: #C5F8CE;
             outline:none;
             width:100%;
             height: 100%;
-            color:white;
+            color:#002980;
+            border-right: 0px solid  white;
+            border-radius: 0  15px 15px 0;
 
 
         }
@@ -273,9 +274,7 @@ function BookingBox({ day, month, building, module, hour, id }) {
                         <span> {hour}</span>
                     </TimeField>
                     <ResponsiveCont2>
-                        <EditButton>
-                            <button>Editar</button>
-                        </EditButton>
+                        
                         <DropButton>
                             <button onClick={releaseBooking}>Liberar</button>
                         </DropButton>
@@ -287,10 +286,7 @@ function BookingBox({ day, month, building, module, hour, id }) {
 
 
             <DisplayButtons>
-                <EditButton>
-                    <button>Editar</button>
-                </EditButton>
-
+        
                 <DropButton>
                     <button onClick={releaseBooking}>Liberar</button>
                 </DropButton>

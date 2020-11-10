@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "../css/Register.css"
-import { db, auth } from '../firebase';
+import { db, auth,functions } from '../firebase';
 import { useHistory } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 
@@ -162,6 +162,31 @@ function Register() {
             };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
+                    var addAdminRole = functions.httpsCallable('addAdminRole');
+                    addAdminRole ({email:userData.email}).then(result=>{
+                        console.log(result)
+                    }).catch(function(error) {
+                        // Getting the Error details.
+                        var code = error.code;
+                        var message = error.message;
+                        var details = error.details;
+                        console.error("Error adding ADMIN: ", code,message,details);
+                      });
+
+                      auth.currentUser.getIdTokenResult()
+                      .then((idTokenResult) => {
+                        // Confirm the user is an Admin.
+                        if (idTokenResult.claims.admin) {
+                          // Show admin UI.
+                          console.log("soy admin", idTokenResult.claims);
+                        } else {
+                          // Show regular unser UI.
+                          console.log("no soy admin" ,idTokenResult.claims);
+                        }
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
                     db.collection("usuarios").doc(auth.currentUser.uid).set({
                         name: userData.name,
                         lastname: userData.lastname,
@@ -170,12 +195,6 @@ function Register() {
                         email: userData.email,
                         idEdificio: edificioCode,
                     })
-                        .then(function (docRef) {
-                            dispatch({
-                                type: "USER_REGISTER",
-                                userInfo: userDataF
-                            })
-                        })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
