@@ -11,6 +11,7 @@ import Landing from './components/Landing';
 import Help from './components/Help';
 import {auth} from "./firebase"
 import {useStateValue} from "./components/StateProvider";
+import ResidentList from './components/BuildingAdmin/ResidentList';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
           <Route path="/ayuda">
           <NavBar users active="ayuda" />
             <Help/>
+            <ResidentList/>
           </Route>
           <Route path="/">
             <NavBar />

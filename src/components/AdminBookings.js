@@ -17,7 +17,7 @@ const Admin = styled.div`
             margin-top:40px;
             margin-left:80px;
             color: #002980;
-          
+            font-weight: 700;
         }
         @media (max-width: 860px) {
            h1{

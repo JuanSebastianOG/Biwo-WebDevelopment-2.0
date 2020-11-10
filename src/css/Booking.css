@@ -14,6 +14,7 @@
     margin-top:40px;
     margin-left:80px;
     color: #002980;
+    font-weight: 700;
 }
 .bking__containerFlex{
     display: flex;
@@ -70,19 +71,23 @@
 .bking__modules{
     outline: none;
     border: none;
+    color: #707070;
     border-bottom: solid 3px #002980;
+    padding: 0.5rem;
+
 } 
 .bking__date{
     outline: none;
     border: none;
     border-bottom: solid 3px #002980;
+    color: #707070;
 }
 .bking__Button{
     
     color: white;
     background-color: #002980;
     border:none;
-    padding: 1px 20px;
+    padding: 0.8rem 1.2rem;
     font-family: 'Helvetica Text';
     font-size: small;
 }
@@ -90,27 +95,31 @@
     background: #999;
     color: #555;
     cursor: not-allowed;
+    padding: 0.8rem 1.2rem;
   }
 .bking_containerFlexForm > input{
-    color: #002980;
+    color: #707070;
     outline: none;
     border: none;
-    border-bottom: solid 1px #002980;
+    border-bottom: solid 3px #002980;
+    padding: 0.5rem;
 }
 .bking_containerFlexForm >label {
     color: #002980;
     font-size: large;
+    margin-top: 0.5rem;
 
 }
 .bking__containerButton > label{
     color: #002980;
     font-size: large;
-
+    padding: 1rem;
 }
 .bking__containerTimes > select{
     outline: none;
     border: none;
     border-bottom: solid 3px #002980;
+    color: #707070;
 
 }
 .bking_containerFlexFormHours{
@@ -142,6 +151,10 @@
             margin-left: 0px;
             margin-top: 40px;
             margin-bottom: 40px;
+        }
+        .bking_containerFlexForm >label {
+            
+            margin-top: 2rem;
         }
 }
 

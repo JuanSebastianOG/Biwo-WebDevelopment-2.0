@@ -27,7 +27,6 @@ function Booking() {
     const [bookingCost, setBookingCost] = useState(" - ")
     const [cantHours, setCantHours] = useState("-")
 
-
     var d = new Date();
     var day = d.getDate()
     var month = d.getMonth() + 1
@@ -259,7 +258,7 @@ function Booking() {
                         <label htmlFor="">Módulo</label>
                         <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
                             {
-                                AddModules.map((module, key) => <option value={key}>{module}</option>)
+                                AddModules.map((module, key) => <option value={key} key={module}>{module}</option>)
                             }
                         </select>
                         <div className="bking_containerFlexFormHours">
@@ -270,13 +269,13 @@ function Booking() {
 
                             <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
                                 {
-                                    AddStartHours.map((hourStart, key) => <option value={key}>{hourStart}</option>)
+                                    AddStartHours.map((hourStart, key) => <option value={key} key={hourStart}>{hourStart}</option>)
                                 }
                             </select>
                             <h1> - </h1>
                             <select className="bking__time" id="out_time_hr" name="out_time_hr" onChange={selectEndHourChangeHandler}>
                                 {
-                                    AddFinHours.map((hourFin, key) => <option value={key}>{hourFin}</option>)
+                                    AddFinHours.map((hourFin, key) => <option value={key} key={hourFin}>{hourFin}</option>)
                                 }
                             </select>
 
