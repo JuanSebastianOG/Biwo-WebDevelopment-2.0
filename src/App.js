@@ -36,7 +36,7 @@ function App() {
             <NavBar users active="reservar" />
             <Booking />
           </Route>
-          <Route path="/administar">
+          <Route path="/administrar">
             <NavBar users active="administrar" />
             <AdminBookings />
           </Route>

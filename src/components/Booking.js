@@ -55,20 +55,6 @@ function Booking() {
     useEffect(() => {
         if (usersi) {
 
-            auth.currentUser.getIdTokenResult()
-            .then((idTokenResult) => {
-              // Confirm the user is an Admin.
-              if (idTokenResult.claims.admin) {
-                // Show admin UI.
-                console.log("soy admin", idTokenResult.claims);
-              } else {
-                // Show regular user UI.
-                console.log("no soy admin" ,idTokenResult.claims);
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
             
             // User is signed in.
             setUserID(usersi.uid)
