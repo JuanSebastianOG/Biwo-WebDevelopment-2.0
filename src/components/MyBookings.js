@@ -16,20 +16,7 @@ function MyBookings() {
             // User is signed in.
             console.log("Soooy", usersi.uid)
 
-            auth.currentUser.getIdTokenResult()
-            .then((idTokenResult) => {
-              // Confirm the user is an Admin.
-              if (idTokenResult.claims.admin) {
-                // Show admin UI.
-                console.log("soy admin", idTokenResult.claims);
-              } else {
-                // Show regular user UI.
-                console.log("no soy admin" ,idTokenResult.claims);
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+            
 
             db.collection('reservas').where("idUsuario", "==", usersi.uid)
                 .onSnapshot(function (querySnapshot) {

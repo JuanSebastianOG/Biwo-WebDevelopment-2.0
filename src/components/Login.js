@@ -15,7 +15,21 @@ function Login() {
         console.log( username, password)
         auth.signInWithEmailAndPassword(username, password)
         .then(()=>{
-            history.push("/misreservas");
+
+            auth.currentUser.getIdTokenResult()
+            .then((idTokenResult) => {
+              // Confirm the user is an Admin.
+              if (idTokenResult.claims.admin) {
+                history.push("/adminReservas");
+              } else {
+                history.push("/misreservas");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+            
         })
         .catch((e)=> alert(e.message));
 

@@ -8,7 +8,7 @@ import Burger from './Burger';
 import {useStateValue} from "./StateProvider";
 import {  auth } from '../firebase';
 
-function NavBar({ color, users, active }) {
+function NavBar({ color, users, active, admin }) {
 
     const signOutUser = () =>{
         auth.signOut().then(function() {
@@ -80,17 +80,17 @@ function NavBar({ color, users, active }) {
                 </Link>
 
                 <div className="navbar-login__links">
-                    <Link to="/reservar" className={linkClassReservar}  >
-                        <h1>Reservar</h1>
+                    <Link to={admin ?  '/adminPagos' : '/reservar'} className={linkClassReservar}  >
+                        <h1>{admin ? 'Pagos' : 'Reservas'}</h1>
                     </Link>
-                    <Link to="/misreservas" className={linkClassMisReservas} >
-                        <h1>Mis reservas</h1>
+                    <Link to={admin ?  '/adminReservas' : '/misreservas'} className={linkClassMisReservas} >
+                        <h1>{admin ? 'Reservas' : 'Mis Reservas'}</h1>
                     </Link>
-                    <Link to="/administar" className={linkClassAdministrar}   >
-                        <h1>Administrar</h1>
+                    <Link to={admin ?  '/adminResidentes' : '/administrar'} className={linkClassAdministrar}   >
+                        <h1>{admin ? 'Residentes' : 'Administrar'}</h1>
                     </Link>
-                    <Link to="/ayuda" className={linkClassAyuda} >
-                        <h1>Ayuda</h1>
+                    <Link to={admin ?  '/adminEdificios' : '/ayuda'} className={linkClassAyuda} >
+                        <h1>{admin ? 'Edificios' : 'Ayuda'}</h1>
                     </Link>
                     <Link className="navbar-login__linksIcon" to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
 

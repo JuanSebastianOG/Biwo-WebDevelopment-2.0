@@ -55,6 +55,7 @@ function Booking() {
             .catch((error) => {
               console.log(error);
             });
+            
             // User is signed in.
             setUserID(usersi.uid)
             var docRef = db.collection("usuarios").doc(usersi.uid);

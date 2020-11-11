@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,35 +9,9 @@ import AdminBookings from './components/AdminBookings';
 import MyBookings from './components/MyBookings';
 import Landing from './components/Landing';
 import Help from './components/Help';
-import { auth } from "./firebase"
-import { useStateValue } from "./components/StateProvider";
 
 function App() {
 
-  const [user, dispatch] = useStateValue();
-  console.log(user)
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        dispatch({
-          type: "USER_SIGN_IN/OUT",
-          user: authUser
-        })
-      }
-      else {
-        dispatch({
-          type: "USER_SIGN_IN/OUT",
-          user: null
-        })
-      }
-    })
-
-  
-    return () => {
-      unsubscribe();
-    }
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Router>
@@ -63,15 +37,31 @@ function App() {
             <NavBar users active="administrar" />
             <AdminBookings />
           </Route>
-          <Route path="/editarreserva">
-            <h1>Editar reserva</h1>
-          </Route>
           <Route path="/ayuda">
             <NavBar users active="ayuda" />
             <Help />
           </Route>
+
+          <Route path="/adminPagos">
+            <NavBar users admin />
+            <h1>Reporte de Pagos</h1>
+          </Route>
+
+          <Route path="/adminReservas">
+            <NavBar users admin />
+            <h1>Reporte de Reservas</h1>
+          </Route>
+
+          <Route path="/adminResidentes">
+            <NavBar users admin />
+            <h1>Reporte de Residentes</h1>
+          </Route>
+          <Route users path="/adminEdificios">
+            <NavBar users admin />
+            <h1>Reporte de Edificios</h1>
+          </Route>
           <Route path="/">
-            <NavBar />
+            <NavBar admin={false} />
             <Landing />
           </Route>
         </Switch>

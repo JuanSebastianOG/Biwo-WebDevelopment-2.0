@@ -173,20 +173,7 @@ function Register() {
                         console.error("Error adding ADMIN: ", code,message,details);
                       });
 
-                      auth.currentUser.getIdTokenResult()
-                      .then((idTokenResult) => {
-                        // Confirm the user is an Admin.
-                        if (idTokenResult.claims.admin) {
-                          // Show admin UI.
-                          console.log("soy admin", idTokenResult.claims);
-                        } else {
-                          // Show regular unser UI.
-                          console.log("no soy admin" ,idTokenResult.claims);
-                        }
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
+                      
                     db.collection("usuarios").doc(auth.currentUser.uid).set({
                         name: userData.name,
                         lastname: userData.lastname,
