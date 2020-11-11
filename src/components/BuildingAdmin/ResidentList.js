@@ -31,6 +31,7 @@ function ResidentList() {
             {
                 Header: "Celular",
                 accessor: "phonenumber",
+                disableSortBy: true
             },
             {
                 Header: 'Block',
@@ -54,7 +55,7 @@ function ResidentList() {
             })
     }, [])
     return (
-        <Container style={{ marginTop: 100 }}>
+        <Container style={{ marginTop: 100}}>
             <TableContainer id='tables' columns={columns} data={residents}/>
         </Container>
     )

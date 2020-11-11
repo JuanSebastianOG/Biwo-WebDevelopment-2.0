@@ -1,8 +1,9 @@
 import React from "react"
-import { useTable } from "react-table"
+import { useTable, useSortBy, useFilters } from "react-table"
 import { Table } from 'reactstrap';
+import { Filter, DefaultColumnFilter } from './Filters';
 
-const TableContainer = ({ columns, data}) => {
+const TableContainer = ({ columns, data }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -12,18 +13,30 @@ const TableContainer = ({ columns, data}) => {
   } = useTable({
     columns,
     data,
-  })
-  
-  
+    defaultColumn: { Filter: DefaultColumnFilter }
+  },
+  useFilters,
+    useSortBy
+  )
+  const generateSortingIndicator = column => {
+    return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
+  }
+
   return (
     // If you're curious what props we get as a result of calling our getter functions (getTableProps(), getRowProps())
     // Feel free to use console.log()  This will help you better understand how react table works underhood.
-    <Table bordered hover {...getTableProps()}>
-      <thead>
+    <Table bordered hover striped responsive {...getTableProps()}>
+      <thead style={{ color: "#002980", textAlign: 'center' }}>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps()}>
+              <div {...column.getSortByToggleProps()}>
+                {column.render("Header")}
+                {generateSortingIndicator(column)}
+              </div>
+              <Filter column={column} />
+            </th>
             ))}
           </tr>
         ))}
@@ -41,7 +54,7 @@ const TableContainer = ({ columns, data}) => {
           )
         })}
       </tbody>
-      </Table>
+    </Table>
   )
 }
 
