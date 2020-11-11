@@ -17,7 +17,7 @@ const Admin = styled.div`
             margin-top:40px;
             margin-left:80px;
             color: #002980;
-          
+            font-weight: 700;
         }
         @media (max-width: 860px) {
            h1{
@@ -35,27 +35,22 @@ function AdminBookings() {
     const [bookingId, setBookingId] = useState([]);
     const history = useHistory();
 
-    var tempBookings = [];
-    var idBookings = [];
+    
 
     useEffect(() => {
         if (currentUser) {
-            db.collection('reservas').where("idUsuario", "==", currentUser.uid).get()
-                .then(function (snap) {
 
-                    snap.forEach(function (doc) {
-                        console.log("Booking Details:", doc.data());
-
+            db.collection('reservas').where("idUsuario", "==", currentUser.uid)
+                .onSnapshot(function (querySnapshot) {
+                    var tempBookings = [];
+                     var idBookings = [];
+                    querySnapshot.forEach(function (doc) {
                         tempBookings.push(doc.data());
                         idBookings.push(doc.id);
-
                     });
                     setUserBookings(tempBookings);
                     setBookingId(idBookings);
                 })
-                .catch(function (error) {
-                    console.log("Error getting documents: ", error);
-                });
 
             console.log("All Bookings Details:", userBookings);
 

@@ -14,9 +14,6 @@ function MyBookings() {
     useEffect(() => {
         if (usersi) {
             // User is signed in.
-            console.log("Soooy", usersi.uid)
-
-            
 
             db.collection('reservas').where("idUsuario", "==", usersi.uid)
                 .onSnapshot(function (querySnapshot) {
@@ -25,6 +22,7 @@ function MyBookings() {
                     var totalCost=0;
                     querySnapshot.forEach(function (doc) {
                         myBookings.push(doc.data());
+
                         totalTime=totalTime+doc.data().tiempoTotal;
                         totalCost=totalCost+doc.data().costoReserva;
                     });
@@ -48,7 +46,7 @@ function MyBookings() {
                         {
                             mybookings.map(booking =>
                                 (<LastBookings
-                                    key={booking.horaInicioFin+booking.dia+booking.mes}
+                                    key={booking.horaInicioFin+booking.dia+booking.mes+booking.idModulo}
                                     active={booking.estado}
                                     day={booking.dia}
                                     month={booking.mes}

@@ -245,14 +245,12 @@ function BookingBox({ day, month, building, module, hour, id }) {
     function releaseBooking (){
 
         db.collection("reservas").doc(id).delete().then(function() {
-            window.location.reload();
+            //window.location.reload();
             console.log("Document successfully deleted!");
             
         }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
-
-
 
     }
     return (
