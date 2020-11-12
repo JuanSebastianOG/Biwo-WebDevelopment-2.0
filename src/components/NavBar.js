@@ -8,7 +8,7 @@ import Burger from './Burger';
 import {useStateValue} from "./StateProvider";
 import {  auth } from '../firebase';
 
-function NavBar({ color, users, active, admin }) {
+function NavBar({ color, users, active, usertype }) {
 
     const signOutUser = () =>{
         auth.signOut().then(function() {
@@ -49,14 +49,14 @@ function NavBar({ color, users, active, admin }) {
     else {
         let linkClassReservar = "navbar-login__link";
         let linkClassMisReservas = "navbar-login__link";
-        let linkClassAdministrar = "navbar-login__link";
+        let linkClassusertypeistrar = "navbar-login__link";
         let linkClassAyuda = "navbar-login__link";
         switch (active) {
             case "reservar":
                 linkClassReservar = "navbar-login__linkActive"
                 break;
-            case "administrar":
-                linkClassAdministrar = "navbar-login__linkActive"
+            case "usertypeistrar":
+                linkClassusertypeistrar = "navbar-login__linkActive"
                 break;
             case "misreservas":
                 linkClassMisReservas = "navbar-login__linkActive"
@@ -80,17 +80,17 @@ function NavBar({ color, users, active, admin }) {
                 </Link>
 
                 <div className="navbar-login__links">
-                    <Link to={admin ?  '/adminPagos' : '/reservar'} className={linkClassReservar}  >
-                        <h1>{admin ? 'Pagos' : 'Reservas'}</h1>
+                    <Link to={usertype ?  '/adminPagos' : '/reservar'} className={linkClassReservar}  >
+                        <h1>{usertype ? 'Pagos' : 'Reservas'}</h1>
                     </Link>
-                    <Link to={admin ?  '/adminReservas' : '/misreservas'} className={linkClassMisReservas} >
-                        <h1>{admin ? 'Reservas' : 'Mis Reservas'}</h1>
+                    <Link to={usertype ?  '/adminReservas' : '/misreservas'} className={linkClassMisReservas} >
+                        <h1>{usertype ? 'Reservas' : 'Mis Reservas'}</h1>
                     </Link>
-                    <Link to={admin ?  '/adminResidentes' : '/administrar'} className={linkClassAdministrar}   >
-                        <h1>{admin ? 'Residentes' : 'Administrar'}</h1>
+                    <Link to={usertype ?  '/adminResidentes' : '/administrar'} className={linkClassusertypeistrar}   >
+                        <h1>{usertype ? 'Residentes' : 'Administrar'}</h1>
                     </Link>
-                    <Link to={admin ?  '/adminEdificios' : '/ayuda'} className={linkClassAyuda} >
-                        <h1>{admin ? 'Edificios' : 'Ayuda'}</h1>
+                    <Link to={usertype ?  '/adminEdificios' : '/ayuda'} className={linkClassAyuda} >
+                        <h1>{usertype ? 'Edificios' : 'Ayuda'}</h1>
                     </Link>
                     <Link className="navbar-login__linksIcon" to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
 

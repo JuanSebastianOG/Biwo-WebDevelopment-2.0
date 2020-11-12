@@ -162,8 +162,8 @@ function Register() {
             };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
-                    var addAdminRole = functions.httpsCallable('addAdminRole');
-                    addAdminRole ({email:userData.email}).then(result=>{
+                    var addSuperAdminRole = functions.httpsCallable('addSuperAdminRole');
+                    addSuperAdminRole ({email:userData.email}).then(result=>{
                         console.log(result)
                     }).catch(function(error) {
                         // Getting the Error details.

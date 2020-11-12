@@ -19,7 +19,7 @@ function Login() {
             auth.currentUser.getIdTokenResult()
             .then((idTokenResult) => {
               // Confirm the user is an Admin.
-              if (idTokenResult.claims.admin) {
+              if (idTokenResult.claims.superadmin) {
                 history.push("/adminReservas");
               } else {
                 history.push("/misreservas");

@@ -24,50 +24,54 @@ function App() {
             <NavBar color />
             <Login />
           </Route>
+
           <Route path="/registrarse">
             <NavBar color />
             <Register />
           </Route>
+
           <Route path="/misreservas">
             <NavBar users active="misreservas" />
             <MyBookings />
           </Route>
+
           <Route path="/reservar">
             <NavBar users active="reservar" />
             <Booking />
           </Route>
+
           <Route path="/administrar">
             <NavBar users active="administrar" />
             <AdminBookings />
           </Route>
+
           <Route path="/ayuda">
             <NavBar users active="ayuda" />
             <Help />
-          <NavBar users active="ayuda" />
-            <Help/>
-            <ResidentList/>
           </Route>
 
           <Route path="/adminPagos">
-            <NavBar users admin />
+            <NavBar users usertype />
             <h1>Reporte de Pagos</h1>
           </Route>
 
           <Route path="/adminReservas">
-            <NavBar users admin />
+            <NavBar users usertype />
             <h1>Reporte de Reservas</h1>
           </Route>
 
           <Route path="/adminResidentes">
-            <NavBar users admin />
+            <NavBar users usertype />
             <h1>Reporte de Residentes</h1>
+            <ResidentList/>
           </Route>
           <Route users path="/adminEdificios">
-            <NavBar users admin />
+            <NavBar users usertype />
             <h1>Reporte de Edificios</h1>
           </Route>
+
           <Route path="/">
-            <NavBar admin={false} />
+            <NavBar usertype={false} />
             <Landing />
           </Route>
         </Switch>
