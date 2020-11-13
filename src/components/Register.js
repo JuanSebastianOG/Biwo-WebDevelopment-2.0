@@ -162,17 +162,6 @@ function Register() {
             };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
-                    var addSuperAdminRole = functions.httpsCallable('addSuperAdminRole');
-                    addSuperAdminRole ({email:userData.email}).then(result=>{
-                        console.log(result)
-                    }).catch(function(error) {
-                        // Getting the Error details.
-                        var code = error.code;
-                        var message = error.message;
-                        var details = error.details;
-                        console.error("Error adding ADMIN: ", code,message,details);
-                      });
-
                       
                     db.collection("usuarios").doc(auth.currentUser.uid).set({
                         name: userData.name,

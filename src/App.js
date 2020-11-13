@@ -12,6 +12,7 @@ import Help from './components/Help';
 import {auth} from "./firebase"
 import {useStateValue} from "./components/StateProvider";
 import ResidentList from './components/BuildingAdmin/ResidentList';
+import AddAdmin from './components/AddAdmin';
 
 function App() {
 
@@ -31,43 +32,47 @@ function App() {
           </Route>
 
           <Route path="/misreservas">
-            <NavBar users active="misreservas" />
+            <NavBar users active="misreservas" usertype={"residente"} />
             <MyBookings />
           </Route>
 
           <Route path="/reservar">
-            <NavBar users active="reservar" />
+            <NavBar users active="reservar" usertype={"residente"}/>
             <Booking />
           </Route>
 
           <Route path="/administrar">
-            <NavBar users active="administrar" />
+            <NavBar users active="administrar" usertype={"residente"}/>
             <AdminBookings />
           </Route>
 
           <Route path="/ayuda">
-            <NavBar users active="ayuda" />
+            <NavBar users active="ayuda" usertype={"residente"} />
             <Help />
           </Route>
 
           <Route path="/adminPagos">
-            <NavBar users usertype />
+            <NavBar users active="adminPagos" usertype={"superadmin"} />
             <h1>Reporte de Pagos</h1>
           </Route>
 
           <Route path="/adminReservas">
-            <NavBar users usertype />
+            <NavBar users active="adminReservas" usertype={"superadmin"} />
             <h1>Reporte de Reservas</h1>
           </Route>
 
           <Route path="/adminResidentes">
-            <NavBar users usertype />
+            <NavBar users active="adminResidentes" usertype={"superadmin"} />
             <h1>Reporte de Residentes</h1>
             <ResidentList/>
           </Route>
           <Route users path="/adminEdificios">
-            <NavBar users usertype />
+            <NavBar users  active="adminEdificios" usertype={"superadmin"} />
             <h1>Reporte de Edificios</h1>
+          </Route>
+          <Route users path="/adminUsuarios">
+            <NavBar users  active="adminUsuarios" usertype={"superadmin"} />
+            <AddAdmin></AddAdmin>
           </Route>
 
           <Route path="/">

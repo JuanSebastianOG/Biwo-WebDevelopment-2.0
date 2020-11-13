@@ -2,22 +2,14 @@ import React from 'react'
 import "../css/NavBar.css"
 //import "../img/biwo-logo.png"
 import { Link } from 'react-router-dom';
-import { Avatar } from "@material-ui/core"
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Burger from './Burger';
 import {useStateValue} from "./StateProvider";
-import {  auth } from '../firebase';
-
+import Burger from './Burger';
+import { Avatar } from "@material-ui/core"
+import UserNavLinks from './NavLinks/UserNavLinks';
+import SuperAdminNavLinks from './NavLinks/SuperAdminNavLinks'
 function NavBar({ color, users, active, usertype }) {
 
-    const signOutUser = () =>{
-        auth.signOut().then(function() {
-            // Sign-out successful.
-          }).catch(function(error) {
-            alert(error.message)
-          });
-        
-    }
+    
     const [{user}] = useStateValue();
     if (!users) {
         let className = 'navbar-landing'
@@ -46,28 +38,8 @@ function NavBar({ color, users, active, usertype }) {
             </nav>
         )
     }
-    else {
-        let linkClassReservar = "navbar-login__link";
-        let linkClassMisReservas = "navbar-login__link";
-        let linkClassusertypeistrar = "navbar-login__link";
-        let linkClassAyuda = "navbar-login__link";
-        switch (active) {
-            case "reservar":
-                linkClassReservar = "navbar-login__linkActive"
-                break;
-            case "usertypeistrar":
-                linkClassusertypeistrar = "navbar-login__linkActive"
-                break;
-            case "misreservas":
-                linkClassMisReservas = "navbar-login__linkActive"
-                break;
-            case "ayuda":
-                linkClassAyuda = "navbar-login__linkActive"
-                break;
-            default:
-                break;
-        }
-
+    else
+    {
         return (
 
             <nav className='navbar-login'>
@@ -79,23 +51,11 @@ function NavBar({ color, users, active, usertype }) {
                     </img>
                 </Link>
 
-                <div className="navbar-login__links">
-                    <Link to={usertype ?  '/adminPagos' : '/reservar'} className={linkClassReservar}  >
-                        <h1>{usertype ? 'Pagos' : 'Reservas'}</h1>
-                    </Link>
-                    <Link to={usertype ?  '/adminReservas' : '/misreservas'} className={linkClassMisReservas} >
-                        <h1>{usertype ? 'Reservas' : 'Mis Reservas'}</h1>
-                    </Link>
-                    <Link to={usertype ?  '/adminResidentes' : '/administrar'} className={linkClassusertypeistrar}   >
-                        <h1>{usertype ? 'Residentes' : 'Administrar'}</h1>
-                    </Link>
-                    <Link to={usertype ?  '/adminEdificios' : '/ayuda'} className={linkClassAyuda} >
-                        <h1>{usertype ? 'Edificios' : 'Ayuda'}</h1>
-                    </Link>
-                    <Link className="navbar-login__linksIcon" to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
-
-
+                <div>
+                {(usertype == 'residente') ? <UserNavLinks active={active}/>:(usertype == 'superadmin') ?<SuperAdminNavLinks  active={active}/>:''}
                 </div>
+               
+                
                 <Burger />
 
 
@@ -105,8 +65,11 @@ function NavBar({ color, users, active, usertype }) {
 
         )
     }
-
-
+        
 }
+
+
+
+
 
 export default NavBar
