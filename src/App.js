@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,14 +9,14 @@ import AdminBookings from './components/AdminBookings';
 import MyBookings from './components/MyBookings';
 import Landing from './components/Landing';
 import Help from './components/Help';
-import {auth} from "./firebase"
-import {useStateValue} from "./components/StateProvider";
 import ResidentList from './components/BuildingAdmin/ResidentList';
+import BuildingsList from './components/BiwoAdmin/BuildingsList';
+
 import AddAdmin from './components/AddAdmin';
 
 function App() {
 
-
+ 
   return (
     <Router>
       <div className="app">
@@ -37,12 +37,12 @@ function App() {
           </Route>
 
           <Route path="/reservar">
-            <NavBar users active="reservar" usertype={"residente"}/>
+            <NavBar users active="reservar" usertype={"residente"} />
             <Booking />
           </Route>
 
           <Route path="/administrar">
-            <NavBar users active="administrar" usertype={"residente"}/>
+            <NavBar users active="administrar" usertype={"residente"} />
             <AdminBookings />
           </Route>
 
@@ -64,14 +64,15 @@ function App() {
           <Route path="/adminResidentes">
             <NavBar users active="adminResidentes" usertype={"superadmin"} />
             <h1>Reporte de Residentes</h1>
-            <ResidentList/>
+            <ResidentList />
           </Route>
           <Route users path="/adminEdificios">
-            <NavBar users  active="adminEdificios" usertype={"superadmin"} />
+            <NavBar users active="adminEdificios" usertype={"superadmin"} />
             <h1>Reporte de Edificios</h1>
+            <BuildingsList/>
           </Route>
           <Route users path="/adminUsuarios">
-            <NavBar users  active="adminUsuarios" usertype={"superadmin"} />
+            <NavBar users active="adminUsuarios" usertype={"superadmin"} />
             <AddAdmin></AddAdmin>
           </Route>
 
