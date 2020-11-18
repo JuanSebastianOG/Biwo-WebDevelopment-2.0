@@ -54,7 +54,6 @@ function Booking() {
 
     useEffect(() => {
         if (usersi) {
-
             
             // User is signed in.
             setUserID(usersi.uid)
@@ -135,7 +134,6 @@ function Booking() {
             costoReserva: bookingCost,
             dia: day,
             mes: monthNames[month - 1],
-
             nombreEdificio: buildingName,
             nombreModulo: strselectedModule,
             horaInicioFin: hourStartEnd,
@@ -200,6 +198,7 @@ function Booking() {
                 setDate(selectedDate)
             }
         });
+        //if there aren't bookings on the day (all hours are valid)
         if (!bookingsOnDay) {
             let validHours = []
             validHours.push("-")
@@ -208,9 +207,8 @@ function Booking() {
                 validHours.push(i)
             }
             setDate(selectedDate)
-
             setStartHours(validHours)
-        }   // The function returns the product of p1 and p2
+        }  
     }
     const dateChangeHandler = e => {
         calculateStartHours()
