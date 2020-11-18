@@ -1,10 +1,7 @@
-
-
 import React, {useState} from 'react'
 import "../css/Register.css"
 import "../css/Login.css"
 import {functions } from '../firebase';
-import {useStateValue} from "./StateProvider";
 import styled from 'styled-components';
 
 const StyledForm = styled.div`

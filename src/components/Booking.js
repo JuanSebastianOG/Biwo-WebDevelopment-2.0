@@ -8,7 +8,7 @@ function Booking() {
 
     const [date, setDate] = useState('');
     var nonvalidHours = [];
-    const [modules, setModules] = useState([])
+    const [modules, setModules] = useState(['Cargando... (Ingrese Fecha)'])
     const AddModules = modules.map(Add => Add)
     const [buildingModules, setBuildingModules] = useState([])
     const [allowSubmit, setAllowSubmit] = useState(false);
@@ -50,8 +50,7 @@ function Booking() {
         monthend='0'+monthend
     } 
     const datiend = yearend + "-" + monthend + "-" + dayend
-
-
+  
     useEffect(() => {
         if (usersi) {
             
@@ -65,10 +64,8 @@ function Booking() {
                     db.collection('edificios').doc(doc.data().idEdificio).get()
                         .then(function (doc) {
                             if (doc.exists) {
-                                console.log("Document Building data:", doc.data());
                                 setBuildingModules(doc.data().idModulos)
                                 var mod = []
-
                                 for (let i = 0; i < doc.data().idModulos.length; i++) {
                                     mod.push("Módulo " + (1 + i))
                                 }
@@ -103,6 +100,7 @@ function Booking() {
         } else {
             // No user is signed in.
         }
+        
     }, [usersi]);
 
     const submitBooking = e => {
@@ -244,7 +242,6 @@ function Booking() {
         setCantHours(cantHours)
     }
     return (
-
         <div className="bking">
             <div className="bking__container">
                 <h1>Nueva Reserva</h1>
@@ -294,6 +291,7 @@ function Booking() {
             </div>
 
         </div>
+    
     )
 }
 

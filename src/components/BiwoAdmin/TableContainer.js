@@ -27,7 +27,7 @@ const TableContainer = ({ columns, data,renderRowSubComponent }) => {
   return (
     // If you're curious what props we get as a result of calling our getter functions (getTableProps(), getRowProps())
     // Feel free to use console.log()  This will help you better understand how react table works underhood.
-    <Table bordered hover striped responsive {...getTableProps()}>
+    <Table bordered striped responsive {...getTableProps()}>
       <thead style={{ color: "#002980", textAlign: 'center' }}>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>

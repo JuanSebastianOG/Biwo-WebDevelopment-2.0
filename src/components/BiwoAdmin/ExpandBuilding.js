@@ -3,7 +3,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Container } from "reactstrap"
 import { db } from '../../firebase.js'
+import styled from 'styled-components';
+const SelectH2 = styled.h4`
+    {
+        color: #002980;
+        margin: 2rem;        
+    }`
+    const newbtn = styled.button`
+    {
+        margin: 2rem !important;        
+    }`
 
+    
 function ExpandBuilding({ row }) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
@@ -19,21 +30,15 @@ function ExpandBuilding({ row }) {
         for (let i = 0; i < row.original.numModulos; i++) {
             mod.push("Módulo " + (1 + i))
         }
-        console.log(row.original.idModulos[0])
         setModules(mod)
-
-    }, [])
+    }, [row.original.numModulos])
 
 
     const submitBlockDays = (row) => {
         //Code for block days
-
         const {
-            numModulos,
-            nombre,
             direccion
         } = row.original
-
 
         // To calculate the time difference of two dates 
         var Difference_In_Time = endDate.getTime() - startDate.getTime();
@@ -45,14 +50,13 @@ function ExpandBuilding({ row }) {
         db.collection('edificios').where("direccion", "==", direccion)
             .onSnapshot(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
-                    console.log('estoy en el firebase', doc.id)
                     const startBuildHour = doc.data().horaInicio
                     const endBuildHour = doc.data().horaFin
                     const idBuilding = doc.id
 
                     for (let i = 0; i < Difference_In_Days; i++) {
                         var date = startDate;
-                        if (i != 0)
+                        if (i !== 0)
                             date.setDate(date.getDate() + 1)
                         var day = date.getDate()
                         var month = date.getMonth() + 1
@@ -64,9 +68,8 @@ function ExpandBuilding({ row }) {
                             month = '0' + month
                         }
                         const dateInFormat = year + "-" + month + "-" + day
-                        console.log('para bloquear', doc.id, dateInFormat, row.original.idModulos[selectedModule], startBuildHour, endBuildHour)
                         db.collection("reservas").add({
-                            estado: 'Bloqueo Adinistrador Biwo',
+                            estado: 'Bloqueo Administrador Biwo',
                             fecha: dateInFormat,
                             horaFin: endBuildHour,
                             horaInicio: startBuildHour,
@@ -78,20 +81,21 @@ function ExpandBuilding({ row }) {
                             console.error("Error adding document: ", error);
                         });
                     }
+                    window.location.reload();
+
                 });
             })
     }
 
     const selectModuleChange = e => {
         setSelectedModule(e.target.value)
-        console.log('aver', e.target.value)
     }
     const onChange = dates => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
-        if (start !== null)
-            if (end !== null) {
+        if (start != null)
+            if (end != null) {
                 console.log(start.getDate(), end.getDate())
                 setShowBlock(true)
             }
@@ -99,17 +103,21 @@ function ExpandBuilding({ row }) {
                 setShowBlock(false)
 
     };
+    
     return (
+        
+        
         <Container style={{ alignItems: 'center', display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
 
-            <label htmlFor="">Módulo</label>
-            <select className="block" onChange={selectModuleChange} id="bking__selectedModule">
+            <SelectH2>1. Seleccione módulo a bloquear</SelectH2>
+            <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
                 {
                     AddModules.map((modules, key) => <option value={key} key={modules}>{modules}</option>)
                 }
             </select>
+            
             <Container style={{ alignItems: 'center', display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
-                <h2>Seleccione días a bloquear</h2>
+                <SelectH2 >2. Seleccione días a bloquear</SelectH2>
                 <DatePicker
                     selected={startDate}
                     onChange={onChange}
@@ -119,8 +127,9 @@ function ExpandBuilding({ row }) {
                     selectsRange
                     inline
                 />
+                 <Container style={{ height:'2rem'}}></Container>
                 {showBlock &&
-                    <button onClick={() => submitBlockDays(row, document.getElementById("bking__selectedModule").value)} type="button" className="btn btn-danger btn-sm btn-block" >Bloquear</button>
+                    <newbtn onClick={() => submitBlockDays(row, document.getElementById("bking__selectedModule").value)} type="button" className="btn btn-danger btn-sm" >Bloquear</newbtn>
                 }
             </Container>
 

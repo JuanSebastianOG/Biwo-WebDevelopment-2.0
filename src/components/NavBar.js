@@ -52,7 +52,7 @@ function NavBar({ color, users, active, usertype }) {
                 </Link>
 
                 <div>
-                {(usertype == 'residente') ? <UserNavLinks active={active}/>:(usertype == 'superadmin') ?<SuperAdminNavLinks  active={active}/>:''}
+                {(usertype === 'residente') ? <UserNavLinks active={active}/>:(usertype === 'superadmin') ?<SuperAdminNavLinks  active={active}/>:''}
                 </div>
                
                 
