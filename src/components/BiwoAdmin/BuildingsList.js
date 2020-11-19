@@ -14,7 +14,7 @@ function BuildingsList() {
         } = cellProps.row.original
 
         console.log(numModulos)
-        //Cote for block user
+        //Cote for block building
     }
     
 
@@ -50,7 +50,6 @@ function BuildingsList() {
             {
                 Header: "Tarifa",
                 accessor: "tarifa",
-                disableSortBy: true
             },
             {
                 Header: 'Block',

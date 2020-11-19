@@ -9,20 +9,26 @@ const SelectH2 = styled.h4`
         color: #002980;
         margin: 2rem;        
     }`
-    const newbtn = styled.button`
+
+    const ErrorH6 = styled.h4`
     {
-        margin: 2rem !important;        
+        text-align: center;
+        color: #d9534f;     
     }`
 
-    
+
 function ExpandBuilding({ row }) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
     const [showBlock, setShowBlock] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+
     const [modules, setModules] = useState([])
     const [selectedModule, setSelectedModule] = useState(0)
-
+    const [bookingsOnBlockday, setBookingsOnBlockday] = useState(false)
     const AddModules = modules.map(Add => Add)
+    const [bookingsModuleBuilding, setBookingsModuleBuilding] = useState([])
+
 
     useEffect(() => {
         var mod = []
@@ -31,6 +37,24 @@ function ExpandBuilding({ row }) {
             mod.push("Módulo " + (1 + i))
         }
         setModules(mod)
+
+
+        db.collection('edificios').where("direccion", "==", row.original.direccion)
+            .onSnapshot(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    db.collection('reservas').where("idEdificio", "==", doc.id)
+                        .onSnapshot(function (querySnapshot) {
+                            var bookings = []
+                            querySnapshot.forEach(function (doc) {
+                                bookings.push(doc.data())
+                            });
+                            setBookingsModuleBuilding(bookings)
+                        })
+                });
+            })
+
+
+
     }, [row.original.numModulos])
 
 
@@ -45,7 +69,6 @@ function ExpandBuilding({ row }) {
 
         // To calculate the no. of days between two dates 
         var Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24)) + 1;
-        console.log('Son esta canitadad', Difference_In_Days, 'tengo de start', startDate.getDate())
 
         db.collection('edificios').where("direccion", "==", direccion)
             .onSnapshot(function (querySnapshot) {
@@ -53,7 +76,7 @@ function ExpandBuilding({ row }) {
                     const startBuildHour = doc.data().horaInicio
                     const endBuildHour = doc.data().horaFin
                     const idBuilding = doc.id
-
+                    //Make block on bookings day by day
                     for (let i = 0; i < Difference_In_Days; i++) {
                         var date = startDate;
                         if (i !== 0)
@@ -68,20 +91,25 @@ function ExpandBuilding({ row }) {
                             month = '0' + month
                         }
                         const dateInFormat = year + "-" + month + "-" + day
-                        db.collection("reservas").add({
-                            estado: 'Bloqueo Administrador Biwo',
-                            fecha: dateInFormat,
-                            horaFin: endBuildHour,
-                            horaInicio: startBuildHour,
-                            idEdificio: idBuilding,
-                            idModulo: row.original.idModulos[selectedModule]
-                        }).then(function (docRef) {
-                            console.log("Su bloqueo ha sido existoso")
-                        }).catch(function (error) {
-                            console.error("Error adding document: ", error);
-                        });
+
+                        if (!bookingsOnBlockday) {
+                            db.collection("reservas").add({
+                                estado: 'Bloqueo Administrador Biwo',
+                                fecha: dateInFormat,
+                                horaFin: endBuildHour,
+                                horaInicio: startBuildHour,
+                                idEdificio: idBuilding,
+                                idModulo: row.original.idModulos[selectedModule]
+                            }).then(function (docRef) {
+                                console.log("Su bloqueo ha sido existoso")
+                            }).catch(function (error) {
+                                console.error("Error adding document: ", error);
+                            });
+                        }
+
                     }
-                    window.location.reload();
+                    if (!bookingsOnBlockday)
+                        window.location.reload();
 
                 });
             })
@@ -89,24 +117,68 @@ function ExpandBuilding({ row }) {
 
     const selectModuleChange = e => {
         setSelectedModule(e.target.value)
+        setStartDate(new Date());
+        setEndDate(null);
+        setShowBlock(false)
+        setShowMessage(false);
+
+
     }
     const onChange = dates => {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
-        if (start != null)
-            if (end != null) {
-                console.log(start.getDate(), end.getDate())
-                setShowBlock(true)
+        if (start != null && end != null) {
+            setShowBlock(true)
+            setShowMessage(false)
+            // To calculate the time difference of two dates 
+            var Difference_In_Time = end.getTime() - start.getTime();
+
+            // To calculate the no. of days between two dates 
+            var Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24)) + 1;
+            var date = new Date(start.getTime());
+
+            for (let i = 0; i < Difference_In_Days; i++) {
+
+                if (i !== 0)
+                    date.setDate(date.getDate() + 1)
+               
+                var day = date.getDate()
+                var month = date.getMonth() + 1
+                var year = date.getFullYear()
+                if (day < 10) {
+                    day = '0' + day
+                }
+                if (month < 10) {
+                    month = '0' + month
+                }
+                const dateInFormat = year + "-" + month + "-" + day
+                console.log("aver qeu hay",bookingsModuleBuilding)
+                console.log("date in format",dateInFormat)
+
+                bookingsModuleBuilding.forEach(function (doc) {
+                    // if there is at least one booking on the specific module on the day it doesnt allow block button
+                    //and show Error message
+                    console.log(doc.fecha , dateInFormat, doc.idModulo , row.original.idModulos[selectedModule])
+
+                    if (doc.fecha === dateInFormat && doc.idModulo === row.original.idModulos[selectedModule]) {
+                        console.log("tengo  este día paila")
+                        setShowBlock(false)
+                        setShowMessage(true)
+                    }
+                });
+
             }
-            else
-                setShowBlock(false)
+
+        }
+        else
+            setShowBlock(false)
 
     };
-    
+
     return (
-        
-        
+
+
         <Container style={{ alignItems: 'center', display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
 
             <SelectH2>1. Seleccione módulo a bloquear</SelectH2>
@@ -115,7 +187,7 @@ function ExpandBuilding({ row }) {
                     AddModules.map((modules, key) => <option value={key} key={modules}>{modules}</option>)
                 }
             </select>
-            
+
             <Container style={{ alignItems: 'center', display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
                 <SelectH2 >2. Seleccione días a bloquear</SelectH2>
                 <DatePicker
@@ -127,9 +199,13 @@ function ExpandBuilding({ row }) {
                     selectsRange
                     inline
                 />
-                 <Container style={{ height:'2rem'}}></Container>
+                
+                <Container style={{ height: '2rem' }}></Container>
+                {showMessage &&
+                    <ErrorH6>No se puede bloquear, hay reserva en uno de los días escogidos </ErrorH6>
+                }
                 {showBlock &&
-                    <newbtn onClick={() => submitBlockDays(row, document.getElementById("bking__selectedModule").value)} type="button" className="btn btn-danger btn-sm" >Bloquear</newbtn>
+                    <button onClick={() => submitBlockDays(row, document.getElementById("bking__selectedModule").value)} type="button" className="btn btn-danger btn-sm" >Bloquear</button>
                 }
             </Container>
 

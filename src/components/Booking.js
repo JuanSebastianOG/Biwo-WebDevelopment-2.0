@@ -31,29 +31,29 @@ function Booking() {
     var day = d.getDate()
     var month = d.getMonth() + 1
     var year = d.getFullYear()
-    if(day<10){
-        day='0'+day
-    } 
-    if(month<10){
-        month='0'+month
-    } 
+    if (day < 10) {
+        day = '0' + day
+    }
+    if (month < 10) {
+        month = '0' + month
+    }
     const dati = year + "-" + month + "-" + day
     d.setMonth(d.getMonth() + 2);
 
     var dayend = d.getDate()
     var monthend = d.getMonth() + 1
     var yearend = d.getFullYear()
-    if(dayend<10){
-        dayend='0'+dayend
-    } 
-    if(monthend<10){
-        monthend='0'+monthend
-    } 
+    if (dayend < 10) {
+        dayend = '0' + dayend
+    }
+    if (monthend < 10) {
+        monthend = '0' + monthend
+    }
     const datiend = yearend + "-" + monthend + "-" + dayend
-  
+
     useEffect(() => {
         if (usersi) {
-            
+
             // User is signed in.
             setUserID(usersi.uid)
             var docRef = db.collection("usuarios").doc(usersi.uid);
@@ -100,7 +100,7 @@ function Booking() {
         } else {
             // No user is signed in.
         }
-        
+
     }, [usersi]);
 
     const submitBooking = e => {
@@ -206,7 +206,7 @@ function Booking() {
             }
             setDate(selectedDate)
             setStartHours(validHours)
-        }  
+        }
     }
     const dateChangeHandler = e => {
         calculateStartHours()
@@ -237,7 +237,7 @@ function Booking() {
         let endHour = endHours[e.target.value]
         let cantHours = endHour - startHour;
         setAllowSubmit(true)
-        
+
         setBookingCost(cantHours * buildingModuleCost)
         setCantHours(cantHours)
     }
@@ -291,7 +291,7 @@ function Booking() {
             </div>
 
         </div>
-    
+
     )
 }
 
