@@ -10,17 +10,49 @@ function BuildingsList() {
     const [buildings, setBuildings] = useState([])
     const blockBuilding = (cellProps) => {
         const {
-            numModulos,
+            idEdificio,
         } = cellProps.row.original
 
-        console.log(numModulos)
-        //Cote for block building
+        //Code for block building
+        var buildingRef = db.collection("edificios").doc(idEdificio);
+
+        // Set the "esto" field of the city 'false'
+        return buildingRef.update({
+            estado: false
+        })
+            .then(function () {
+                console.log("Document successfully updated!");
+            })
+            .catch(function (error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
     }
-    
+    const unlockBuilding = (cellProps) => {
+        const {
+            idEdificio,
+        } = cellProps.row.original
+
+        //Code for block building
+        var buildingRef = db.collection("edificios").doc(idEdificio);
+
+        // Set the "esto" field of the city 'false'
+        return buildingRef.update({
+            estado: true
+        })
+            .then(function () {
+                console.log("Document successfully updated!");
+            })
+            .catch(function (error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+    }
+
 
     const renderRowSubComponent = row => {
         return (
-           <ExpandBuilding row={row}/>
+            <ExpandBuilding row={row} />
         )
     }
 
@@ -52,10 +84,16 @@ function BuildingsList() {
                 accessor: "tarifa",
             },
             {
-                Header: 'Block',
+                Header: 'Bloquear / Desbloquear Edificio}',
                 // Cell has access to row values. If you are curious what is inside cellProps, you can  console log it
                 Cell: (cellProps) => {
-                    return <button onClick={() => blockBuilding(cellProps)} type="button" className="btn btn-danger btn-sm btn-block" >Bloquear</button>
+                    const {
+                        estado,
+                    } = cellProps.row.original
+                    if (estado)
+                        return <button onClick={() => blockBuilding(cellProps)} type="button" className="btn btn-danger btn-sm btn-block" >Bloquear</button>
+                    else    
+                        return <button onClick={() => unlockBuilding(cellProps)} type="button" className="btn btn-success btn-sm btn-block" >Desbloquear</button>
                 }
             },
         ],
@@ -67,8 +105,11 @@ function BuildingsList() {
             .onSnapshot(function (querySnapshot) {
                 var buildings = []
                 querySnapshot.forEach(function (doc) {
-                    buildings.push(doc.data())
+                    var newdoc = doc.data()
+                    newdoc.idEdificio = doc.id
+                    buildings.push(newdoc)
                 });
+                console.log(buildings)
                 setBuildings(buildings)
             })
 

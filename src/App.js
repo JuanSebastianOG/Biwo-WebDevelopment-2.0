@@ -45,7 +45,6 @@ function App() {
             <NavBar users active="administrar" usertype={"residente"} />
             <AdminBookings />
           </Route>
-
           <Route path="/ayuda">
             <NavBar users active="ayuda" usertype={"residente"} />
             <Help />

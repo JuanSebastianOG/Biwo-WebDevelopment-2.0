@@ -38,7 +38,6 @@ function ExpandBuilding({ row }) {
         }
         setModules(mod)
 
-
         db.collection('edificios').where("direccion", "==", row.original.direccion)
             .onSnapshot(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {

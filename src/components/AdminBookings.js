@@ -39,7 +39,6 @@ function AdminBookings() {
 
     useEffect(() => {
         if (currentUser) {
-
             db.collection('reservas').where("idUsuario", "==", currentUser.uid)
                 .onSnapshot(function (querySnapshot) {
                     var tempBookings = [];
@@ -56,7 +55,7 @@ function AdminBookings() {
 
         }
         else {
-            history.push("/reservar");
+            history.push("/");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);

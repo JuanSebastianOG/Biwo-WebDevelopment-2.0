@@ -12,7 +12,7 @@ function Booking() {
     const AddModules = modules.map(Add => Add)
     const [buildingModules, setBuildingModules] = useState([])
     const [allowSubmit, setAllowSubmit] = useState(false);
-    const [startHours, setStartHours] = useState(["1. Ingrese Fecha"])
+    const [startHours, setStartHours] = useState(["2. Ingrese fecha"])
     const AddStartHours = startHours.map(Add => Add)
     const [endHours, setEndHours] = useState(["2. Ingrese hora inicio"])
     const AddFinHours = endHours.map(Add => Add)
@@ -24,6 +24,8 @@ function Booking() {
     const [buildingName, setBuildingName] = useState("")
     const [buildingStartHour, setBuildingStartHour] = useState("")
     const [buildingEndHour, setBuildingEndHour] = useState("")
+    const [buildingState, setBuildingState] = useState(true)
+
     const [bookingCost, setBookingCost] = useState(" - ")
     const [cantHours, setCantHours] = useState("-")
 
@@ -53,7 +55,6 @@ function Booking() {
 
     useEffect(() => {
         if (usersi) {
-
             // User is signed in.
             setUserID(usersi.uid)
             var docRef = db.collection("usuarios").doc(usersi.uid);
@@ -61,9 +62,17 @@ function Booking() {
                 if (doc.exists) {
                     setEdificioID(doc.data().idEdificio)
                     console.log("Document data USUARIO:", doc.data().idEdificio);
-                    db.collection('edificios').doc(doc.data().idEdificio).get()
-                        .then(function (doc) {
+                    db.collection('edificios').doc(doc.data().idEdificio).
+                        onSnapshot(function (doc) {
                             if (doc.exists) {
+                                const unsub = db.collection('reservas').where("idEdificio", "==", doc.id)
+                                .onSnapshot(function (querySnapshot) {
+                                    var bookings = []
+                                    querySnapshot.forEach(function (doc) {
+                                        bookings.push(doc.data())
+                                    });
+                                    setBookingsModuleBuilding(bookings)
+                                })
                                 setBuildingModules(doc.data().idModulos)
                                 var mod = []
                                 for (let i = 0; i < doc.data().idModulos.length; i++) {
@@ -74,22 +83,17 @@ function Booking() {
                                 setBuildingName(doc.data().nombre)
                                 setBuildingStartHour(doc.data().horaInicio)
                                 setBuildingEndHour(doc.data().horaFin)
+                                setBuildingState(doc.data().estado)
+
+                               
+
                             } else {
                                 // doc.data() will be undefined in this case
                                 console.log("No such document!");
                             }
-                        }).catch(function (error) {
-                            console.log("Error getting document:", error);
-                        });
-                    db.collection('reservas').where("idEdificio", "==", doc.data().idEdificio)
-                        .onSnapshot(function (querySnapshot) {
-                            var bookings = []
-                            querySnapshot.forEach(function (doc) {
-                                bookings.push(doc.data())
-                            });
-                            setBookingsModuleBuilding(bookings)
                         })
 
+                   
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");
@@ -100,6 +104,7 @@ function Booking() {
         } else {
             // No user is signed in.
         }
+
 
     }, [usersi]);
 
@@ -146,13 +151,12 @@ function Booking() {
 
     function calculateStartHours() {
         setAllowSubmit(false)
-
         setBookingCost(" - ")
         let element = document.getElementById("in_time_hr");
         element.value = 0;
-        setStartHours(["1. Ingrese Fecha"])
+        setStartHours(["-"])
         setEndHours(["2. Ingrese hora inicio"])
-        //Takes all bookings on a specific dat ****NO FOR MODULE (NEED)****
+        //Takes all bookings on a specific date
         var bookingsOnDay = false;
         const selectedDate = document.getElementById("bking__date").value
 
@@ -166,8 +170,11 @@ function Booking() {
         } else {
             firstHour = buildingStartHour
         }
+        console.log("voy a calcular",bookingsModuleBuilding)
 
         bookingsModuleBuilding.forEach(function (doc) {
+            console.log("pero no entro")
+
             var moduleSelected = document.getElementById('bking__selectedModule').value;
             // Take only the ones that are on the specific day
             if (doc.fecha === selectedDate && doc.idModulo === buildingModules[moduleSelected]) {
@@ -241,58 +248,126 @@ function Booking() {
         setBookingCost(cantHours * buildingModuleCost)
         setCantHours(cantHours)
     }
-    return (
-        <div className="bking">
-            <div className="bking__container">
-                <h1>Nueva Reserva</h1>
-
-                <div className="bking__containerFlex">
-                    <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
-                    <form className="bking_containerFlexForm" action="">
-                        <label htmlFor="">Fecha</label>
-                        <input id="bking__date" type="date" min={dati} max={datiend} onChange={dateChangeHandler} />
-                        <label htmlFor="">Módulo</label>
-                        <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
-                            {
-                                AddModules.map((module, key) => <option value={key} key={module}>{module}</option>)
-                            }
-                        </select>
-                        <div className="bking_containerFlexFormHours">
-                            <label htmlFor="">Hora Inicio</label>
-                            <label>Hora Fin</label>
+    if(usersi){
+        if (buildingState) {
+            return (
+                <div className="bking">
+                    <div className="bking__container">
+                        <h1>Nueva Reserva</h1>
+    
+                        <div className="bking__containerFlex">
+                            <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
+                            <form className="bking_containerFlexForm" action="">
+                                <label htmlFor="">Fecha</label>
+                                <input id="bking__date" type="date" min={dati} max={datiend} onChange={dateChangeHandler} />
+                                <label htmlFor="">Módulo</label>
+                                <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
+                                    {
+                                        AddModules.map((module, key) => <option value={key} key={module}>{module}</option>)
+                                    }
+                                </select>
+                                <div className="bking_containerFlexFormHours">
+                                    <label htmlFor="">Hora Inicio</label>
+                                    <label>Hora Fin</label>
+                                </div>
+                                <div className="bking__containerTimes">
+    
+                                    <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
+                                        {
+                                            AddStartHours.map((hourStart, key) => <option value={key} key={hourStart}>{hourStart}</option>)
+                                        }
+                                    </select>
+                                    <h1> - </h1>
+                                    <select className="bking__time" id="out_time_hr" name="out_time_hr" onChange={selectEndHourChangeHandler}>
+                                        {
+                                            AddFinHours.map((hourFin, key) => <option value={key} key={hourFin}>{hourFin}</option>)
+                                        }
+                                    </select>
+    
+                                </div>
+                                <div className="bking__containerButton">
+    
+                                    <label>Costo:</label>
+                                    <label> <span>$</span>{bookingCost}</label>
+    
+                                    <button disabled={!allowSubmit} type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
+                                </div>
+                            </form>
+                            <div></div>
                         </div>
-                        <div className="bking__containerTimes">
-
-                            <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
-                                {
-                                    AddStartHours.map((hourStart, key) => <option value={key} key={hourStart}>{hourStart}</option>)
-                                }
-                            </select>
-                            <h1> - </h1>
-                            <select className="bking__time" id="out_time_hr" name="out_time_hr" onChange={selectEndHourChangeHandler}>
-                                {
-                                    AddFinHours.map((hourFin, key) => <option value={key} key={hourFin}>{hourFin}</option>)
-                                }
-                            </select>
-
-                        </div>
-                        <div className="bking__containerButton">
-
-                            <label>Costo:</label>
-                            <label> <span>$</span>{bookingCost}</label>
-
-                            <button disabled={!allowSubmit} type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
-                        </div>
-                    </form>
-                    <div></div>
+                    </div>
                 </div>
+            )
+        } else {
+            return (
+                <div className="bking__blocked">
+                    <h5>No se pueden realizar reservas, el edificio esta bloqueado por un administrador </h5>
+                </div>
+            )
+    
+        }
+    }else{
+        if (buildingState) {
+            return (
+                <div className="bking">
+                    <div className="bking__container">
+                        <h1>Nueva Reserva</h1>
+    
+                        <div className="bking__containerFlex">
+                            <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
+                            <form className="bking_containerFlexForm" action="">
+                                <label htmlFor="">Fecha</label>
+                                <input id="bking__date" type="date" min={dati} max={datiend} onChange={dateChangeHandler} />
+                                <label htmlFor="">Módulo</label>
+                                <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
+                                    {
+                                        AddModules.map((module, key) => <option value={key} key={module}>{module}</option>)
+                                    }
+                                </select>
+                                <div className="bking_containerFlexFormHours">
+                                    <label htmlFor="">Hora Inicio</label>
+                                    <label>Hora Fin</label>
+                                </div>
+                                <div className="bking__containerTimes">
+    
+                                    <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
+                                        {
+                                            AddStartHours.map((hourStart, key) => <option value={key} key={hourStart}>{hourStart}</option>)
+                                        }
+                                    </select>
+                                    <h1> - </h1>
+                                    <select className="bking__time" id="out_time_hr" name="out_time_hr" onChange={selectEndHourChangeHandler}>
+                                        {
+                                            AddFinHours.map((hourFin, key) => <option value={key} key={hourFin}>{hourFin}</option>)
+                                        }
+                                    </select>
+    
+                                </div>
+                                <div className="bking__containerButton">
+    
+                                    <label>Costo:</label>
+                                    <label> <span>$</span>{bookingCost}</label>
+    
+                                    <button disabled={!allowSubmit} type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
+                                </div>
+                            </form>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="bking__blocked">
+                    <h5>No se pueden realizar reservas, el edificio esta bloqueado por un administrador </h5>
+                </div>
+            )
+    
+        }
+    }
+    
 
 
-            </div>
-
-        </div>
-
-    )
 }
 
 export default Booking
