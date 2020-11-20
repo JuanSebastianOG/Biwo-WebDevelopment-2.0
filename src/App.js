@@ -15,6 +15,7 @@ import { auth } from './firebase';
 import {useStateValue} from './components/StateProvider'
 
 import AddAdmin from './components/AddAdmin';
+import BookingsList from './components/BiwoAdmin/BookingsList';
 
 function App() {
 
@@ -78,11 +79,13 @@ function App() {
           <Route path="/adminPagos">
             <NavBar users active="adminPagos" usertype={"superadmin"} />
             <h1>Reporte de Pagos</h1>
+            
           </Route>
 
           <Route path="/adminReservas">
             <NavBar users active="adminReservas" usertype={"superadmin"} />
             <h1>Reporte de Reservas</h1>
+            <BookingsList></BookingsList>
           </Route>
 
           <Route path="/adminResidentes">

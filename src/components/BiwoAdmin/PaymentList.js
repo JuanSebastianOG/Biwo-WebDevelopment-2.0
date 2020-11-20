@@ -81,7 +81,7 @@ function BuildingsList() {
             },
             {
                 Header: "Tarifa",
-                accessor: "idEdificio",
+                accessor: "tarifa",
             },
             {
                 Header: 'Bloquear / Desbloquear Edificio}',

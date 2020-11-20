@@ -22,6 +22,7 @@ function Booking() {
     const [bookingsModuleBuilding, setBookingsModuleBuilding] = useState([])
     const [buildingModuleCost, setBuildingModuleCost] = useState("")
     const [buildingName, setBuildingName] = useState("")
+    const [userName, setUserName] = useState("")
     const [buildingStartHour, setBuildingStartHour] = useState("")
     const [buildingEndHour, setBuildingEndHour] = useState("")
     const [buildingState, setBuildingState] = useState(true)
@@ -61,6 +62,7 @@ function Booking() {
             docRef.get().then(function (doc) {
                 if (doc.exists) {
                     setEdificioID(doc.data().idEdificio)
+                    setUserName(doc.data().name + " " + doc.data().lastname )
                     console.log("Document data USUARIO:", doc.data().idEdificio);
                     db.collection('edificios').doc(doc.data().idEdificio).
                         onSnapshot(function (doc) {
@@ -135,6 +137,7 @@ function Booking() {
             idUsuario: idUsuario,
             tiempoTotal: tiempoTotal,
             costoReserva: bookingCost,
+            nombreUsuario: userName,
             dia: day,
             mes: monthNames[month - 1],
             nombreEdificio: buildingName,
