@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -11,11 +11,36 @@ import Landing from './components/Landing';
 import Help from './components/Help';
 import ResidentList from './components/BuildingAdmin/ResidentList';
 import BuildingsList from './components/BiwoAdmin/BuildingsList';
+import { auth } from './firebase';
+import {useStateValue} from './components/StateProvider'
 
 import AddAdmin from './components/AddAdmin';
 
 function App() {
 
+  const [user,dispatch] = useStateValue ();
+  console.log(user)
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) =>{
+      if(authUser)
+      {
+        dispatch({
+          type: "USER_SIGN_IN/OUT",
+          user: authUser
+        })
+      }
+      else{
+        dispatch({
+          type: "USER_SIGN_IN/OUT",
+          user: null
+        })
+      }
+    })
+    return () => {
+      unsubscribe();
+    }
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
  
   return (
     <Router>

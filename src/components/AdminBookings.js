@@ -50,12 +50,9 @@ function AdminBookings() {
                     setUserBookings(tempBookings);
                     setBookingId(idBookings);
                 })
-
-            console.log("All Bookings Details:", userBookings);
-
         }
         else {
-            history.push("/");
+            history.push("/reservar");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
@@ -71,7 +68,7 @@ function AdminBookings() {
                 userBookings.map((booking, index) =>
 
                     <BookingBox
-
+                        key={index}
                         day={booking.dia}
                         month={booking.mes}
                         building={booking.nombreEdificio}
