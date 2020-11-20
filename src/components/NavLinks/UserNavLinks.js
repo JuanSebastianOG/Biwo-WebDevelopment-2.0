@@ -40,16 +40,16 @@ function UserNavLinks( {active}) {
         }
     return (
         <div className="navbar-login__links">
-                    <Link to={'/reservar'}  className={linkClassReservar} >
+                    <Link style={{textDecoration: 'none'}} to={'/reservar'}  className={linkClassReservar} >
                         <h1>{'Reservas'}</h1>
                     </Link>
-                    <Link to={'/misreservas'}  className={linkClassMisReservas} >
+                    <Link style={{textDecoration: 'none'}} to={'/misreservas'}  className={linkClassMisReservas} >
                         <h1>{'Mis Reservas'}</h1>
                     </Link>
-                    <Link to={'/administrar'}  className={linkClassAdministrar}    >
+                    <Link style={{textDecoration: 'none'}} to={'/administrar'}  className={linkClassAdministrar}    >
                         <h1>{'Administrar'}</h1>
                     </Link>
-                    <Link to={'/ayuda'} className={linkClassAyuda} >
+                    <Link style={{textDecoration: 'none'}} to={'/ayuda'} className={linkClassAyuda} >
                         <h1>{'Ayuda'}</h1>
                     </Link>       
                     <Link className="navbar-login__linksIcon" to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>
