@@ -3,11 +3,20 @@ import TableContainer from "./TableContainer"
 import { db } from '../../firebase.js'
 import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
+import ExpandBooking from './ExpandBooking'
+
+
 
 function BookingsList() {
 
     const [bookings, setBookings] = useState([])
-    const [name, setName] = useState()
+
+
+    const renderRowSubComponent = row => {
+        return (
+            <ExpandBooking row={row} ></ExpandBooking>
+        )
+    }
 
     const columns = useMemo(
         () => [
@@ -34,12 +43,17 @@ function BookingsList() {
             {
                 Header: "Reseña",
 
-                Cell: () => {
 
-                    return <button  type="button" className="btn btn-success btn-sm btn-block" > Reseña</button>}
+                id: 'expander', // 'id' is required
+                Cell: ({ row }) => (
+                    <span {...row.getToggleRowExpandedProps()}>
+                        <button  type="button" className="btn btn-success btn-sm btn-block"  > Ver</button>
+                    </span>
+                )
+
 
             },
-            
+
         ],
         []
     )
@@ -64,7 +78,7 @@ function BookingsList() {
 
     return (
         <Container style={{ marginTop: 100 }}>
-            <TableContainer columns={columns} data={bookings} />
+            <TableContainer columns={columns} data={bookings} renderRowSubComponent={renderRowSubComponent} />
         </Container>
     )
 }
