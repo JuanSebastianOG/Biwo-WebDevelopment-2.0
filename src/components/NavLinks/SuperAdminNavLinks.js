@@ -17,14 +17,14 @@ function SuperAdminNavLinks({active}) {
         
     }
         
-        let linkClassAdminPagos = "navbar-login__link";
+        let linkClassAdminRecibos = "navbar-login__link";
         let linkClassAdminReservas = "navbar-login__link";
         let linkClassAdminResidentes = "navbar-login__link";
         let linkClassAdminEdificios= "navbar-login__link";
         let linkClassAdminUsuarios= "navbar-login__link";
         switch (active) {
-            case "adminPagos":
-                linkClassAdminPagos = "navbar-login__linkActive"
+            case "adminRecibos":
+                linkClassAdminRecibos = "navbar-login__linkActive"
                 break;
             case "adminReservas":
                 linkClassAdminReservas = "navbar-login__linkActive"
@@ -43,8 +43,8 @@ function SuperAdminNavLinks({active}) {
         }
     return (
         <div className="navbar-login__links">
-                    <Link to={'/adminPagos' } className={linkClassAdminPagos}  >
-                        <h1>{'Pagos' }</h1>
+                    <Link to={'/adminRecibos' } className={linkClassAdminRecibos}  >
+                        <h1>{'Recibos' }</h1>
                     </Link>
                     <Link to={'/adminReservas'} className={linkClassAdminReservas} >
                         <h1>{'Reservas'}</h1>

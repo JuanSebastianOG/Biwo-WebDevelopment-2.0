@@ -10,6 +10,7 @@ import MyBookings from './components/MyBookings';
 import Landing from './components/Landing';
 import Help from './components/Help';
 import ResidentList from './components/BuildingAdmin/ResidentList';
+import ReceiptList from './components/BiwoAdmin/ReceiptList';
 import BuildingsList from './components/BiwoAdmin/BuildingsList';
 import { auth } from './firebase';
 import {useStateValue} from './components/StateProvider'
@@ -76,9 +77,10 @@ function App() {
             <Help />
           </Route>
 
-          <Route path="/adminPagos">
-            <NavBar users active="adminPagos" usertype={"superadmin"} />
-            <h1>Reporte de Pagos</h1>
+          <Route path="/adminRecibos">
+            <NavBar users active="adminRecibos" usertype={"superadmin"} />
+            <h1>Reporte de Recibos</h1>
+            <ReceiptList></ReceiptList>
             
           </Route>
 
