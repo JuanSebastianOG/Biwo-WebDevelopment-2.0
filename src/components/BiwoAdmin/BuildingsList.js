@@ -81,10 +81,10 @@ function BuildingsList() {
             },
             {
                 Header: "Tarifa",
-                accessor: "idEdificio",
+                accessor: "tarifa",
             },
             {
-                Header: 'Bloquear / Desbloquear Edificio}',
+                Header: 'Bloquear / Desbloquear Edificio',
                 // Cell has access to row values. If you are curious what is inside cellProps, you can  console log it
                 Cell: (cellProps) => {
                     const {
