@@ -48,6 +48,7 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
+
           <Route path="/iniciarsesion">
             <NavBar color />
             <Login />
@@ -57,6 +58,8 @@ function App() {
             <NavBar color />
             <Register />
           </Route>
+
+
 
           <Route path="/misreservas">
             <NavBar users active="misreservas" usertype={"residente"} />
@@ -76,6 +79,11 @@ function App() {
             <NavBar users active="ayuda" usertype={"residente"} />
             <Help />
           </Route>
+
+
+
+
+
 
           <Route path="/adminRecibos">
             <NavBar users active="adminRecibos" usertype={"superadmin"} />
@@ -104,6 +112,30 @@ function App() {
             <NavBar users active="adminUsuarios" usertype={"superadmin"} />
             <AddAdmin></AddAdmin>
           </Route>
+
+
+
+
+
+          <Route users path="/edAdminPagos">
+            <NavBar users active="edAdminPagos" usertype={"edAdmin"} />
+            <h1>Pagos Edificio</h1>
+          </Route>
+          <Route users path="/edAdminResidentes">
+            <NavBar users active="edAdminResidentes" usertype={"edAdmin"} />
+            <h1>Residentes Edificio</h1>
+          </Route>
+          <Route users path="/edAdminReservas">
+            <NavBar users active="edAdminReservas" usertype={"edAdmin"} />
+            <h1>Reservas Edificio</h1>
+          </Route>
+          <Route users path="/edAdminEdificio">
+            <NavBar users active="edAdminEdificio" usertype={"edAdmin"} />
+            <h1>Administracion Edificio</h1>
+          </Route>
+
+
+
 
           <Route path="/">
             <NavBar usertype={false} />

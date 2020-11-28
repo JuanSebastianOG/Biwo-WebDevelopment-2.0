@@ -7,6 +7,7 @@ import Burger from './Burger';
 import { Avatar } from "@material-ui/core"
 import UserNavLinks from './NavLinks/UserNavLinks';
 import SuperAdminNavLinks from './NavLinks/SuperAdminNavLinks'
+import EdificioAdminNavLinks from './NavLinks/EdificioAdminNavLinks'
 function NavBar({ color, users, active, usertype }) {
 
     
@@ -31,8 +32,8 @@ function NavBar({ color, users, active, usertype }) {
                 <Link to={user ? '/reservar' : '/iniciarsesion'} className={className2}>
                     <Avatar />
                     <div className="navbar__loginlinkElements">
-                        <span className="navbar__loginlinkElementsOne">{user ? 'Mis' : 'Iniciar'} </span>
-                        <span className="navbar__loginlinkElementsTwo">{user ? 'Reservas' : 'Sesión'}</span>
+                        <span className="navbar__loginlinkElementsOne">{user ? 'Inicio' : 'Iniciar'} </span>
+                        <span className="navbar__loginlinkElementsTwo">{user ? ' ' : 'Sesión'}</span>
                     </div>
                 </Link>
             </nav>
@@ -52,7 +53,7 @@ function NavBar({ color, users, active, usertype }) {
                 </Link>
 
                 <div>
-                {(usertype === 'residente') ? <UserNavLinks active={active}/>:(usertype === 'superadmin') ?<SuperAdminNavLinks  active={active}/>:''}
+                {(usertype === 'residente') ? <UserNavLinks active={active}/>:(usertype === 'superadmin') ?<SuperAdminNavLinks  active={active}/>:(usertype === 'edAdmin') ?<EdificioAdminNavLinks  active={active}/>:''}
                 </div>
                
                 

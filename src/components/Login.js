@@ -21,8 +21,11 @@ function Login() {
               // Confirm the user is an Admin.
               if (idTokenResult.claims.superadmin) {
                 history.push("/adminReservas");
-              } else {
-                history.push("/misreservas");
+              } else if(idTokenResult.claims.admin) {
+                history.push("/edAdminPagos");
+              }
+              else{
+                history.push("/misReservas");
               }
             })
             .catch((error) => {
