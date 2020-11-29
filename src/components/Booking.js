@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import "../css/Booking.css"
 import { auth, db } from '../firebase';
+import moment from 'moment';
 
 
 function Booking() {
@@ -56,25 +57,29 @@ function Booking() {
 
     useEffect(() => {
         if (usersi) {
+
+
+           
+
             // User is signed in.
             setUserID(usersi.uid)
             var docRef = db.collection("usuarios").doc(usersi.uid);
             docRef.get().then(function (doc) {
                 if (doc.exists) {
                     setEdificioID(doc.data().idEdificio)
-                    setUserName(doc.data().name + " " + doc.data().lastname )
+                    setUserName(doc.data().name + " " + doc.data().lastname)
                     console.log("Document data USUARIO:", doc.data().idEdificio);
                     db.collection('edificios').doc(doc.data().idEdificio).
                         onSnapshot(function (doc) {
                             if (doc.exists) {
                                 const unsub = db.collection('reservas').where("idEdificio", "==", doc.id)
-                                .onSnapshot(function (querySnapshot) {
-                                    var bookings = []
-                                    querySnapshot.forEach(function (doc) {
-                                        bookings.push(doc.data())
-                                    });
-                                    setBookingsModuleBuilding(bookings)
-                                })
+                                    .onSnapshot(function (querySnapshot) {
+                                        var bookings = []
+                                        querySnapshot.forEach(function (doc) {
+                                            bookings.push(doc.data())
+                                        });
+                                        setBookingsModuleBuilding(bookings)
+                                    })
                                 setBuildingModules(doc.data().idModulos)
                                 var mod = []
                                 for (let i = 0; i < doc.data().idModulos.length; i++) {
@@ -87,7 +92,7 @@ function Booking() {
                                 setBuildingEndHour(doc.data().horaFin)
                                 setBuildingState(doc.data().estado)
 
-                               
+
 
                             } else {
                                 // doc.data() will be undefined in this case
@@ -95,7 +100,7 @@ function Booking() {
                             }
                         })
 
-                   
+
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");
@@ -173,7 +178,7 @@ function Booking() {
         } else {
             firstHour = buildingStartHour
         }
-        console.log("voy a calcular",bookingsModuleBuilding)
+        console.log("voy a calcular", bookingsModuleBuilding)
 
         bookingsModuleBuilding.forEach(function (doc) {
             console.log("pero no entro")
@@ -251,13 +256,13 @@ function Booking() {
         setBookingCost(cantHours * buildingModuleCost)
         setCantHours(cantHours)
     }
-    if(usersi){
+    if (usersi) {
         if (buildingState) {
             return (
                 <div className="bking">
                     <div className="bking__container">
                         <h1>Nueva Reserva</h1>
-    
+
                         <div className="bking__containerFlex">
                             <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
                             <form className="bking_containerFlexForm" action="">
@@ -274,7 +279,7 @@ function Booking() {
                                     <label>Hora Fin</label>
                                 </div>
                                 <div className="bking__containerTimes">
-    
+
                                     <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
                                         {
                                             AddStartHours.map((hourStart, key) => <option value={key} key={hourStart}>{hourStart}</option>)
@@ -286,13 +291,13 @@ function Booking() {
                                             AddFinHours.map((hourFin, key) => <option value={key} key={hourFin}>{hourFin}</option>)
                                         }
                                     </select>
-    
+
                                 </div>
                                 <div className="bking__containerButton">
-    
+
                                     <label>Costo:</label>
                                     <label> <span>$</span>{bookingCost}</label>
-    
+
                                     <button disabled={!allowSubmit} type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
                                 </div>
                             </form>
@@ -307,15 +312,15 @@ function Booking() {
                     <h5>No se pueden realizar reservas, el edificio esta bloqueado por un administrador </h5>
                 </div>
             )
-    
+
         }
-    }else{
+    } else {
         if (buildingState) {
             return (
                 <div className="bking">
                     <div className="bking__container">
                         <h1>Nueva Reserva</h1>
-    
+
                         <div className="bking__containerFlex">
                             <img className="bking_containerFlexImg" src="https://i.ibb.co/PG6R21D/Componente-1-1.png" alt="Componente-1-1" border="0" />
                             <form className="bking_containerFlexForm" action="">
@@ -332,7 +337,7 @@ function Booking() {
                                     <label>Hora Fin</label>
                                 </div>
                                 <div className="bking__containerTimes">
-    
+
                                     <select id="in_time_hr" name="in_time_hr" onChange={selectStartHourChangeHandler}>
                                         {
                                             AddStartHours.map((hourStart, key) => <option value={key} key={hourStart}>{hourStart}</option>)
@@ -344,13 +349,13 @@ function Booking() {
                                             AddFinHours.map((hourFin, key) => <option value={key} key={hourFin}>{hourFin}</option>)
                                         }
                                     </select>
-    
+
                                 </div>
                                 <div className="bking__containerButton">
-    
+
                                     <label>Costo:</label>
                                     <label> <span>$</span>{bookingCost}</label>
-    
+
                                     <button disabled={!allowSubmit} type="button" className="bking__Button" onClick={submitBooking}>Reservar</button>
                                 </div>
                             </form>
@@ -365,10 +370,10 @@ function Booking() {
                     <h5>No se pueden realizar reservas, el edificio esta bloqueado por un administrador </h5>
                 </div>
             )
-    
+
         }
     }
-    
+
 
 
 }

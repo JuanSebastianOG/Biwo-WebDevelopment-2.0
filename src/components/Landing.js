@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "../css/Landing.css"
+import moment from 'moment';
+import { auth, db } from '../firebase';
 
 
 function Landing() {
 
+
     return (
         <div className="landing">
             <img className="landing__background" src="https://i.ibb.co/WKDYk04/Grupo-37.png" alt="Grupo-37" border="0"></img>
-            
+
             <div className="landing__bottom">
                 <img className="landing_bottomImg" src="https://i.ibb.co/Z6KXqd5/Imagen-5.png" alt="Imagen-5" border="0" />
                 <div className="landing__bottomRect">

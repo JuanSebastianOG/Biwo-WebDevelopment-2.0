@@ -11,6 +11,7 @@ import Landing from './components/Landing';
 import Help from './components/Help';
 import ResidentList from './components/BuildingAdmin/ResidentList';
 import ReceiptList from './components/BiwoAdmin/ReceiptList';
+import ReceiptsPayment from './components/BuildingAdmin/ReceiptsPayment';
 import BuildingsList from './components/BiwoAdmin/BuildingsList';
 import { auth } from './firebase';
 import {useStateValue} from './components/StateProvider'
@@ -120,6 +121,7 @@ function App() {
           <Route users path="/edAdminPagos">
             <NavBar users active="edAdminPagos" usertype={"edAdmin"} />
             <h1>Pagos Edificio</h1>
+            <ReceiptsPayment></ReceiptsPayment>
           </Route>
           <Route users path="/edAdminResidentes">
             <NavBar users active="edAdminResidentes" usertype={"edAdmin"} />
