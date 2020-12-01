@@ -7,11 +7,13 @@ function ReceiptsPayment() {
     var user = auth.currentUser;
 
     useEffect(() => {
-        let mounted = true;
-        if (user && mounted) {
+        
+        if (user)  {
 
-            db.collection("recibos").where("idAdminEdificio", "==", user.uid)
-                .onSnapshot(function (querySnapshot) {
+            db.collection("recibos")
+            .where("idAdminEdificio", "==", user.uid)
+            .get()
+            .then(function (querySnapshot) {
 
                     console.log(querySnapshot.docs.length);
 
@@ -48,18 +50,18 @@ function ReceiptsPayment() {
                             var nombreAdmin
 
                             db.collection("usuarios").doc(user.uid)
-                                .onSnapshot(function (doc) {
+                                .get()
+                                .then(function (doc) {
                                     nombreAdmin = doc.data().name
-
+                                    console.log("este el nombre Admin", nombreAdmin)
                                 })
+                                
 
 
-
-
-                            db.collection("usuarios").doc(user.uid).onSnapshot(function (doc) {
+                            db.collection("usuarios").doc(user.uid).get().then(function (doc) {
 
                                 db.collection("edificios").doc(doc.data().idEdificio)
-                                    .onSnapshot(function (doc) {
+                                    .get().then(function (doc) {
                                         if (doc.exists) {
                                             const years = YEARS()
                                             const months = MONTHS()
@@ -87,22 +89,22 @@ function ReceiptsPayment() {
 
                                     })
 
-                            })
-
+                                })
+                    
                         
                        
                     }
                     else {
-                        console.log("si existten")
+                        console.log("si existen")
                     }
 
 
                 })
 
         }
-    ;
+    
         return function cleanup ()  {
-            mounted = false
+         
         }
     }, [])
 
