@@ -58,7 +58,7 @@ function ReceiptList() {
                 accessor: "año",
             },
             {
-                Header: "Estado de Recibo",
+                Header: "Estado de Pago",
                 Cell: (cellProps) => {
                     const {
                         estado,
