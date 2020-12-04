@@ -1,8 +1,6 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import { auth, db, firebaseConfig } from '../../firebase';
-import moment from 'moment';
-import TableContainer from '../BiwoAdmin/TableContainer'
 import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import styled from 'styled-components';
@@ -30,29 +28,31 @@ const ExpandPayment = ({ row }) => {
 
     const [totalPayment, setTotalPayment] = useState([])
     const [fileUrl, setFileUrl] = useState('');
+    const [idRec, setidRec] = useState('');
+    
 
     useEffect(() => {
+        setidRec(row.original.idRecibo);
         db.collection('reservas')
-            .where("mes","==",row.original.mes)
-            .where("año","==",row.original.año)
-        
+            .where("mes", "==", row.original.mes)
+            .where("año", "==", row.original.año)
+            .where("idAdminEdificio","==",row.original.idAdminEdificio)
+
             .onSnapshot(function (querySnapshot) {
                 var totalMesAño = 0
                 querySnapshot.forEach(function (doc) {
 
-                        
-                        console.log(row.original.año,doc.data().year);
-                        totalMesAño = totalMesAño + doc.data().costoReserva
-                        console.log(totalMesAño);
-                    
+
+                    console.log(row.original.año, doc.data().year);
+                    totalMesAño = totalMesAño + doc.data().costoReserva
+                    console.log(totalMesAño);
+
 
                 });
                 console.log(totalMesAño);
                 setTotalPayment(totalMesAño);
             })
-        return () => {
-
-        }
+        
     }, [])
 
     const uploadReceipt = async (e) => {
@@ -61,19 +61,48 @@ const ExpandPayment = ({ row }) => {
         const fileRef = storageRef.child(file.name)
         await fileRef.put(file)
         setFileUrl(await fileRef.getDownloadURL())
+        console.log(fileUrl)
+    }
+
+    function updateStorage () {
+
+        return db.collection('recibos')
+        .doc(idRec)
+        .update({
+            storage: fileUrl,
+            estado: "En Revision"
+        }).then(function() {
+            console.log("Document successfully updated!");
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+
+    }
+
+    const onSubmit = async (e) => {
+
+        e.preventDefault()
+
+        updateStorage()
+            
     }
 
 
     return (
         <div>
             <StyledContainer >
-              
 
+                <form onSubmit={onSubmit}>
                     <input type="file" onChange={uploadReceipt} />
                     <StyledTitle>Total a Pagar</StyledTitle>
                     <StyledText>{totalPayment}</StyledText>
-                    <button className="btn btn-success btn-sm btn-block" >Subir Recibo</button>
-               
+                    <button  className="btn btn-success btn-sm btn-block" >Subir Recibo</button>
+
+                </form>
+
+
             </StyledContainer>
         </div>
     );

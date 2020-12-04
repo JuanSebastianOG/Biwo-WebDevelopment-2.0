@@ -36,7 +36,7 @@ const StyledTitleGreen = styled.div`
 function ReceiptsPayment() {
 
     var user = auth.currentUser;
-    
+
     const [receiptsPayments, setReceiptsPayments] = useState([]);
 
 
@@ -121,9 +121,18 @@ function ReceiptsPayment() {
                                                 idEdificio: doc.id,
                                                 nombreAdmin: nombreAdmin,
                                                 nombreEdificio: doc.data().nombre,
-                                                storage: ""
+                                                storage: "",
+                                                idRecibo: ""
                                             }
                                             db.collection("recibos").add(monthsWithYears[x])
+                                                .then(function (docRef) {
+                                                    console.log("Document written with ID: ", docRef.id)
+                                                    db.collection("recibos")
+                                                        .doc(docRef.id)
+                                                        .update({
+                                                            idRecibo: docRef.id
+                                                        });
+                                                })
 
                                         }
                                     }
@@ -147,42 +156,31 @@ function ReceiptsPayment() {
 
     }
 
-        function getReceipts() {
-
-      
-                    
-           
 
 
 
-        }
+    useEffect(() => {
 
-        useEffect(() => {
+        createReceipts()
 
-            createReceipts()
-            getReceipts()
-            if(user)
-      {
-        db.collection('recibos').where("idAdminEdificio", "==", user.uid)
-        .onSnapshot(function (querySnapshot) {
-            var receipts = []
-            querySnapshot.forEach(function (doc) {
+        if (user) {
+            db.collection('recibos').where("idAdminEdificio", "==", user.uid)
+                .onSnapshot(function (querySnapshot) {
+                    var receipts = []
+                    querySnapshot.forEach(function (doc) {
 
-                var newReceipt = doc.data()
-                newReceipt.idReceipt = doc.id
-                receipts.push(newReceipt)
-            });
-            console.log(receipts);
-            setReceiptsPayments(receipts);
+                        var newReceipt = doc.data()
+                        newReceipt.idReceipt = doc.id
+                        receipts.push(newReceipt)
+                    });
+                    console.log(receipts);
+                    setReceiptsPayments(receipts);
 
-        })
-        
-      }
-
-
-        return function cleanup() {
+                })
 
         }
+
+
     }, [user])
 
     const renderRowSubComponent = row => {
@@ -218,7 +216,7 @@ function ReceiptsPayment() {
                             {estado}
                             <StyledTitleRed></StyledTitleRed>
                         </div>
-                    else if (estado == "En Revisión")
+                    else if (estado == "En Revision")
                         return <div>
                             {estado}
                             <StyledTitleYellow></StyledTitleYellow>
