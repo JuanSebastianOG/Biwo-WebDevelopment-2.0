@@ -67,13 +67,13 @@ const ExpandPayment = ({ row }) => {
     return (
         <div>
             <StyledContainer >
-                <form >
+              
 
                     <input type="file" onChange={uploadReceipt} />
                     <StyledTitle>Total a Pagar</StyledTitle>
                     <StyledText>{totalPayment}</StyledText>
                     <button className="btn btn-success btn-sm btn-block" >Subir Recibo</button>
-                </form>
+               
             </StyledContainer>
         </div>
     );

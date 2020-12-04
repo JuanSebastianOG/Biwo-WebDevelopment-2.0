@@ -34,11 +34,14 @@ const StyledTitleGreen = styled.div`
     }`
 
 function ReceiptsPayment() {
+
     var user = auth.currentUser;
+    
     const [receiptsPayments, setReceiptsPayments] = useState([]);
 
 
     function createReceipts() {
+
         if (user) {
 
             db.collection("recibos")
@@ -53,29 +56,37 @@ function ReceiptsPayment() {
                         console.log("no existe ingresadno por primer vez")
 
 
-                        const YEARS = () => {
-                            const years = []
-                            const dateStart = moment()
-                            const dateEnd = moment().add(4, 'y')
-                            while (dateEnd.diff(dateStart, 'years') >= 0) {
-                                years.push(dateStart.format('YYYY'))
-                                dateStart.add(1, 'year')
-                            }
-                            return years
-                        }
-
                         const MONTHS = () => {
                             const months = []
+                            const years = []
                             const dateStart = moment()
                             const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
                             ];
                             const dateEnd = moment().add(48, 'month')
                             while (dateEnd.diff(dateStart, 'months') >= 0) {
-                                months.push(monthNames[dateStart.format('MM')-1])
+                                years.push(dateStart.format('YYYY'))
+                                months.push(monthNames[dateStart.format('MM') - 1])
                                 dateStart.add(1, 'month')
                             }
+                            console.log(months)
+                            console.log(years)
                             return months
+                        }
+
+                        const YEARS = () => {
+
+                            const years = []
+                            const dateStart = moment()
+
+                            const dateEnd = moment().add(48, 'month')
+                            while (dateEnd.diff(dateStart, 'months') >= 0) {
+                                years.push(dateStart.format('YYYY'))
+                                dateStart.add(1, 'month')
+                            }
+
+                            console.log(years)
+                            return years
                         }
 
 
@@ -99,14 +110,11 @@ function ReceiptsPayment() {
                                     if (doc.exists) {
                                         const years = YEARS()
                                         const months = MONTHS()
-                                        var y = 0
                                         var x = 0
                                         for (x = 0; x < 48; x++) {
-                                            if (x % 12 == 0 && x != 0) {
-                                                y++
-                                            }
+
                                             monthsWithYears[x] = {
-                                                año: years[y],
+                                                año: years[x],
                                                 mes: months[x],
                                                 estado: "No Pago",
                                                 idAdminEdificio: user.uid,
@@ -136,41 +144,46 @@ function ReceiptsPayment() {
                 })
 
         }
+
     }
 
-    function getReceipts() {
+        function getReceipts() {
 
-        if (user) {
-            db.collection('recibos').where("idAdminEdificio", "==", user.uid)
-                .onSnapshot(function (querySnapshot) {
-                    var receipts = []
-                    querySnapshot.forEach(function (doc) {
+      
+                    
+           
 
-                        var newReceipt = doc.data()
-                        newReceipt.idReceipt = doc.id
-                        receipts.push(newReceipt)
-                    });
-                    console.log(receipts);
-                    setReceiptsPayments(receipts);
 
-                })
 
         }
 
+        useEffect(() => {
 
+            createReceipts()
+            getReceipts()
+            if(user)
+      {
+        db.collection('recibos').where("idAdminEdificio", "==", user.uid)
+        .onSnapshot(function (querySnapshot) {
+            var receipts = []
+            querySnapshot.forEach(function (doc) {
 
-    }
+                var newReceipt = doc.data()
+                newReceipt.idReceipt = doc.id
+                receipts.push(newReceipt)
+            });
+            console.log(receipts);
+            setReceiptsPayments(receipts);
 
-    useEffect(() => {
+        })
+        
+      }
 
-        createReceipts();
-
-        getReceipts();
 
         return function cleanup() {
 
         }
-    }, [])
+    }, [user])
 
     const renderRowSubComponent = row => {
         return (
