@@ -30,12 +30,40 @@ const StyledTitleGreen = styled.div`
         height: 15px;
          width: 15px;       
     }`
+
+const StyledContainer = styled(Container)`
+
+{   align-items: center;
+    display: flex;
+    flex-direction: column;
+    
+   
+}`
+
 //importar table
 
 function ReceiptList() {
 
     const [receipts, setReceipts] = useState([])
 
+    const openUrl = (cellProps) => {
+        console.log(cellProps.row.original)
+        window.open(cellProps.row.original.storage);
+    }
+
+    const markPayed = (cellProps) => {
+        db.collection('recibos')
+            .doc(cellProps.row.original.idRecibo)
+            .update({
+                estado: "Pagado"
+            }).then(function () {
+                console.log("Document successfully updated!");
+            })
+            .catch(function (error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+    }
     //useSate de recibos
 
     //define columns
@@ -68,7 +96,7 @@ function ReceiptList() {
                             {estado}
                             <StyledTitleRed></StyledTitleRed>
                         </div>
-                    else if (estado == "En Revisión")
+                    else if (estado == "En Revision")
                         return <div>
                             {estado}
                             <StyledTitleYellow></StyledTitleYellow>
@@ -79,43 +107,60 @@ function ReceiptList() {
                         </div>
                 }
             },
+
             {
-                Header: "Evidencia Documento",
-                Cell: () => (
-                    <span >
-                        <button type="button" className="btn btn-success btn-sm btn-block"  > Descargar</button>
-                    </span>
-                )
+                Header: 'Pago',
+                // Cell has access to row values. If you are curious what is inside cellProps, you can  console log it
+                Cell: (cellProps) => {
 
+                    const {
+                        storage,
+                    } = cellProps.row.original
 
+                    if (storage == "")
+                        return <StyledContainer>
+                            <button onClick={() => openUrl(cellProps)} type="button" class="btn btn-secondary btn-block btn-sm " disabled>Descargar Recibo</button>
+                        <button onClick={() => markPayed(cellProps)} type="button" class="btn btn-secondary btn-primary btn-block btn-sm" disabled >Marcar como Pagado</button>
+
+                        </StyledContainer>
+                    else {
+                        return   <StyledContainer>
+                        <button onClick={() => openUrl(cellProps)} type="button" class="btn  btn-primary  btn-block btn-sm" >Descargar Recibo</button>
+                        <button onClick={() => markPayed(cellProps)} type="button" class="btn btn-success btn-primary btn-block btn-sm" >Marcar como Pagado</button>
+                   </StyledContainer>
+                           
+                       
+                    }
+                }
             },
+           
 
         ],
-        []
+[]
     )
 
-    //useEffect con hacer query 
-    useEffect(() => {
+//useEffect con hacer query 
+useEffect(() => {
 
-        db.collection('recibos')
-            .onSnapshot(function (querySnapshot) {
-                var receipts = []
-                querySnapshot.forEach(function (doc) {
+    db.collection('recibos')
+        .onSnapshot(function (querySnapshot) {
+            var receipts = []
+            querySnapshot.forEach(function (doc) {
 
-                    var newReceipt = doc.data()
-                    newReceipt.idReceipt = doc.id
-                    receipts.push(newReceipt)
-                });
-                console.log(receipts);
-                setReceipts(receipts);
-            })
+                var newReceipt = doc.data()
+                newReceipt.idReceipt = doc.id
+                receipts.push(newReceipt)
+            });
+            console.log(receipts);
+            setReceipts(receipts);
+        })
 
-    }, []);
-    return (
-        <Container style={{ marginTop: 100 }}>
-            <TableContainer columns={columns} data={receipts} />
-        </Container>
-    );
+}, []);
+return (
+    <Container style={{ marginTop: 100 }}>
+        <TableContainer columns={columns} data={receipts} />
+    </Container>
+);
 }
 
 export default ReceiptList;

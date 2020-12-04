@@ -29,14 +29,14 @@ const ExpandPayment = ({ row }) => {
     const [totalPayment, setTotalPayment] = useState([])
     const [fileUrl, setFileUrl] = useState('');
     const [idRec, setidRec] = useState('');
-    
+
 
     useEffect(() => {
         setidRec(row.original.idRecibo);
         db.collection('reservas')
             .where("mes", "==", row.original.mes)
             .where("año", "==", row.original.año)
-            .where("idAdminEdificio","==",row.original.idAdminEdificio)
+           
 
             .onSnapshot(function (querySnapshot) {
                 var totalMesAño = 0
@@ -52,7 +52,7 @@ const ExpandPayment = ({ row }) => {
                 console.log(totalMesAño);
                 setTotalPayment(totalMesAño);
             })
-        
+
     }, [])
 
     const uploadReceipt = async (e) => {
@@ -64,20 +64,20 @@ const ExpandPayment = ({ row }) => {
         console.log(fileUrl)
     }
 
-    function updateStorage () {
+    function updateStorage() {
 
         return db.collection('recibos')
-        .doc(idRec)
-        .update({
-            storage: fileUrl,
-            estado: "En Revision"
-        }).then(function() {
-            console.log("Document successfully updated!");
-        })
-        .catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
+            .doc(idRec)
+            .update({
+                storage: fileUrl,
+                estado: "En Revision"
+            }).then(function () {
+                console.log("Document successfully updated!");
+            })
+            .catch(function (error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
 
     }
 
@@ -86,7 +86,7 @@ const ExpandPayment = ({ row }) => {
         e.preventDefault()
 
         updateStorage()
-            
+
     }
 
 
@@ -95,10 +95,17 @@ const ExpandPayment = ({ row }) => {
             <StyledContainer >
 
                 <form onSubmit={onSubmit}>
-                    <input type="file" onChange={uploadReceipt} />
-                    <StyledTitle>Total a Pagar</StyledTitle>
-                    <StyledText>{totalPayment}</StyledText>
-                    <button  className="btn btn-success btn-sm btn-block" >Subir Recibo</button>
+                    <StyledContainer>
+
+                        <StyledTitle>Total a Pagar</StyledTitle>
+                        <StyledText>{totalPayment}</StyledText>
+                        <StyledTitle>Elegir Archivo a Subir</StyledTitle>
+                        <input type="file" onChange={uploadReceipt} />
+                        <StyledText>    </StyledText>
+                        <button className="btn btn-success btn-sm btn-block" >Subir Recibo</button>
+
+                    </StyledContainer>
+
 
                 </form>
 
