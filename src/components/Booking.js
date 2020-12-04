@@ -128,6 +128,7 @@ function Booking() {
         ];
         var day = parseInt(date.substring(8, 10));
         var month = parseInt(date.substring(5, 7));
+        var year = date.substring(0, 4);
 
         var hourStartEnd = horaInicio + ":00 - " + horaFin + ":00";
         var selectedModuleNumber = document.getElementById("bking__selectedModule");
@@ -145,6 +146,7 @@ function Booking() {
             nombreUsuario: userName,
             dia: day,
             mes: monthNames[month - 1],
+            año: year,
             nombreEdificio: buildingName,
             nombreModulo: strselectedModule,
             horaInicioFin: hourStartEnd,

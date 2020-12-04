@@ -1,11 +1,12 @@
 
-import React, { useEffect,useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { auth, db, firebaseConfig } from '../../firebase';
 import moment from 'moment';
 import TableContainer from '../BiwoAdmin/TableContainer'
 import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import styled from 'styled-components';
+import ExpandPayment from './ExpandPayment'
 
 const StyledTitleRed = styled.div`
     {
@@ -35,7 +36,7 @@ const StyledTitleGreen = styled.div`
 function ReceiptsPayment() {
     var user = auth.currentUser;
     const [receiptsPayments, setReceiptsPayments] = useState([]);
-    const [fileUrl, setFileUrl] = useState('');
+
 
     function createReceipts() {
         if (user) {
@@ -66,9 +67,12 @@ function ReceiptsPayment() {
                         const MONTHS = () => {
                             const months = []
                             const dateStart = moment()
+                            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+                            ];
                             const dateEnd = moment().add(48, 'month')
                             while (dateEnd.diff(dateStart, 'months') >= 0) {
-                                months.push(dateStart.format('MMMM'))
+                                months.push(monthNames[dateStart.format('MM')-1])
                                 dateStart.add(1, 'month')
                             }
                             return months
@@ -136,23 +140,24 @@ function ReceiptsPayment() {
 
     function getReceipts() {
 
-        if(user){
+        if (user) {
             db.collection('recibos').where("idAdminEdificio", "==", user.uid)
-            .onSnapshot(function (querySnapshot) {
-                var receipts = []
-                querySnapshot.forEach(function (doc) {
+                .onSnapshot(function (querySnapshot) {
+                    var receipts = []
+                    querySnapshot.forEach(function (doc) {
 
-                    var newReceipt = doc.data()
-                    newReceipt.idReceipt = doc.id
-                    receipts.push(newReceipt)
-                });
-                console.log(receipts);
-                setReceiptsPayments(receipts);
-            })
+                        var newReceipt = doc.data()
+                        newReceipt.idReceipt = doc.id
+                        receipts.push(newReceipt)
+                    });
+                    console.log(receipts);
+                    setReceiptsPayments(receipts);
+
+                })
 
         }
 
-        
+
 
     }
 
@@ -167,9 +172,20 @@ function ReceiptsPayment() {
         }
     }, [])
 
+    const renderRowSubComponent = row => {
+        return (
+            <ExpandPayment row={row} ></ExpandPayment>
+        )
+    }
+
     const columns = useMemo(
         () => [
-            
+
+            {
+                Header: "Edificio",
+                accessor: "nombreEdificio",
+            },
+
             {
                 Header: "Mes",
                 accessor: "mes",
@@ -202,13 +218,15 @@ function ReceiptsPayment() {
             },
             {
                 Header: "Pagar",
-                Cell: () => (
-                    <form onSubmit={onSubmit}>
 
-                        <input type="file" onChange={uploadReceipt} />
+                id: 'expander', // 'id' is required
 
-                        <button onClick={onSubmit} >Subir Recibo</button>
-                    </form>
+
+                Cell: ({ row }) => (
+                    <span {...row.getToggleRowExpandedProps()}>
+                        <button type="button" className="btn btn-success btn-sm btn-block"  > Pagar</button>
+                    </span>
+
                 )
 
 
@@ -217,27 +235,12 @@ function ReceiptsPayment() {
         ])
 
 
-    const uploadReceipt = async (e) => {
-        const file = e.target.files[0]
-        const storageRef = firebaseConfig.storage().ref()
-        const fileRef = storageRef.child(file.name)
-        await fileRef.put(file)
-        setFileUrl(await fileRef.getDownloadURL())
-    }
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        getReceipts().then(result => {
-            result.forEach(docSnapshot => {
-                console.log(docSnapshot.data());
-                docSnapshot.set()
-            });
-        });
-    }
+
 
     return (
         <Container style={{ marginTop: 100 }}>
-            <TableContainer columns={columns} data={receiptsPayments} />
+            <TableContainer columns={columns} data={receiptsPayments} renderRowSubComponent={renderRowSubComponent} />
         </Container>
     )
 }
