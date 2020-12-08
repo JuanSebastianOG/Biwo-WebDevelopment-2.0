@@ -68,7 +68,7 @@ function Booking() {
                 if (doc.exists) {
                     setEdificioID(doc.data().idEdificio)
                     setUserName(doc.data().name + " " + doc.data().lastname)
-                    console.log("Document data USUARIO:", doc.data().idEdificio);
+                    console.log("Document data USUARIO:", doc.data().email);
                     db.collection('edificios').doc(doc.data().idEdificio).
                         onSnapshot(function (doc) {
                             if (doc.exists) {
