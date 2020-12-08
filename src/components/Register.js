@@ -2,25 +2,30 @@ import React, { useState, useEffect } from 'react'
 import "../css/Register.css"
 import { db, auth } from '../firebase';
 import { useHistory } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
+
+
 /* eslint-disable */
 function Register() {
-    const history = useHistory();
 
+    const [{ userInfo }, dispatch] = useStateValue();
+    const history = useHistory();
+    var edificioCode = null;
     const [userData, setUserData] = useState({
         name: '',
         lastname: '',
         date: '',
         phonenumber: '',
         email: '',
-        password: ''
+        password: '',
     });
-
 
     const [phoneError, setPhoneError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [existEmail, setExistEmail] = useState('');
     const [allowSubmit, setAllowSubmit] = useState(false);
+
 
 
     const validEmailRegex =
@@ -41,7 +46,9 @@ function Register() {
                 )
                 break;
             case 'email':
-                var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+                if (validEmails) {
+                    var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+                }
 
                 if (!arraycontainsemail) {
                     setExistEmail('')
@@ -95,12 +102,35 @@ function Register() {
     }
 
     function validEmail() {
-        var arraycontainsemail = (validEmails[0].indexOf(userData.email) > -1);
+
+        //Saca los correos del arreglo de maps
+        let correos = validEmails[0].map(({ correo }) => ({ correo }));
+        let edificios = validEmails[0].map(({ edificio }) => ({ edificio }));
+
+        //Crea el arreglo para meter los correos y posteriormente validar
+        const arrCorreos = new Array();
+
+        //Llena el arreglo para validar
+        correos.map(correo => {
+            arrCorreos.push(correo.correo);
+        })
+        //Crea el arreglo para meter los correos y posteriormente validar
+        const arrEdificios = new Array();
+
+        //Llena el arreglo para validar
+        edificios.map(edificio => {
+            arrEdificios.push(edificio.edificio);
+        })
+
+        var arraycontainsemail = (arrCorreos.indexOf(userData.email) > -1);
+        var code = arrEdificios[arrCorreos.indexOf(userData.email)]
+        edificioCode = code;
+
 
         if (arraycontainsemail) {
+
             setExistEmail('');
             return true;
-
         }
         else {
             setExistEmail('El correo no existe. Comuniquese con el administrador');
@@ -120,9 +150,7 @@ function Register() {
 
     const submitRegister = e => {
         e.preventDefault();
-
         if (validEmail()) {
-
 
             var userDataF = {
                 name: userData.name,
@@ -130,22 +158,25 @@ function Register() {
                 date: userData.date,
                 phonenumber: userData.phonenumber,
                 email: userData.email,
+                idEdificio: edificioCode,
             };
-            console.log(userData.name, 'holiii')
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
-                    db.collection("usuarios").add(
-                        userDataF
-                    )
-                        .then(function (docRef) {
-                            console.log("Document written with ID: ", docRef.id);
-                            history.push("/reservar");
-                        })
+                      
+                    db.collection("usuarios").doc(auth.currentUser.uid).set({
+                        name: userData.name,
+                        lastname: userData.lastname,
+                        date: userData.date,
+                        phonenumber: userData.phonenumber,
+                        email: userData.email,
+                        idEdificio: edificioCode,
+                    })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
+                    history.push("/reservar");
                 })
-                .catch((e) => setEmailError("Ya existe una cuenta asociada a este correo"));
+                .catch((e) => alert(e.message));
 
         }
     }

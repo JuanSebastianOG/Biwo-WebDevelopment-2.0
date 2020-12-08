@@ -1,5 +1,33 @@
 import React from 'react'
 import "../css/LastBookings.css"
+import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
+
+const DropButton = styled.button`
+    {
+    
+            font-family: 'Helvetica Text';
+            font-size: 20px;
+            border: 0px;
+            background: #C5F8CE;
+            outline:none;
+            width:20%;
+            height:100%;
+            color:#002980;
+            
+            border-radius: 0  15px 15px 0;
+
+
+        
+        @media (max-width: 550px) {
+  
+            border-radius: 0  0 15px 0;
+            width:50%;
+            font-size: 12px;
+            
+        }
+
+}`
 
 function LastBookings({ active, day, month, building, module, hour }) {
     let classNameDiv = "lastBookings";
@@ -22,6 +50,12 @@ function LastBookings({ active, day, month, building, module, hour }) {
                 <h6>{module}</h6>
                 <h5>{hour}</h5>
             </div>
+            <DropButton>
+            <Link to ="/feedback">Reseña
+               &#9734;</Link>
+               
+            </DropButton>
+           
         </div>
     )
 }

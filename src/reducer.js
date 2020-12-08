@@ -1,5 +1,6 @@
 export const initialState = {
-    user: null
+    user: null,
+    userInfo:["vacio"]
 };
 
 function reducer (state,action){
@@ -11,8 +12,14 @@ function reducer (state,action){
                 ...state,
                 user:action.user,
             };
-        default:
-        return state;
+        
+        case'USER_REGISTER':
+        return{
+            ...state,
+            userInfo:action.userInfo,
+        };
+    default:
+    return state;
     }
 }
 

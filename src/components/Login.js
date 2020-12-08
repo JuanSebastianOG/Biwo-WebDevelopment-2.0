@@ -15,11 +15,27 @@ function Login() {
         console.log( username, password)
         auth.signInWithEmailAndPassword(username, password)
         .then(()=>{
-            history.push("/misreservas");
+
+            auth.currentUser.getIdTokenResult()
+            .then((idTokenResult) => {
+              // Confirm the user is an Admin.
+              if (idTokenResult.claims.superadmin) {
+                history.push("/adminReservas");
+              } else if(idTokenResult.claims.admin) {
+                history.push("/edAdminPagos");
+              }
+              else{
+                history.push("/misReservas");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+            
         })
         .catch((e)=> alert(e.message));
 
-        
     }
     const userRegister = (e) => {
         e.preventDefault();

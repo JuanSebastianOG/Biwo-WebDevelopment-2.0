@@ -6,6 +6,7 @@
     margin-top:40px;
     margin-left:80px;
     color: #002980;
+    font-weight: 700;
 }
 
 .help__containerFlex{
@@ -79,11 +80,12 @@
 
     }
     .help{
-        align-items: center;
+        align-items: center !important;
     }
     .help>h1{
         margin-top:40px;
         margin-left:0px;
+        text-align: center;
     }
     .help__containerFlexRight{
         align-items: center;

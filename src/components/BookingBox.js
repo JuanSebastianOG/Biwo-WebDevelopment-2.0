@@ -1,6 +1,6 @@
 import React from 'react'
-
 import styled from 'styled-components/macro';
+import {  db } from '../firebase';
 
 const BookingContainer = styled.div`
     {
@@ -210,19 +210,20 @@ const DropButton = styled.div`
         align-items: center;
         width:6em;
         height:100%;
-        background-color: #002980;
         color:white;
-        border-radius: 0  15px 15px 0;
+        border-radius: 15px  0 0 0;
 
         button{
             font-family: 'Helvetica Text';
             font-size: 20px;
             border: 0px;
-            background: none;
+            background: #C5F8CE;
             outline:none;
             width:100%;
             height: 100%;
-            color:white;
+            color:#002980;
+            border-right: 0px solid  white;
+            border-radius: 0  15px 15px 0;
 
 
         }
@@ -239,7 +240,19 @@ const DropButton = styled.div`
     }`
 
 
-function BookingBox({ day, month, building, module, hour }) {
+function BookingBox({ day, month, building, module, hour, id }) {
+    
+    function releaseBooking (){
+
+        db.collection("reservas").doc(id).delete().then(function() {
+            //window.location.reload();
+            console.log("Document successfully deleted!");
+            
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+
+    }
     return (
         <BookingContainer>
             <DateField>
@@ -259,11 +272,9 @@ function BookingBox({ day, month, building, module, hour }) {
                         <span> {hour}</span>
                     </TimeField>
                     <ResponsiveCont2>
-                        <EditButton>
-                            <button>Editar</button>
-                        </EditButton>
+                        
                         <DropButton>
-                            <button>Liberar</button>
+                            <button onClick={releaseBooking}>Liberar</button>
                         </DropButton>
                     </ResponsiveCont2>
                 </ResponsiveCont1>
@@ -273,12 +284,9 @@ function BookingBox({ day, month, building, module, hour }) {
 
 
             <DisplayButtons>
-                <EditButton>
-                    <button>Editar</button>
-                </EditButton>
-
+        
                 <DropButton>
-                    <button>Liberar</button>
+                    <button onClick={releaseBooking}>Liberar</button>
                 </DropButton>
             </DisplayButtons>
 

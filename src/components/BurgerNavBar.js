@@ -75,7 +75,7 @@ const signOutUser = () =>{
                 <h1>Mis Reservas</h1>
             </StyledLink>
             <hr />
-            <StyledLink to="/administar"  >
+            <StyledLink to="/administrar"  >
                 <h1>Administrar</h1>
             </StyledLink>
             <hr />
