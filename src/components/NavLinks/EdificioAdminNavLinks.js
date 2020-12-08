@@ -18,6 +18,9 @@ function EdificioAdminNavLinks({active}) {
         
     }
 
+    
+    
+
         let linkClassEdPagos = "navbar-login__link";
         let linkClassEdResidentes = "navbar-login__link";
         let linkClassEdReservas = "navbar-login__link";
@@ -49,9 +52,6 @@ function EdificioAdminNavLinks({active}) {
                     </Link>
                     <Link to={'/edAdminReservas'} className={linkClassEdReservas}   >
                         <h1>{'Reservas'}</h1>
-                    </Link>
-                    <Link to={'/edAdminEdificio'} className={linkClassEdAdminEdificio} >
-                        <h1>{'Mi Edificio'}</h1>
                     </Link>
                     
                     <Link className="navbar-login__linksIcon" to="/" onClick = {signOutUser}  > <ExitToAppIcon  /></Link>

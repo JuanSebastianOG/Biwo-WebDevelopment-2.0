@@ -15,34 +15,48 @@ import ReceiptsPayment from './components/BuildingAdmin/ReceiptsPayment';
 import BuildingsList from './components/BiwoAdmin/BuildingsList';
 import { auth } from './firebase';
 import {useStateValue} from './components/StateProvider'
+import { useHistory } from "react-router-dom";
+
 
 import AddAdmin from './components/AddAdmin';
+import styled from 'styled-components'; 
 import BookingsList from './components/BiwoAdmin/BookingsList';
+
+const StyledTitle= styled.h1`
+ margin-top:40px;
+    margin-left:80px;
+    color: #002980;
+    font-weight: 700;
+    display: block;
+`;
 
 function App() {
 
   const [user,dispatch] = useStateValue ();
   console.log(user)
-
+  const history = useHistory();
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) =>{
-      if(authUser)
-      {
-        dispatch({
-          type: "USER_SIGN_IN/OUT",
-          user: authUser
-        })
-      }
-      else{
-        dispatch({
-          type: "USER_SIGN_IN/OUT",
-          user: null
-        })
-      }
-    })
-    return () => {
-      unsubscribe();
+
+    if(auth.currentUser)
+    {
+      auth.currentUser.getIdTokenResult()
+      .then((idTokenResult) => {
+        // Confirm the user is an Admin.
+        if (idTokenResult.claims.superadmin) {
+          history.push("/adminReservas");
+        } else if(idTokenResult.claims.admin) {
+          history.push("/edAdminPagos");
+        }
+        else{
+          history.push("/misReservas");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
+    
+    
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
  
   return (
@@ -88,25 +102,25 @@ function App() {
 
           <Route path="/adminRecibos">
             <NavBar users active="adminRecibos" usertype={"superadmin"} />
-            <h1>Reporte de Recibos</h1>
+            <StyledTitle>Reporte de Recibos</StyledTitle>
             <ReceiptList></ReceiptList>
             
           </Route>
 
           <Route path="/adminReservas">
             <NavBar users active="adminReservas" usertype={"superadmin"} />
-            <h1>Reporte de Reservas</h1>
+            <StyledTitle>Reporte de Reservas</StyledTitle>
             <BookingsList></BookingsList>
           </Route>
 
           <Route path="/adminResidentes">
             <NavBar users active="adminResidentes" usertype={"superadmin"} />
-            <h1>Reporte de Residentes</h1>
+            <StyledTitle>Reporte de Residentes</StyledTitle>
             <ResidentList />
           </Route>
           <Route users path="/adminEdificios">
             <NavBar users active="adminEdificios" usertype={"superadmin"} />
-            <h1>Reporte de Edificios</h1>
+            <StyledTitle>Reporte de Edificios</StyledTitle>
             <BuildingsList/>
           </Route>
           <Route users path="/adminUsuarios">
@@ -120,21 +134,18 @@ function App() {
 
           <Route users path="/edAdminPagos">
             <NavBar users active="edAdminPagos" usertype={"edAdmin"} />
-            <h1>Pagos Edificio</h1>
+            <StyledTitle>Pagos Edificio</StyledTitle>
             <ReceiptsPayment></ReceiptsPayment>
           </Route>
           <Route users path="/edAdminResidentes">
             <NavBar users active="edAdminResidentes" usertype={"edAdmin"} />
-            <h1>Residentes Edificio</h1>
+            <StyledTitle>Residentes Edificio</StyledTitle>
           </Route>
           <Route users path="/edAdminReservas">
             <NavBar users active="edAdminReservas" usertype={"edAdmin"} />
-            <h1>Reservas Edificio</h1>
+            <StyledTitle>Reservas Edificio</StyledTitle>
           </Route>
-          <Route users path="/edAdminEdificio">
-            <NavBar users active="edAdminEdificio" usertype={"edAdmin"} />
-            <h1>Administracion Edificio</h1>
-          </Route>
+          
 
 
 

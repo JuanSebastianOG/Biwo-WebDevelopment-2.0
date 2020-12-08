@@ -2,10 +2,37 @@ import React, { useEffect } from 'react'
 import "../css/Landing.css"
 import moment from 'moment';
 import { auth, db } from '../firebase';
+import { useHistory } from "react-router-dom";
 
 
 function Landing() {
 
+    const history = useHistory();
+    useEffect(() => {
+
+
+        if (auth.currentUser) {
+            auth.currentUser.getIdTokenResult()
+                .then((idTokenResult) => {
+                    // Confirm the user is an Admin.
+                    if (idTokenResult.claims.superadmin) {
+                        history.push("/adminReservas");
+                    } else if (idTokenResult.claims.admin) {
+                        history.push("/edAdminPagos");
+                    }
+                    else {
+                        history.push("/misReservas");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        else {
+            history.push("/landing");
+        }
+
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="landing">
