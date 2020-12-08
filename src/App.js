@@ -43,12 +43,12 @@ function App() {
       .then((idTokenResult) => {
         // Confirm the user is an Admin.
         if (idTokenResult.claims.superadmin) {
-          history.push("/adminReservas");
+          history.push("/adminRecibos");
         } else if(idTokenResult.claims.admin) {
           history.push("/edAdminPagos");
         }
         else{
-          history.push("/misReservas");
+          history.push("/reservar");
         }
       })
       .catch((error) => {

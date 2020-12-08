@@ -21,7 +21,7 @@ function Landing() {
                         history.push("/edAdminPagos");
                     }
                     else {
-                        history.push("/misReservas");
+                        history.push("/reservar");
                     }
                 })
                 .catch((error) => {
