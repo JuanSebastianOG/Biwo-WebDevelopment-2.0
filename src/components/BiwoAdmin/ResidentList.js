@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import TableContainer from "./TableContainer"
+import TableContainer from "../BuildingAdmin/TableContainer"
 import { db } from '../../firebase.js'
 import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -17,7 +17,7 @@ function ResidentList() {
     const columns = useMemo(
         () => [
             {
-                Header: "Primer nombre",
+                Header: "Primer Nombre",
                 accessor: "name",
             },
             {
@@ -34,7 +34,7 @@ function ResidentList() {
                 disableSortBy: true
             },
             {
-                Header: 'Block',
+                Header: 'Bloquear',
                 // Cell has access to row values. If you are curious what is inside cellProps, you can  console log it
                 Cell: (cellProps) => {
                     return <button onClick={() => submitBooking(cellProps)} type="button" className="btn btn-danger btn-sm btn-block" >Bloquear</button>
