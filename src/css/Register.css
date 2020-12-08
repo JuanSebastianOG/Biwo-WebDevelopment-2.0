@@ -1,0 +1,116 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #0029809d;
+    opacity: 5; /* Firefox */
+    font-family: 'Helvetica Text'
+  }
+
+.reg{
+    display: grid;
+    place-items: center;
+    width: 100%;
+}
+
+
+.reg__title{
+    font-family: 'Neue Titles';
+    color: #002980;
+    margin-top: 50px;
+    font-size: xx-large;
+    border-bottom: solid 3px #002980;
+    
+}
+
+.reg__container{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 50px;
+    align-items: center;
+}
+
+.reg__container1{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    margin-left: auto;
+    
+    
+}
+.error {
+    color:#db2269;
+    font-size: 0.625em;
+    display: relative;
+  }
+  
+
+.reg__container2{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    margin-right: auto;
+    
+}
+
+.reg__containerInput{
+    border: 0;
+    border-bottom: 3px solid #002980;
+    outline:none;
+    width: 300px;
+    padding: 8px;
+    font-size: large;
+
+}
+
+.reg__containerLine{
+  border-left: 1px solid #002980;
+  height: 200px;
+  border-radius: 2px;
+  margin-right:30px;
+  margin-left:30px;
+
+}
+
+.reg__containerButton{
+    color: white;
+    background-color: #002980;
+    border:none;
+    padding: 1px 20px;
+    font-family: 'Helvetica Text';
+    font-size: large;
+    
+   
+}
+
+
+.reg__containerButton:disabled {
+    background: #999;
+    color: #555;
+    cursor: not-allowed;
+  }
+
+@media only screen and (max-width: 670px) {
+    .reg__container{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .reg__container1{
+        margin-right: auto; 
+        margin-left: auto;
+        height: 300px;
+    }
+    .reg__container2{
+        margin-right: auto; 
+        margin-left: auto;
+        height: 300px;
+    }
+    .reg__containerLine{
+        display: none;
+      }
+    .reg__container2{
+        margin-top: 20px;
+    }
+
+}

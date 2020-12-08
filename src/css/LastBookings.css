@@ -1,0 +1,68 @@
+.lastBookingsactive{
+    height: 35%;
+    margin-bottom:5px ;
+    border-radius: 25px;
+    display: flex;
+    place-items: center;
+    justify-content: space-evenly; 
+    color: white;
+    background-color: #002980;
+    overflow-y: scroll;
+}
+.lastBookingsactive::-webkit-scrollbar {
+    display: none;
+  }
+.lastBookings__dateactive{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.lastBookings__infoactive{
+    max-width: 60%;
+    margin: auto;
+}
+.lastBookings__infoactive>h4{
+    color:white;
+}
+.lastBookings__infoactive > h6{
+    color:white;
+    opacity: 0.8;
+}
+.lastBookings{
+    height: 35%;
+    margin-bottom:5px ;
+    border-radius: 25px;
+    display: flex;
+    place-items: center;
+    justify-content: space-evenly; 
+    overflow-y: scroll;
+    border-color:#0029807e;
+
+    border-style: solid ;
+}
+.lastBookings::-webkit-scrollbar {
+    display: none;
+  }
+.lastBookings__date{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    color: #002980;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.lastBookings__info{
+    max-width: 60%;
+    margin: auto;
+}
+.lastBookings__info>h4{
+    color:#002980;
+    
+}
+.lastBookings__info > h6{
+    color:#002980;
+    opacity: 0.5;
+}

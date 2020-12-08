@@ -1,67 +1,129 @@
-.navbar-landing{
-        background-color: transparent;
-        display: flex;
-        align-items:center;
-        position:sticky;
-        top: 0;
-        z-index: 100;
-        justify-content: space-between;
-        height: 50px;
-        width: 100%;
+.navbar-landing {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+    transition: 1s;
+
 }
-.navbar-login{
+
+.navbar-login {
     background-color: #002980;
     display: flex;
-    align-items:center;
-    position:sticky;
+    align-items: center;
+    position: sticky;
     top: 0;
     z-index: 100;
     justify-content: space-between;
     height: 50px;
     width: 100%;
 }
-.navbar__logo{
+
+.navbar__logo {
     width: 130px;
     object-fit: contain;
-    margin:5x;
+    margin: 5x;
     margin-right: 20px;
     padding-left: 25px;
 }
-.navbar__loginlinkElements{
+
+.navbar__loginlinkElements {
     margin-right: 20px;
     margin-left: 10px;
     display: flex;
     flex-direction: column;
 }
 
-.navbar__loginlinkElementsOne
-{
-    font-family: 'Neue Titles';
-    color: #C5F8CE;
-}
-.navbar__loginlinkElementsTwo
-{
+.navbar__loginlinkElementsOne {
     font-family: 'Neue Titles';
     color: #C5F8CE;
 }
 
-.navbar__loginlink{
+.navbar__loginlinkElementsTwo {
+    font-family: 'Neue Titles';
+    color: #C5F8CE;
+}
+
+.navbar__loginlink {
     align-items: center;
     display: flex;
     flex-direction: row;
     text-decoration: none;
 
 }
-.navbar__loginlink > .MuiAvatar-root{
+
+.navbar__loginlink>.MuiAvatar-root {
     color: #C5F8CE;
     background-color: lightgray;
     height: 30px;
     width: 30px;
-
 }
 
 
-.navbar-login__hideElements{
+.navbar-login__hideElements {
     display: none;
 }
 
+.navbar-login__links {
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+    text-decoration: none;
+}
+
+.navbar-login__link {
+    color: white;
+    background-color: #002980;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.navbar-login__link:hover {
+
+    color: rgb(129, 156, 216);
+    border-bottom: solid 5px #C5F8CE;
+    transition: border-bottom 0.4s;
+
+}
+
+.navbar-login__linkActive {
+    color: #002980;
+    background-color: white;
+    padding: 20px;
+    text-decoration: none !important;
+    transition: 1s;
+
+    height: 100%;
+}
+
+.navbar-login__link>h1 {
+    font-size: medium;
+}
+
+.navbar-login__linkActive>h1 {
+    font-size: medium;
+}
+
+.navbar-login__links>.MuiSvgIcon-root {
+    color: #C5F8CE;
+    margin-left: 10px;
+    height: 30px;
+    width: 30px;
+}
+.navbar-login__linksIcon {
+    color: #C5F8CE;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .navbar-login__links {
+        display: none;
+
+    }
+
+}

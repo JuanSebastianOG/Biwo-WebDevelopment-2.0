@@ -1,0 +1,188 @@
+.bking{
+    background-image: url("https://i.ibb.co/2d8pLGZ/BIWO-ISOTIPO-VERDE.png");
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 10%;
+    width: 100%;
+    height: 100%;
+}
+.bking__blocked{
+    display: grid;
+    height: 90vh;
+    place-items: center;
+}
+.bking__blocked>h5{
+    color: #d9534f;
+    text-align: center;
+    margin: 5rem;
+}
+.bking__container{
+    display: flex;
+    flex-direction: column;
+}
+.bking__container>h1{
+    margin-top:40px;
+    margin-left:80px;
+    color: #002980;
+    font-weight: 700;
+    display: block;
+}
+.bking__containerFlex{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 70vh;
+}
+
+.bking_containerFlexImg{
+    width: 200px;
+    height: auto;
+    margin-left: 80px;
+}
+
+.bking_containerFlexForm {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height:350px;
+    margin-right: 50px;
+    margin-left: 30px;
+    width:350px;
+}
+.bking_containerFlexForm >label {
+    font-family: 'Neue Titles';
+    font-size: 20px;
+
+}
+.bking__containerTimes{
+    display:flex;
+    flex-direction: row;
+    
+    justify-content: space-evenly;
+}
+.bking__containerTimes>h1{
+    font-size:30px;
+    color: #002980;    
+}
+.bking__containerButton{
+    display:flex;
+    flex-direction: row;
+    margin-top:20px;
+    align-items: center;
+    
+    justify-content: space-between;
+
+}
+.bking__containerButton>label{
+  
+    font-family: "Neue Titles";
+    
+}
+.bking__modules{
+    outline: none;
+    border: none;
+    color: #707070;
+    border-bottom: solid 3px #002980;
+    padding: 0.5rem;
+
+} 
+.bking__date{
+    outline: none;
+    border: none;
+    border-bottom: solid 3px #002980;
+    color: #707070;
+}
+.bking__Button{
+    
+    color: white;
+    background-color: #002980;
+    border:none;
+    padding: 0.8rem 1.2rem;
+    font-family: 'Helvetica Text';
+    font-size: small;
+}
+.bking__Button:disabled {
+    background: #999;
+    color: #555;
+    cursor: not-allowed;
+    padding: 0.8rem 1.2rem;
+  }
+.bking_containerFlexForm > input{
+    color: #707070;
+    outline: none;
+    border: none;
+    border-bottom: solid 3px #002980;
+    padding: 0.5rem;
+}
+.bking_containerFlexForm >label {
+    color: #002980;
+    font-size: large;
+    margin-top: 0.5rem;
+
+}
+.bking__containerButton > label{
+    color: #002980;
+    font-size: large;
+    padding: 1rem;
+}
+.bking__containerTimes > select{
+    outline: none;
+    border: none;
+    border-bottom: solid 3px #002980;
+    color: #707070;
+
+}
+.bking_containerFlexFormHours{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.bking_containerFlexFormHours > label{
+    color: #002980;
+    font-size: large;
+    font-family: "Neue Titles";
+
+}
+@media only screen and (max-width: 660px) {
+    
+        .bking__container {
+            align-items: center;
+        }
+        
+        .bking__container>h1 {
+             margin-left: 0px; 
+
+        }
+        .bking__containerFlex {
+            flex-direction: column;
+            height: unset; 
+
+        }
+        .bking_containerFlexImg {
+            width: 100px;
+            margin-left: 0px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .bking_containerFlexForm >label {
+            margin-top: 2rem;
+        }
+}
+
+@media only screen and (max-width: 480px) {
+    .bking_containerFlexForm {
+        
+        height:350px;
+        width:90%;
+    }
+    
+}
+@media only screen and (max-width: 380px) {
+    .bking_containerFlexForm {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    
+}

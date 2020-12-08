@@ -1,11 +1,15 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #0029809d;
+    opacity: 5; /* Firefox */
+    font-family: 'Helvetica Text';
+    font-size: large;
+  }
+
 .login{
     display: grid;
     place-items: center;
-    height: 100vh;
-    background-image: url("https://i.ibb.co/hV09PpM/Imagen-10.png")  ;
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: 30%;
+
+    
 }
 .login__container{
     display: flex;
@@ -14,13 +18,18 @@
     background-color: transparent;
     height: 70vh;
     width: 70vw;
+    margin-top: 50px;
 }
 .login__container >h2{
-    color:#002980;
+    font-family: 'Neue Titles';
+    color: #002980;
+  
+    font-size: xx-large;
     border-bottom: solid 3px #002980;
 
 }
 .login__containerForm{
+    margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
@@ -33,12 +42,14 @@
     border-bottom: solid 3px #002980;
     padding: 8px;
     width: 300px;
+    outline:none;
 }
 .login__containerFormPassword{
     border: none;
     border-bottom: solid 3px #002980;
     padding: 8px;
     width: 300px;
+    outline:none;
 
 
 }
@@ -46,16 +57,26 @@
     color: white;
     background-color: #002980;
     border:none;
-    padding: 10px 20px;
+    padding: 1px 20px;
+    font-family: 'Helvetica Text';
+    font-size: large;
+    width:100%;
+    margin-top:50px;
 }
 .login__containerFormRegisterButton{
     color: #002980;
     background-color: white;
-    padding: 10px 20px;
+    padding: 1px 20px;
     margin-top: 20px ;
     border: solid 3px #002980;
-    
+    font-family: 'Helvetica Text';
+    font-size: large;
+    width: 100%;
+
 }
+
+
+
 .login__containerFormPassForg{
     display: flex;
     flex-direction: column;
@@ -72,9 +93,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-@media only screen and (max-width: 446px) {
-    .login{
-        background: none;
-    }
+    width:100%;
 }

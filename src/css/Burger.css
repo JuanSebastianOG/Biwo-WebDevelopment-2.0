@@ -1,0 +1,27 @@
+.burger {
+    width: 2rem;
+    height: 2rem;
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 20;
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .burger {
+        display: flex;
+        justify-content: space-around;
+        flex-flow: column nowrap;
+    }
+
+}
+
+.burger__Item{
+    width: 2rem;
+    height: 0.25rem;
+    border-radius: 10px;
+    transform-origin: 1px;
+    transition: all 0.3s linear;
+}
