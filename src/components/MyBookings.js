@@ -38,10 +38,10 @@ function MyBookings() {
 
     return (
         <div className="mybookings">
-            <h1>Tu reporte de Reservas</h1>
+            <h1>Tu Reporte de Reservas</h1>
             <div className="mybookings__middle">
                 <div className="mybookings__middleCont">
-                    <h4>Reservas previas</h4>
+                    <h4>Reservas Previas</h4>
                     <div className="mybookings__middleContBookings">
                         {
                             mybookings.map(booking =>
@@ -55,34 +55,7 @@ function MyBookings() {
                                     hour={booking.horaInicioFin}
                                 />))
                         }
-                        {/*<LastBookings
-                            active={true}
-                            day={24}
-                            month="Agosto"
-                            building="Edificio Reservas del Cedro"
-                            module="Modulo 1"
-                            hour="14:00 - 16:00" />
-                        <LastBookings
-                            active={false}
-                            day={15}
-                            month="Agosto"
-                            building="Edificio Reservas del Cedro"
-                            module="Modulo 1"
-                            hour="14:00 - 16:00" />
-                        <LastBookings
-                            active={false}
-                            day={12}
-                            month="Agosto"
-                            building="Edificio Reservas del Cedro el elefante feliz"
-                            module="Modulo 1"
-                            hour="14:00 - 16:00" />
-                        <LastBookings
-                            active={false}
-                            day={24}
-                            month="Agosto"
-                            building="Edificio Reservas del Cedro"
-                            module="Modulo 1"
-                            hour="14:00 - 16:00" />*/ }                   </div>
+                                     </div>
                 </div>
                 <div className="mybookings__middleCont">
                     <h4>Tiempo de uso</h4>

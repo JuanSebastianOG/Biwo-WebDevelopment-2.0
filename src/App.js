@@ -23,6 +23,7 @@ import { useHistory } from "react-router-dom";
 import AddAdmin from './components/AddAdmin';
 import styled from 'styled-components'; 
 import BookingsList from './components/BiwoAdmin/BookingsList';
+import Feedback from './components/Feedback';
 
 const StyledTitle= styled.h1`
  margin-top:40px;
@@ -81,6 +82,10 @@ function App() {
           <Route path="/misreservas">
             <NavBar users active="misreservas" usertype={"residente"} />
             <MyBookings />
+          </Route>
+          <Route path="/feedback">
+            <NavBar users active="misreservas" usertype={"residente"} />
+            <Feedback />
           </Route>
 
           <Route path="/reservar">
