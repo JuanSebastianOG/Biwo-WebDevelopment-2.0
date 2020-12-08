@@ -13,6 +13,7 @@ import ResidentList from './components/BiwoAdmin/ResidentList';
 import ReceiptList from './components/BiwoAdmin/ReceiptList';
 import ReceiptsPayment from './components/BuildingAdmin/ReceiptsPayment';
 import ResidentBuildingList from './components/BuildingAdmin/ResidentBuildingList';
+import BookingsBuildingList from './components/BuildingAdmin/BookingsBuildingList';
 import BuildingsList from './components/BiwoAdmin/BuildingsList';
 import { auth } from './firebase';
 import {useStateValue} from './components/StateProvider'
@@ -146,6 +147,7 @@ function App() {
           <Route users path="/edAdminReservas">
             <NavBar users active="edAdminReservas" usertype={"edAdmin"} />
             <StyledTitle>Reservas Edificio</StyledTitle>
+            <BookingsBuildingList></BookingsBuildingList>
           </Route>
           
 
