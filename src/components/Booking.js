@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import "../css/Booking.css"
 import { auth, db } from '../firebase';
-import moment from 'moment';
 
 
 function Booking() {
@@ -69,10 +68,9 @@ function Booking() {
                     setEdificioID(doc.data().idEdificio)
                     setUserName(doc.data().name + " " + doc.data().lastname)
                     console.log("Document data USUARIO:", doc.data().email);
-                    db.collection('edificios').doc(doc.data().idEdificio).
-                        onSnapshot(function (doc) {
+                    db.collection('edificios').doc(doc.data().idEdificio).onSnapshot(function (doc) {
                             if (doc.exists) {
-                                const unsub = db.collection('reservas').where("idEdificio", "==", doc.id)
+                                db.collection('reservas').where("idEdificio", "==", doc.id)
                                     .onSnapshot(function (querySnapshot) {
                                         var bookings = []
                                         querySnapshot.forEach(function (doc) {
@@ -92,7 +90,7 @@ function Booking() {
                                 setBuildingEndHour(doc.data().horaFin)
                                 setBuildingState(doc.data().estado)
 
-
+        
 
                             } else {
                                 // doc.data() will be undefined in this case
@@ -111,6 +109,7 @@ function Booking() {
         } else {
             // No user is signed in.
         }
+       
 
 
     }, [usersi]);

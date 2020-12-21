@@ -1,6 +1,6 @@
 
-import React, { useEffect, useMemo, useState } from 'react'
-import { auth, db, firebaseConfig } from '../../firebase';
+import React, { useEffect, useState } from 'react'
+import {  db, firebaseConfig } from '../../firebase';
 import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import styled from 'styled-components';
@@ -53,7 +53,7 @@ const ExpandPayment = ({ row }) => {
                 setTotalPayment(totalMesAño);
             })
 
-    }, [])
+    }, [row.original.idRecibo,row.original.año,row.original.mes])
 
     const uploadReceipt = async (e) => {
         const file = e.target.files[0]

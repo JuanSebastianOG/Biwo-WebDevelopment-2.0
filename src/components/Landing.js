@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import "../css/Landing.css"
-import moment from 'moment';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 import { useHistory } from "react-router-dom";
 
 

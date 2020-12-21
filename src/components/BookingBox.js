@@ -149,7 +149,7 @@ const TimeField = styled.div`
         
     }`
 
-const EditButton = styled.div`
+/*const EditButton = styled.div`
     {
         display: flex;
         flex-direction: column; 
@@ -178,7 +178,7 @@ const EditButton = styled.div`
         
         }
 
-    }`
+    }`*/
 
 const TimeResponsive = styled.div`{
     display: none;

@@ -9,8 +9,8 @@ function ResidentList() {
         const {
             email,
             date,
-          } = cellProps.row.original
-        console.log(email,date)
+        } = cellProps.row.original
+        console.log(email, date)
         //Cote for block user
     }
 
@@ -48,15 +48,19 @@ function ResidentList() {
         db.collection('usuarios')
             .onSnapshot(function (querySnapshot) {
                 var residents = []
+                var adminMail = "biwodev@gmail.com";
+
                 querySnapshot.forEach(function (doc) {
-                    residents.push(doc.data())
+                    console.log(doc.data().email)
+                    if (!(adminMail===doc.data().email))
+                        residents.push(doc.data())
                 });
                 setResidents(residents)
             })
     }, [])
     return (
-        <Container style={{ marginTop: 100}}>
-            <TableContainer id='tables' columns={columns} data={residents}/>
+        <Container style={{ marginTop: 100 }}>
+            <TableContainer id='tables' columns={columns} data={residents} />
         </Container>
     )
 }

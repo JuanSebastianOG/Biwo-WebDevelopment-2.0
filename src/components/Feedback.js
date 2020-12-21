@@ -3,7 +3,6 @@ import { Container } from "reactstrap"
 import styled from 'styled-components';
 import ReactStars from "react-rating-stars-component";
 import "../css/Help.css"
-import {  db } from '../firebase';
 import { useState } from 'react'
 
 import "../css/Help.css"
@@ -13,11 +12,7 @@ const StyledTitle = styled.h5`
         color: #002980;
         margin: 1rem;        
     }`
-const StyledText = styled.h6`
-    {
-        color: black;
-        margin: 0.1rem;        
-    }`
+
 const StyledContainer = styled(Container)`
 
 {   align-items: center;

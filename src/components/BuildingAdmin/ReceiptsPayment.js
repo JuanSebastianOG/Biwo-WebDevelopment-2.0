@@ -1,6 +1,6 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
-import { auth, db, firebaseConfig } from '../../firebase';
+import { auth, db } from '../../firebase';
 import moment from 'moment';
 import TableContainer from '../BiwoAdmin/TableContainer'
 import { Container } from "reactstrap"
@@ -51,7 +51,7 @@ function ReceiptsPayment() {
 
                     console.log(querySnapshot.docs.length);
 
-                    if (querySnapshot.docs.length == 0) {
+                    if (querySnapshot.docs.length === 0) {
 
                         console.log("no existe ingresadno por primer vez")
 
@@ -90,7 +90,7 @@ function ReceiptsPayment() {
                         }
 
 
-                        const monthsWithYears = new Array()
+                        const monthsWithYears = []
 
                         var nombreAdmin
 
@@ -211,17 +211,17 @@ function ReceiptsPayment() {
                     const {
                         estado,
                     } = cellProps.row.original
-                    if (estado == "No Pago")
+                    if (estado === "No Pago")
                         return <div>
                             {estado}
                             <StyledTitleRed></StyledTitleRed>
                         </div>
-                    else if (estado == "En Revision")
+                    else if (estado === "En Revision")
                         return <div>
                             {estado}
                             <StyledTitleYellow></StyledTitleYellow>
                         </div>
-                    else if (estado == "Pagado")
+                    else if (estado === "Pagado")
                         return <div>{estado}
                             <StyledTitleGreen></StyledTitleGreen>
                         </div>

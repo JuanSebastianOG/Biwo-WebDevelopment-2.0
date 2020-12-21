@@ -25,7 +25,7 @@ function ExpandBuilding({ row }) {
 
     const [modules, setModules] = useState([])
     const [selectedModule, setSelectedModule] = useState(0)
-    const [bookingsOnBlockday, setBookingsOnBlockday] = useState(false)
+    const [bookingsOnBlockday] = useState(false)
     const AddModules = modules.map(Add => Add)
     const [bookingsModuleBuilding, setBookingsModuleBuilding] = useState([])
 
@@ -54,7 +54,7 @@ function ExpandBuilding({ row }) {
 
 
 
-    }, [row.original.numModulos])
+    }, [row.original.numModulos,row.original.direccion])
 
 
     const submitBlockDays = (row) => {

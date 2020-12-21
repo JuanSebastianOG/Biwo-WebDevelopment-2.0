@@ -91,17 +91,17 @@ function ReceiptList() {
                     const {
                         estado,
                     } = cellProps.row.original
-                    if (estado == "No Pago")
+                    if (estado === "No Pago")
                         return <div>
                             {estado}
                             <StyledTitleRed></StyledTitleRed>
                         </div>
-                    else if (estado == "En Revision")
+                    else if (estado === "En Revision")
                         return <div>
                             {estado}
                             <StyledTitleYellow></StyledTitleYellow>
                         </div>
-                    else if (estado == "Pagado")
+                    else if (estado === "Pagado")
                         return <div>{estado}
                             <StyledTitleGreen></StyledTitleGreen>
                         </div>
@@ -117,7 +117,7 @@ function ReceiptList() {
                         storage,
                     } = cellProps.row.original
 
-                    if (storage == "")
+                    if (storage === "")
                         return <StyledContainer>
                             <button onClick={() => openUrl(cellProps)} type="button" class="btn btn-secondary btn-block btn-sm " disabled>Descargar Recibo</button>
                         <button onClick={() => markPayed(cellProps)} type="button" class="btn btn-secondary btn-primary btn-block btn-sm" disabled >Marcar como Pagado</button>
