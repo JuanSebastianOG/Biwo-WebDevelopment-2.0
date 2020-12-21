@@ -35,9 +35,32 @@ const StyledTitle= styled.h1`
 
 function App() {
 
+
+  const history = useHistory();
   const [user,dispatch] = useStateValue ();
   console.log(user)
-  const history = useHistory();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) =>{
+      if(authUser)
+      {
+        dispatch({
+          type: "USER_SIGN_IN/OUT",
+          user: authUser
+        })
+      }
+      else{
+        dispatch({
+          type: "USER_SIGN_IN/OUT",
+          user: null
+        })
+      }
+    })
+    return () => {
+      unsubscribe();
+    }
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+ 
   useEffect(() => {
 
     if(auth.currentUser)
