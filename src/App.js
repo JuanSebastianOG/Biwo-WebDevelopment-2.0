@@ -152,7 +152,6 @@ function App() {
           </Route>
           <Route users path="/adminEdificios">
             <NavBar users active="adminEdificios" usertype={"superadmin"} />
-            <StyledTitle>Añadir edificio</StyledTitle>
             <AddBuilding/>
 
             <StyledTitle>Reporte de Edificios</StyledTitle>
