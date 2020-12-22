@@ -116,7 +116,7 @@ function BuildingsList() {
 
     }, [])
     return (
-        <Container style={{ marginTop: 100 }}>
+        <Container style={{ marginTop: 40 }}>
             <TableContainer id='tables' columns={columns} data={buildings} renderRowSubComponent={renderRowSubComponent}
             />
         </Container>

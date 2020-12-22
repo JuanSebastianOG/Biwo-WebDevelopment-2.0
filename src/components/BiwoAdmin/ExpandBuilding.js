@@ -10,7 +10,7 @@ const SelectH2 = styled.h4`
         margin: 2rem;        
     }`
 
-    const ErrorH6 = styled.h4`
+const ErrorH6 = styled.h4`
     {
         text-align: center;
         color: #d9534f;     
@@ -54,7 +54,7 @@ function ExpandBuilding({ row }) {
 
 
 
-    }, [row.original.numModulos,row.original.direccion])
+    }, [row.original.numModulos, row.original.direccion])
 
 
     const submitBlockDays = (row) => {
@@ -113,6 +113,41 @@ function ExpandBuilding({ row }) {
                 });
             })
     }
+    const submitCreateModule = (row) => {
+        //Code for block days
+        const {
+            idEdificio,
+            idModulos
+        } = row.original
+        console.log(idModulos.size)
+
+        db.collection("modulos").add({
+            idEdificio: idEdificio,
+            nombreModulo: "Módulo " + (idModulos.length + 1),
+        }).then(function (docRefM) {
+            console.log("Se ha añadido el modulo")
+            idModulos.push(docRefM.id)
+            var buildingRef = db.collection("edificios").doc(idEdificio);
+            buildingRef.update({
+                idModulos,
+                numModulos: idModulos.length,
+            })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                    alert('Modulo añadido satisfactoriamente')
+                    window.location.reload();
+
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }).catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+
+
+    }
 
     const selectModuleChange = e => {
         setSelectedModule(e.target.value)
@@ -120,8 +155,6 @@ function ExpandBuilding({ row }) {
         setEndDate(null);
         setShowBlock(false)
         setShowMessage(false);
-
-
     }
     const onChange = dates => {
         const [start, end] = dates;
@@ -141,7 +174,7 @@ function ExpandBuilding({ row }) {
 
                 if (i !== 0)
                     date.setDate(date.getDate() + 1)
-               
+
                 var day = date.getDate()
                 var month = date.getMonth() + 1
                 var year = date.getFullYear()
@@ -152,13 +185,13 @@ function ExpandBuilding({ row }) {
                     month = '0' + month
                 }
                 const dateInFormat = year + "-" + month + "-" + day
-                console.log("aver qeu hay",bookingsModuleBuilding)
-                console.log("date in format",dateInFormat)
+                console.log("aver qeu hay", bookingsModuleBuilding)
+                console.log("date in format", dateInFormat)
 
                 bookingsModuleBuilding.forEach(function (doc) {
                     // if there is at least one booking on the specific module on the day it doesnt allow block button
                     //and show Error message
-                    console.log(doc.fecha , dateInFormat, doc.idModulo , row.original.idModulos[selectedModule])
+                    console.log(doc.fecha, dateInFormat, doc.idModulo, row.original.idModulos[selectedModule])
 
                     if (doc.fecha === dateInFormat && doc.idModulo === row.original.idModulos[selectedModule]) {
                         console.log("tengo  este día paila")
@@ -179,8 +212,9 @@ function ExpandBuilding({ row }) {
 
 
         <Container style={{ alignItems: 'center', display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
-
-            <SelectH2>1. Seleccione módulo a bloquear</SelectH2>
+            <SelectH2>1.Crear Módulo</SelectH2>
+            <button onClick={() => submitCreateModule(row)} type="button" className="btn btn-success btn-sm" >Crear modulo</button>
+            <SelectH2>2.1 Seleccione módulo a bloquear</SelectH2>
             <select className="bking__modules" onChange={selectModuleChange} id="bking__selectedModule">
                 {
                     AddModules.map((modules, key) => <option value={key} key={modules}>{modules}</option>)
@@ -188,7 +222,7 @@ function ExpandBuilding({ row }) {
             </select>
 
             <Container style={{ alignItems: 'center', display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
-                <SelectH2 >2. Seleccione días a bloquear</SelectH2>
+                <SelectH2 >2.2. Seleccione días a bloquear</SelectH2>
                 <DatePicker
                     selected={startDate}
                     onChange={onChange}
@@ -198,7 +232,7 @@ function ExpandBuilding({ row }) {
                     selectsRange
                     inline
                 />
-                
+
                 <Container style={{ height: '2rem' }}></Container>
                 {showMessage &&
                     <ErrorH6>No se puede bloquear, hay reserva en uno de los días escogidos </ErrorH6>
