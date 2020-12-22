@@ -79,17 +79,17 @@ function AddBuilding() {
             <div className="addBuilding">
                 <button onClick={() => showForm()} type="button" style={{ marginTop: 40 }} className="btn btn-danger btn-sm " >Cerrar formulario</button>
                 <form onSubmit={onSubmitBuilding} action="">
-                    <label htmlFor="">Dirección</label>
+                    <label htmlFor="" className="form__label" >Dirección</label>
                     <input onChange={changeHandler} required type="text" name="direccion" id="" placeholder="eg. (Cll 66 #22b - 61)" />
-                    <label htmlFor="">Hora inicio Jornada</label>
+                    <label htmlFor="" className="form__label">Hora inicio Jornada</label>
                     <input onChange={changeHandler} required type="number" name="horaInicio" id="" placeholder="1-23" min={1} max={23} />
-                    <label htmlFor="">Hora fin Jornada</label>
+                    <label htmlFor="" className="form__label">Hora fin Jornada</label>
                     <input onChange={changeHandler} required type="number" name="horaFin" id="" placeholder="2-24 mayor a inicio jornada " min={1} max={24} />
-                    <label htmlFor="">Nombre edificio</label>
+                    <label htmlFor="" className="form__label">Nombre edificio</label>
                     <input onChange={changeHandler} required type="text" name="nombre" id="" />
-                    <label htmlFor="">Cantidad de módulos </label>
+                    <label htmlFor="" className="form__label">Cantidad de módulos </label>
                     <input onChange={changeHandler} required type="number" name="numModulos" id="" min={1} max={15} placeholder="1-15" />
-                    <label htmlFor="">Tarifa módulo por hora </label>
+                    <label htmlFor="" className="form__label">Tarifa módulo por hora </label>
                     <input onChange={changeHandler} required type="number" name="tarifa" id="" min={1000} max={10000} placeholder="1000-10000" />
                     <button type="submit">Crear edificio</button>
                 </form>

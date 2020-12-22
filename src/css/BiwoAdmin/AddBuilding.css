@@ -17,7 +17,7 @@
     color: #707070;
     margin-bottom: 1rem;
 }
-.addBuilding > form > label{
+.form__label{
     font-family: 'Neue Titles';
     color: #002980;  
     font-size: medium;
