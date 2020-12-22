@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -11,21 +11,23 @@ import Landing from './components/Landing';
 import Help from './components/Help';
 import ResidentList from './components/BiwoAdmin/ResidentList';
 import ReceiptList from './components/BiwoAdmin/ReceiptList';
+import AddBuilding from './components/BiwoAdmin/AddBuilding';
+
 import ReceiptsPayment from './components/BuildingAdmin/ReceiptsPayment';
 import ResidentBuildingList from './components/BuildingAdmin/ResidentBuildingList';
 import BookingsBuildingList from './components/BuildingAdmin/BookingsBuildingList';
 import BuildingsList from './components/BiwoAdmin/BuildingsList';
 import { auth } from './firebase';
-import {useStateValue} from './components/StateProvider'
+import { useStateValue } from './components/StateProvider'
 import { useHistory } from "react-router-dom";
 
 
 import AddAdmin from './components/AddAdmin';
-import styled from 'styled-components'; 
+import styled from 'styled-components';
 import BookingsList from './components/BiwoAdmin/BookingsList';
 import Feedback from './components/Feedback';
 
-const StyledTitle= styled.h1`
+const StyledTitle = styled.h1`
  margin-top:40px;
     margin-left:80px;
     color: #002980;
@@ -37,19 +39,18 @@ function App() {
 
 
   const history = useHistory();
-  const [user,dispatch] = useStateValue ();
+  const [user, dispatch] = useStateValue();
   console.log(user)
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) =>{
-      if(authUser)
-      {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
         dispatch({
           type: "USER_SIGN_IN/OUT",
           user: authUser
         })
       }
-      else{
+      else {
         dispatch({
           type: "USER_SIGN_IN/OUT",
           user: null
@@ -60,31 +61,30 @@ function App() {
       unsubscribe();
     }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
- 
+
   useEffect(() => {
 
-    if(auth.currentUser)
-    {
+    if (auth.currentUser) {
       auth.currentUser.getIdTokenResult()
-      .then((idTokenResult) => {
-        // Confirm the user is an Admin.
-        if (idTokenResult.claims.superadmin) {
-          history.push("/adminRecibos");
-        } else if(idTokenResult.claims.admin) {
-          history.push("/edAdminPagos");
-        }
-        else{
-          history.push("/reservar");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((idTokenResult) => {
+          // Confirm the user is an Admin.
+          if (idTokenResult.claims.superadmin) {
+            history.push("/adminRecibos");
+          } else if (idTokenResult.claims.admin) {
+            history.push("/edAdminPagos");
+          }
+          else {
+            history.push("/reservar");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    
-    
+
+
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
- 
+
   return (
     <Router>
       <div className="app">
@@ -134,7 +134,7 @@ function App() {
             <NavBar users active="adminRecibos" usertype={"superadmin"} />
             <StyledTitle>Reporte de Recibos</StyledTitle>
             <ReceiptList></ReceiptList>
-            
+
           </Route>
 
           <Route path="/adminReservas">
@@ -151,7 +151,8 @@ function App() {
           <Route users path="/adminEdificios">
             <NavBar users active="adminEdificios" usertype={"superadmin"} />
             <StyledTitle>Reporte de Edificios</StyledTitle>
-            <BuildingsList/>
+            <AddBuilding />
+            <BuildingsList />
           </Route>
           <Route users path="/adminUsuarios">
             <NavBar users active="adminUsuarios" usertype={"superadmin"} />
@@ -177,7 +178,7 @@ function App() {
             <StyledTitle>Reservas Edificio</StyledTitle>
             <BookingsBuildingList></BookingsBuildingList>
           </Route>
-          
+
 
 
 

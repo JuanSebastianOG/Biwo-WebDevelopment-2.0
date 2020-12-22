@@ -113,4 +113,10 @@
         margin-top: 20px;
     }
 
+
+}
+@media only screen and (max-width: 400px) {
+    .reg__containerInput{
+        width: 250px;
+    }
 }

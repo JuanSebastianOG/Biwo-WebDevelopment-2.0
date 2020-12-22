@@ -1,0 +1,39 @@
+.addBuilding{
+    display: grid;
+    place-items: center;
+}
+.addBuilding > form{
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    width: 40%;
+    min-width: 250px;
+}
+.addBuilding > form > input{
+    border: none;
+    border-bottom: solid 3px #00298061;
+    padding: 0.5rem;
+    outline:none;
+    color: #707070;
+    margin-bottom: 1rem;
+}
+.form__label{
+    font-family: 'Neue Titles';
+    color: #002980;  
+    font-size: medium;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #70707080;
+}
+.addBuilding > form > button{
+    align-self: center;
+    font-family: "Helvetica Text";
+    width: 50%;
+    min-width: 125px;
+    background-color: #002980; 
+    color: white; 
+    font-size: medium;
+    outline: none;
+    border: none;
+    padding: 0.5rem;
+}
