@@ -11,6 +11,8 @@ import Landing from './components/Landing';
 import Help from './components/Help';
 import ResidentList from './components/BiwoAdmin/ResidentList';
 import ReceiptList from './components/BiwoAdmin/ReceiptList';
+import AddBuilding from './components/BiwoAdmin/AddBuilding';
+
 import ReceiptsPayment from './components/BuildingAdmin/ReceiptsPayment';
 import ResidentBuildingList from './components/BuildingAdmin/ResidentBuildingList';
 import BookingsBuildingList from './components/BuildingAdmin/BookingsBuildingList';
@@ -150,6 +152,9 @@ function App() {
           </Route>
           <Route users path="/adminEdificios">
             <NavBar users active="adminEdificios" usertype={"superadmin"} />
+            <StyledTitle>Añadir edificio</StyledTitle>
+            <AddBuilding/>
+
             <StyledTitle>Reporte de Edificios</StyledTitle>
             <BuildingsList/>
           </Route>
