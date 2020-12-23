@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import "../css/Booking.css"
 import { auth, db } from '../firebase';
-import Landing from './Landing';
-import NavBar from './NavBar';
+
 
 
 function Booking() {
 
-    const history = useHistory();
 
 
     const [date, setDate] = useState('');
@@ -65,48 +62,48 @@ function Booking() {
         if (usersi) {
             // User is signed in.
             setUserID(usersi.uid)
-            var docRef = db.collection("usuarios").doc(usersi.uid)
-            .onSnapshot(function (doc) {
-                if (doc.exists) {
-                    setEdificioID(doc.data().idEdificio)
-                    setUserName(doc.data().name + " " + doc.data().lastname)
-                    setUserState(doc.data().estado)
-                    db.collection('edificios').doc(doc.data().idEdificio).onSnapshot(function (doc) {
-                        if (doc.exists) {
-                            db.collection('reservas').where("idEdificio", "==", doc.id)
-                                .onSnapshot(function (querySnapshot) {
-                                    var bookings = []
-                                    querySnapshot.forEach(function (doc) {
-                                        bookings.push(doc.data())
-                                    });
-                                    setBookingsModuleBuilding(bookings)
-                                })
-                            setBuildingModules(doc.data().idModulos)
-                            var mod = []
-                            for (let i = 0; i < doc.data().idModulos.length; i++) {
-                                mod.push("Módulo " + (1 + i))
+            db.collection("usuarios").doc(usersi.uid)
+                .onSnapshot(function (doc) {
+                    if (doc.exists) {
+                        setEdificioID(doc.data().idEdificio)
+                        setUserName(doc.data().name + " " + doc.data().lastname)
+                        setUserState(doc.data().estado)
+                        db.collection('edificios').doc(doc.data().idEdificio).onSnapshot(function (doc) {
+                            if (doc.exists) {
+                                db.collection('reservas').where("idEdificio", "==", doc.id)
+                                    .onSnapshot(function (querySnapshot) {
+                                        var bookings = []
+                                        querySnapshot.forEach(function (doc) {
+                                            bookings.push(doc.data())
+                                        });
+                                        setBookingsModuleBuilding(bookings)
+                                    })
+                                setBuildingModules(doc.data().idModulos)
+                                var mod = []
+                                for (let i = 0; i < doc.data().idModulos.length; i++) {
+                                    mod.push("Módulo " + (1 + i))
+                                }
+                                setModules(mod)
+                                setBuildingModuleCost(doc.data().tarifa)
+                                setBuildingName(doc.data().nombre)
+                                setBuildingStartHour(doc.data().horaInicio)
+                                setBuildingEndHour(doc.data().horaFin)
+                                setBuildingState(doc.data().estado)
+
+
+
+                            } else {
+                                // doc.data() will be undefined in this case
+                                console.log("No such document!");
                             }
-                            setModules(mod)
-                            setBuildingModuleCost(doc.data().tarifa)
-                            setBuildingName(doc.data().nombre)
-                            setBuildingStartHour(doc.data().horaInicio)
-                            setBuildingEndHour(doc.data().horaFin)
-                            setBuildingState(doc.data().estado)
+                        })
 
 
-
-                        } else {
-                            // doc.data() will be undefined in this case
-                            console.log("No such document!");
-                        }
-                    })
-
-
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log("No such document!");
-                }
-            })
+                    } else {
+                        // doc.data() will be undefined in this case
+                        console.log("No such document!");
+                    }
+                })
         } else {
             // No user is signed in.
 
@@ -117,47 +114,49 @@ function Booking() {
     }, [usersi]);
 
     const submitBooking = e => {
-        let estado = true;
-        let horaFin = endHours[document.getElementById('out_time_hr').value]
-        let horaInicio = startHours[document.getElementById('in_time_hr').value]
-        let idEdificio = edificioID;
-        let idUsuario = userID;
-        let tiempoTotal = cantHours;
+        if (window.confirm("¿Esta seguro que quiere realizar esta reserva?")) {
 
-        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-        ];
-        var day = parseInt(date.substring(8, 10));
-        var month = parseInt(date.substring(5, 7));
-        var year = date.substring(0, 4);
+            let estado = true;
+            let horaFin = endHours[document.getElementById('out_time_hr').value]
+            let horaInicio = startHours[document.getElementById('in_time_hr').value]
+            let idEdificio = edificioID;
+            let idUsuario = userID;
+            let tiempoTotal = cantHours;
 
-        var hourStartEnd = horaInicio + ":00 - " + horaFin + ":00";
-        var selectedModuleNumber = document.getElementById("bking__selectedModule");
-        var strselectedModule = selectedModuleNumber.options[selectedModuleNumber.selectedIndex].text;
-        db.collection("reservas").add({
-            estado: estado,
-            fecha: date,
-            horaFin: horaFin,
-            horaInicio: horaInicio,
-            idEdificio: idEdificio,
-            idModulo: buildingModules[selectedModuleNumber.value],
-            idUsuario: idUsuario,
-            tiempoTotal: tiempoTotal,
-            costoReserva: bookingCost,
-            nombreUsuario: userName,
-            dia: day,
-            mes: monthNames[month - 1],
-            año: year,
-            nombreEdificio: buildingName,
-            nombreModulo: strselectedModule,
-            horaInicioFin: hourStartEnd,
-        }).then(function (docRef) {
-            alert("Su reserva ha sido existosa")
-            window.location.reload();
-        }).catch(function (error) {
-            console.error("Error adding document: ", error);
-        });
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ];
+            var day = parseInt(date.substring(8, 10));
+            var month = parseInt(date.substring(5, 7));
+            var year = date.substring(0, 4);
 
+            var hourStartEnd = horaInicio + ":00 - " + horaFin + ":00";
+            var selectedModuleNumber = document.getElementById("bking__selectedModule");
+            var strselectedModule = selectedModuleNumber.options[selectedModuleNumber.selectedIndex].text;
+            db.collection("reservas").add({
+                estado: estado,
+                fecha: date,
+                horaFin: horaFin,
+                horaInicio: horaInicio,
+                idEdificio: idEdificio,
+                idModulo: buildingModules[selectedModuleNumber.value],
+                idUsuario: idUsuario,
+                tiempoTotal: tiempoTotal,
+                costoReserva: bookingCost,
+                nombreUsuario: userName,
+                dia: day,
+                mes: monthNames[month - 1],
+                año: year,
+                nombreEdificio: buildingName,
+                nombreModulo: strselectedModule,
+                horaInicioFin: hourStartEnd,
+            }).then(function (docRef) {
+                alert("Su reserva ha sido existosa")
+                window.location.reload();
+            }).catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
+        }
     }
 
     function calculateStartHours() {
@@ -311,13 +310,13 @@ function Booking() {
                         </div>
                     </div>
                 )
-            }else {
+            } else {
                 return (
                     <div className="bking__blocked">
                         <h5>No se pueden realizar reservas, la cuenta ha sido bloqueada. Comuniquese con el administrador del edificio </h5>
                     </div>
                 )
-    
+
             }
 
         } else {

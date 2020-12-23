@@ -98,7 +98,6 @@ function ResidentList() {
                 var adminMail = "biwodev@gmail.com";
 
                 querySnapshot.forEach(function (doc) {
-                    console.log(doc.data().email)
                     if (!(adminMail === doc.data().email)) {
                         var newdoc = doc.data()
                         newdoc.idUsuario = doc.id

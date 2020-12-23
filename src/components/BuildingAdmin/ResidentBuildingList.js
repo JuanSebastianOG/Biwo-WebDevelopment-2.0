@@ -99,7 +99,6 @@ function ResidentBuildingList() {
                     .onSnapshot(function (querySnapshot) {
                         setBuildingState(querySnapshot.data().estado)
                     })
-                console.log('no estoy')
 
                 db.collection("usuarios").where("idEdificio", "==", doc.data().idEdificio)
                     .onSnapshot(function (querySnapshot) {
