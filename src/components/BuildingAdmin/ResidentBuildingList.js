@@ -5,6 +5,7 @@ import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 function ResidentBuildingList() {
     const [residentsBuild, setResidentsBuild] = useState([])
+    const [buildingState, setBuildingState] = useState(true)
 
     var user = auth.currentUser;
 
@@ -12,39 +13,43 @@ function ResidentBuildingList() {
         const {
             idUsuario,
         } = cellProps.row.original
-        console.log(cellProps.row.original)
-        //Code for block user
-        var userRef = db.collection("usuarios").doc(idUsuario);
+        if (window.confirm("Esta seguro que quiere bloquear al usuario?")) {
 
-        return userRef.update({
-            estado: false
-        })
-            .then(function () {
-                console.log("Document successfully updated!");
+            //Code for block user
+            var userRef = db.collection("usuarios").doc(idUsuario);
+
+            return userRef.update({
+                estado: false
             })
-            .catch(function (error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }
     }
     const unlockUser = (cellProps) => {
         const {
             idUsuario,
         } = cellProps.row.original
+        if (window.confirm("Esta seguro que quiere desbloquear al usuario?")) {
 
-        //Code for block user
-        var userRef = db.collection("usuarios").doc(idUsuario);
+            //Code for unblock user
+            var userRef = db.collection("usuarios").doc(idUsuario);
 
-        return userRef.update({
-            estado: true
-        })
-            .then(function () {
-                console.log("Document successfully updated!");
+            return userRef.update({
+                estado: true
             })
-            .catch(function (error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }
     }
 
 
@@ -89,6 +94,13 @@ function ResidentBuildingList() {
         if (user) {
             db.collection("usuarios").doc(user.uid).get().then(function (doc) {
 
+
+                db.collection("edificios").doc(doc.data().idEdificio)
+                    .onSnapshot(function (querySnapshot) {
+                        setBuildingState(querySnapshot.data().estado)
+                    })
+                console.log('no estoy')
+
                 db.collection("usuarios").where("idEdificio", "==", doc.data().idEdificio)
                     .onSnapshot(function (querySnapshot) {
                         var residentsBuilding = []
@@ -106,11 +118,19 @@ function ResidentBuildingList() {
         }
 
     }, [user])
-    return (
-        <Container style={{ marginTop: 100 }}>
-            <TableContainer id='tables' columns={columns} data={residentsBuild} />
-        </Container>
-    )
+    if (buildingState)
+        return (
+            <Container style={{ marginTop: 100 }}>
+                <TableContainer id='tables' columns={columns} data={residentsBuild} />
+            </Container>
+        )
+
+    else
+        return (
+            <div className="bking__blocked">
+                <h5>No se pueden revisar los usuarios, el servicio esta bloqueado. Comuníquese con Biwo para mas informacion </h5>
+            </div>
+        )
 }
 
 export default ResidentBuildingList

@@ -324,7 +324,6 @@ function Booking() {
             return (
                 <div className="bking__blocked">
                     <h5>No se pueden realizar reservas, el edificio esta bloqueado por un administrador </h5>
-
                 </div>
             )
 

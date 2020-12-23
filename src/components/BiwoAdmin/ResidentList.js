@@ -5,51 +5,53 @@ import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 function ResidentList() {
     const [residents, setResidents] = useState([])
-    const submitBooking = (cellProps) => {
-        const {
-            email,
-            date,
-        } = cellProps.row.original
-        console.log(email, date)
-        //Cote for block user
-    }
+
     const blockUser = (cellProps) => {
+
         const {
             idUsuario,
         } = cellProps.row.original
-        console.log(cellProps.row.original)
-        //Code for block user
-        var userRef = db.collection("usuarios").doc(idUsuario);
 
-        return userRef.update({
-            estado: false
-        })
-            .then(function () {
-                console.log("Document successfully updated!");
+
+        if (window.confirm("Esta seguro que quiere bloquear al usuario?")) {
+            //Code for block user
+            var userRef = db.collection("usuarios").doc(idUsuario);
+
+            return userRef.update({
+                estado: false
             })
-            .catch(function (error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }
+
     }
     const unlockUser = (cellProps) => {
         const {
             idUsuario,
         } = cellProps.row.original
 
-        //Code for block user
-        var userRef = db.collection("usuarios").doc(idUsuario);
+        if (window.confirm("Esta seguro que quiere desbloquear al usuario?")) {
 
-        return userRef.update({
-            estado: true
-        })
-            .then(function () {
-                console.log("Document successfully updated!");
+            //Code for block user
+
+            var userRef = db.collection("usuarios").doc(idUsuario);
+
+            return userRef.update({
+                estado: true
             })
-            .catch(function (error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }
     }
 
 
