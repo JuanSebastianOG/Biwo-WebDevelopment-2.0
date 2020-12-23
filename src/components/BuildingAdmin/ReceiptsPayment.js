@@ -173,7 +173,6 @@ function ReceiptsPayment() {
                         newReceipt.idReceipt = doc.id
                         receipts.push(newReceipt)
                     });
-                    console.log(receipts);
                     setReceiptsPayments(receipts);
 
                 })
