@@ -109,7 +109,6 @@ function BuildingsList() {
                     newdoc.idEdificio = doc.id
                     buildings.push(newdoc)
                 });
-                console.log(buildings)
                 setBuildings(buildings)
             })
 
