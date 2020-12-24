@@ -152,14 +152,6 @@ function Register() {
         e.preventDefault();
         if (validEmail()) {
 
-            var userDataF = {
-                name: userData.name,
-                lastname: userData.lastname,
-                date: userData.date,
-                phonenumber: userData.phonenumber,
-                email: userData.email,
-                idEdificio: edificioCode,
-            };
             auth.createUserWithEmailAndPassword(userData.email, userData.password)
                 .then(() => {
                       
@@ -170,6 +162,7 @@ function Register() {
                         phonenumber: userData.phonenumber,
                         email: userData.email,
                         idEdificio: edificioCode,
+                        estado:true,
                     })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
