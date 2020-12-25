@@ -133,7 +133,7 @@ exports.emailHelp = functions.firestore.document('/solicitudayudas/{solicitudayu
     });
 
 
-exports.scheduledMailsFunction = functions.pubsub.schedule('* * * * *').onRun((context) => {
+exports.scheduledMailsFunction = functions.pubsub.schedule('*/15 * * * *').onRun((context) => {
     var d = new Date();
     var newDate = new Date(d);
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -152,36 +152,39 @@ exports.scheduledMailsFunction = functions.pubsub.schedule('* * * * *').onRun((c
     if (month < 10) {
         month = '0' + month
     }
-   // if (minutes === 0) {
+    var years=year.toString();
+    var hourforquery=hour+1;
+    if (minutes === 0) {
         console.log(" Entre por inicio de hora ");
         db.collection('reservas')
-            .where("año", "==", year.toString())
-            .where("mes", "==", monthNames[month-1].toString)
+            .where("año", "==",years)
+            .where("mes", "==", monthNames[month-1])
             .where("dia", "==", Number(day))
-            .where("horaInicio", "==", Number(hour + 1))
+            .where("horaInicio", "==", hourforquery)
             .get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
                     // Send an mail for each user that have one booking in the next hour
-                    return console.log("entre 1 vez",doc.data());
+                    return console.log(doc.id, " => Envio de correo 1 hora ", doc.data().nombreUsuario);
+
                 });
                 return true;
             }).catch(function (error) {
                 console.log("Error getting document:", error);
             });
 
-    //}
+    }
     if (minutes === 45) {
         console.log(" Entre por 45 minutos ");
 
         db.collection('reservas')
-            .where("año", "==", year)
+            .where("año", "==", years)
             .where("mes", "==", monthNames[month-1])
-            .where("dia", "==", day)
-            .where("horaInicio", "==", (hour + 1))
+            .where("dia", "==", Number(day))
+            .where("horaInicio", "==",hourforquery)
             .get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
                     // Send an mail for each user that have one booking in the next 15 minutes
-                     console.log(doc.id, " => ", doc.data());
+                     console.log(doc.id, " => Envio de correo 15 minutos ", doc.data().nombreUsuario);
                 });
                 return console.log("Mails sended");
             }).catch(function (error) {
