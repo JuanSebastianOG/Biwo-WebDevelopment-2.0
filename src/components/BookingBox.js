@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro';
-import {  db } from '../firebase';
+import { db } from '../firebase';
 
 const BookingContainer = styled.div`
     {
@@ -241,17 +241,18 @@ const DropButton = styled.div`
 
 
 function BookingBox({ day, month, building, module, hour, id }) {
-    
-    function releaseBooking (){
 
-        db.collection("reservas").doc(id).delete().then(function() {
-            //window.location.reload();
-            console.log("Document successfully deleted!");
-            
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
+    function releaseBooking() {
+        if (window.confirm("¿Esta seguro que desea eliminar esta reserva?")) {
 
+            db.collection("reservas").doc(id).delete().then(function () {
+                //window.location.reload();
+                console.log("Document successfully deleted!");
+
+            }).catch(function (error) {
+                console.error("Error removing document: ", error);
+            });
+        }
     }
     return (
         <BookingContainer>
@@ -259,7 +260,7 @@ function BookingBox({ day, month, building, module, hour, id }) {
                 <span>{day}</span>
                 <span >{month}</span>
                 <TimeResponsive>
-                <span> {hour}</span>
+                    <span> {hour}</span>
                 </TimeResponsive>
             </DateField>
             <ResponsiveContainer>
@@ -272,7 +273,7 @@ function BookingBox({ day, month, building, module, hour, id }) {
                         <span> {hour}</span>
                     </TimeField>
                     <ResponsiveCont2>
-                        
+
                         <DropButton>
                             <button onClick={releaseBooking}>Liberar</button>
                         </DropButton>
@@ -284,7 +285,7 @@ function BookingBox({ day, month, building, module, hour, id }) {
 
 
             <DisplayButtons>
-        
+
                 <DropButton>
                     <button onClick={releaseBooking}>Liberar</button>
                 </DropButton>

@@ -119,14 +119,14 @@ function ReceiptList() {
 
                     if (storage === "")
                         return <StyledContainer>
-                            <button onClick={() => openUrl(cellProps)} type="button" class="btn btn-secondary btn-block btn-sm " disabled>Descargar Recibo</button>
-                        <button onClick={() => markPayed(cellProps)} type="button" class="btn btn-secondary btn-primary btn-block btn-sm" disabled >Marcar como Pagado</button>
+                            <button onClick={() => openUrl(cellProps)} type="button" className="btn btn-secondary btn-block btn-sm " disabled>Descargar Recibo</button>
+                        <button onClick={() => markPayed(cellProps)} type="button" className="btn btn-secondary btn-primary btn-block btn-sm" disabled >Marcar como Pagado</button>
 
                         </StyledContainer>
                     else {
                         return   <StyledContainer>
-                        <button onClick={() => openUrl(cellProps)} type="button" class="btn  btn-primary  btn-block btn-sm" >Descargar Recibo</button>
-                        <button onClick={() => markPayed(cellProps)} type="button" class="btn btn-success btn-primary btn-block btn-sm" >Marcar como Pagado</button>
+                        <button onClick={() => openUrl(cellProps)} type="button" className="btn  btn-primary  btn-block btn-sm" >Descargar Recibo</button>
+                        <button onClick={() => markPayed(cellProps)} type="button" className="btn btn-success btn-primary btn-block btn-sm" >Marcar como Pagado</button>
                    </StyledContainer>
                            
                        
@@ -151,7 +151,6 @@ useEffect(() => {
                 newReceipt.idReceipt = doc.id
                 receipts.push(newReceipt)
             });
-            console.log(receipts);
             setReceipts(receipts);
         })
 

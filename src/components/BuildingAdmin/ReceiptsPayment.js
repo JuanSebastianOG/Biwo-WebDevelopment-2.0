@@ -49,7 +49,6 @@ function ReceiptsPayment() {
                 .get()
                 .then(function (querySnapshot) {
 
-                    console.log(querySnapshot.docs.length);
 
                     if (querySnapshot.docs.length === 0) {
 
@@ -69,8 +68,7 @@ function ReceiptsPayment() {
                                 months.push(monthNames[dateStart.format('MM') - 1])
                                 dateStart.add(1, 'month')
                             }
-                            console.log(months)
-                            console.log(years)
+                            
                             return months
                         }
 
@@ -85,7 +83,6 @@ function ReceiptsPayment() {
                                 dateStart.add(1, 'month')
                             }
 
-                            console.log(years)
                             return years
                         }
 
@@ -146,7 +143,6 @@ function ReceiptsPayment() {
 
                     }
                     else {
-                        console.log("si existen")
                     }
 
 
@@ -173,7 +169,6 @@ function ReceiptsPayment() {
                         newReceipt.idReceipt = doc.id
                         receipts.push(newReceipt)
                     });
-                    console.log(receipts);
                     setReceiptsPayments(receipts);
 
                 })
@@ -181,7 +176,7 @@ function ReceiptsPayment() {
         }
 
 
-    }, [user])
+    })
 
     const renderRowSubComponent = row => {
         return (
@@ -229,25 +224,18 @@ function ReceiptsPayment() {
             },
             {
                 Header: "Pagar",
-
                 id: 'expander', // 'id' is required
-
 
                 Cell: ({ row }) => (
                     <span {...row.getToggleRowExpandedProps()}>
                         <button type="button" className="btn btn-success btn-sm btn-block"  > Pagar</button>
                     </span>
-
                 )
-
-
             },
 
-        ])
-
-
-
-
+        ],
+        []
+    )
 
     return (
         <Container style={{ marginTop: 100 }}>

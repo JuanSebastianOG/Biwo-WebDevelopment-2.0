@@ -13,40 +13,46 @@ function BuildingsList() {
             idEdificio,
         } = cellProps.row.original
 
-        //Code for block building
-        var buildingRef = db.collection("edificios").doc(idEdificio);
+        if (window.confirm("Esta seguro que quiere bloquear al edificio y su administrador?")) {
 
-        // Set the "esto" field of the city 'false'
-        return buildingRef.update({
-            estado: false
-        })
-            .then(function () {
-                console.log("Document successfully updated!");
+            //Code for block building
+            var buildingRef = db.collection("edificios").doc(idEdificio);
+
+            // Set the "esto" field of the city 'false'
+            return buildingRef.update({
+                estado: false
             })
-            .catch(function (error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }
     }
     const unlockBuilding = (cellProps) => {
         const {
             idEdificio,
         } = cellProps.row.original
 
-        //Code for block building
-        var buildingRef = db.collection("edificios").doc(idEdificio);
+        //Code for unblock building
+        if (window.confirm("Esta seguro que quiere desbloquear a el edificio y su administrador?")) {
 
-        // Set the "esto" field of the city 'false'
-        return buildingRef.update({
-            estado: true
-        })
-            .then(function () {
-                console.log("Document successfully updated!");
+            var buildingRef = db.collection("edificios").doc(idEdificio);
+
+            // Set the "esto" field of the city 'false'
+            return buildingRef.update({
+                estado: true
             })
-            .catch(function (error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        }
     }
 
 
@@ -92,7 +98,7 @@ function BuildingsList() {
                     } = cellProps.row.original
                     if (estado)
                         return <button onClick={() => blockBuilding(cellProps)} type="button" className="btn btn-danger btn-sm btn-block" >Bloquear</button>
-                    else    
+                    else
                         return <button onClick={() => unlockBuilding(cellProps)} type="button" className="btn btn-success btn-sm btn-block" >Desbloquear</button>
                 }
             },
@@ -109,7 +115,6 @@ function BuildingsList() {
                     newdoc.idEdificio = doc.id
                     buildings.push(newdoc)
                 });
-                console.log(buildings)
                 setBuildings(buildings)
             })
 

@@ -69,7 +69,6 @@ function BookingsList() {
                     newBooking.idReserva = doc.id
                     bookings.push(newBooking)
                 });
-                console.log(bookings);
                 setBookings(bookings);
             })
 
