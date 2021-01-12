@@ -9,7 +9,7 @@ function Help() {
     const [input, setInput] = useState('')
 
     var usersi = auth.currentUser;
-    
+
     const sendMessage = (e) => {
         e.preventDefault();
         db.collection("solicitudayudas").add({
@@ -20,29 +20,30 @@ function Help() {
             setInput('')
             //window.location.reload();
         }).catch(function (error) {
-                console.error("Error adding document: ", error);
+            console.error("Error adding document: ", error);
         });
-        
+
     }
     useEffect(() => {
-       /* if (usersi) {
-            // User is signed in.
-            console.log("Soooy", usersi.uid)
-            var docRef = db.collection("usuarios").doc(usersi.uid);
-            docRef.get().then(function (doc) {
-                if (doc.exists) {
-                    setUserInfo(doc.data().idEdificio)
-                    console.log("Document data USUARIO:", doc.data());
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log("No user document!");
-                }
-            }).catch(function (error) {
-                console.log("Error getting document", error);
-            });
-        } else {
-            // No user is signed in.
-        }*/
+    
+        /* if (usersi) {
+             // User is signed in.
+             console.log("Soooy", usersi.uid)
+             var docRef = db.collection("usuarios").doc(usersi.uid);
+             docRef.get().then(function (doc) {
+                 if (doc.exists) {
+                     setUserInfo(doc.data().idEdificio)
+                     console.log("Document data USUARIO:", doc.data());
+                 } else {
+                     // doc.data() will be undefined in this case
+                     console.log("No user document!");
+                 }
+             }).catch(function (error) {
+                 console.log("Error getting document", error);
+             });
+         } else {
+             // No user is signed in.
+         }*/
     }, [usersi]);
     return (
         <div className="help">

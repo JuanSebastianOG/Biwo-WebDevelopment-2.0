@@ -182,7 +182,6 @@ function Booking() {
         }
 
         bookingsModuleBuilding.forEach(function (doc) {
-            console.log("pero no entro")
 
             var moduleSelected = document.getElementById('bking__selectedModule').value;
             // Take only the ones that are on the specific day
