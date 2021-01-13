@@ -36,6 +36,11 @@ function BookingsBuildingList() {
             },
             {
                 Header: "Fecha",
+                accessor: "fecha",
+            },
+
+            {
+                Header: "Hora",
                 accessor: "horaInicioFin",
             },
             {

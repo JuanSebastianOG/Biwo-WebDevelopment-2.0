@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from "reactstrap"
 import styled from 'styled-components';
-import ReactStars from "react-rating-stars-component";
+import { db } from '../../firebase.js'
+import { useState } from 'react'
 const StyledTitle = styled.h5`
     {
         color: #002980;
@@ -20,36 +21,39 @@ const StyledContainer = styled(Container)`
     justify-content: space-evenly;
 }`
 
-const ExpandBooking = () => {
-    const ratingChanged = (newRating) => {
-        console.log(newRating);
-    };
+const ExpandBooking = ({ row }) => {
+
+    const [feedback, setFeedback] = useState('')
+    const [ratingService, setRatingService] = useState(0)
+    const [ratingInternet, setRatingInternet] = useState(0)
+    const [ratingNeatness, setRatingNeatness] = useState(0)
+
+    useEffect(() => {
+
+         db.collection('reseñas').where("idBooking", "==", row.original.idReserva)
+                .get()
+                .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                        setFeedback(doc.data().mensaje);
+                        setRatingService(doc.data().ratingServicio)
+                        setRatingInternet(doc.data().ratingInternet)
+                        setRatingNeatness(doc.data().ratingLimpieza)
+                    })
+                })
+    }, [])
+
     return (
         <div>
             <StyledContainer >
                 <StyledTitle >Satisfacción General Del Servicio</StyledTitle>
-                <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={30}
-                    activeColor="#ffd700"
-                />
+                <StyledTitle  >{ratingService}</StyledTitle>
+                
                 <StyledTitle >Servicio de Internet</StyledTitle>
-                <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={30}
-                    activeColor="#ffd700"
-                />
+                <StyledTitle  >{ratingInternet}</StyledTitle>
                 <StyledTitle >Limpieza del Módulo</StyledTitle>
-                <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={30}
-                    activeColor="#ffd700"
-                />
+                <StyledTitle  >{ratingNeatness}</StyledTitle>
                 <StyledTitle >Comentarios Adicionales</StyledTitle>
-                <StyledText>Excelente Servicio, buenísimo el internet. Pude nevagar a alta velocidad.</StyledText>
+                <StyledText>{feedback}</StyledText>
 
             </StyledContainer>
         </div>

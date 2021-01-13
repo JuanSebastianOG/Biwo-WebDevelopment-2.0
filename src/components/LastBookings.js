@@ -2,6 +2,8 @@ import React from 'react'
 import "../css/LastBookings.css"
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
+import { Route,BrowserRouter } from 'react-router-dom';
+
 
 const DropButton = styled.button`
     {
@@ -29,7 +31,7 @@ const DropButton = styled.button`
 
 }`
 
-function LastBookings({ active, day, month, building, module, hour }) {
+function LastBookings({ active, day, month, building, module, hour, idBooking }) {
     let classNameDiv = "lastBookings";
     let classNameDate = "lastBookings__date";
     let classNameInfo = "lastBookings__info";
@@ -51,7 +53,7 @@ function LastBookings({ active, day, month, building, module, hour }) {
                 <h5>{hour}</h5>
             </div>
             <DropButton>
-            <Link to ="/feedback">Reseña
+            <Link  to ={{pathname: `/feedback/${idBooking}`}}>Reseña
                &#9734;</Link>
                
             </DropButton>

@@ -100,22 +100,19 @@ function App() {
             <Register />
           </Route>
 
-
-
-          <Route path="/misreservas">
-            <NavBar users active="misreservas" usertype={"residente"} />
-            <MyBookings />
-          </Route>
-          <Route path="/feedback">
-            <NavBar users active="misreservas" usertype={"residente"} />
-            <Feedback />
-          </Route>
-
           <Route path="/reservar">
             <NavBar users active="reservar" usertype={"residente"} />
             <Booking />
           </Route>
 
+          <Route path="/misreservas">
+            <NavBar users active="misreservas" usertype={"residente"} />
+            <MyBookings />
+          </Route>
+
+          <Route path="/feedback/:idBooking" component={Feedback}>
+           </Route>
+           
           <Route path="/administrar">
             <NavBar users active="administrar" usertype={"residente"} />
             <AdminBookings />

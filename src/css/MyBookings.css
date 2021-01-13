@@ -21,9 +21,7 @@
     width: 600px;
     overflow: auto;
 }
-.mybookings__middleContBookings::-webkit-scrollbar {
-     /* Optional: just make scrollbar invisible */
-}
+
 .mybookings__middleContBookings::-webkit-scrollbar-thumb {
     background: #707070;
     

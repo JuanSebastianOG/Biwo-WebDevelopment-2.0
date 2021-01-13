@@ -151,6 +151,11 @@ function Booking() {
                 nombreModulo: strselectedModule,
                 horaInicioFin: hourStartEnd,
             }).then(function (docRef) {
+                db.collection("reservas")
+                .doc(docRef.id)
+                .update({
+                    idReserva: docRef.id
+                });
                 alert("Su reserva ha sido existosa")
                 window.location.reload();
             }).catch(function (error) {

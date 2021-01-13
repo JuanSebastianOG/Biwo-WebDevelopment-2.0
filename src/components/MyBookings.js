@@ -4,6 +4,7 @@ import LastBookings from './LastBookings'
 import { auth, db } from '../firebase';
 
 
+
 function MyBookings() {
 
     const [mybookings, setMyBookings] = useState([]);
@@ -53,6 +54,7 @@ function MyBookings() {
                                     building={booking.nombreEdificio}
                                     module={booking.nombreModulo}
                                     hour={booking.horaInicioFin}
+                                    idBooking = {booking.idReserva}
                                 />))
                         }
                                      </div>

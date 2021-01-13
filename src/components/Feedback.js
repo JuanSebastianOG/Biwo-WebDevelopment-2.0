@@ -3,6 +3,7 @@ import { Container } from "reactstrap"
 import styled from 'styled-components';
 import ReactStars from "react-rating-stars-component";
 import "../css/Help.css"
+import {  db } from '../firebase';
 import { useState } from 'react'
 
 import "../css/Help.css"
@@ -12,7 +13,11 @@ const StyledTitle = styled.h5`
         color: #002980;
         margin: 1rem;        
     }`
-
+const StyledText = styled.h6`
+    {
+        color: black;
+        margin: 0.1rem;        
+    }`
 const StyledContainer = styled(Container)`
 
 {   align-items: center;
@@ -32,13 +37,36 @@ const StyledTitle1= styled.h1`
 
 const Feedback = () => {
 
-    const [comment, setComment] = useState('')
-    const ratingChanged = (newRating) => {
+    const [feedback, setFeedback] = useState('')
+    const [ratingService, setRatingService] = useState('')
+    const [ratingInternet, setRatingInternet] = useState('')
+    const [ratingNeatness, setRatingNeatness] = useState('')
+    const ratingChangedService = (newRating) => {
+        setRatingService(newRating)
+        console.log(newRating);
+    };
+    const ratingChangedInternet = (newRating) => {
+        setRatingInternet(newRating)
+        console.log(newRating);
+    };
+    const ratingChangedNeatness = (newRating) => {
+        setRatingNeatness(newRating)
         console.log(newRating);
     };
 
-    const sendMessage = (e) => {
+    const sendFeedback = (e) => {
+        
         e.preventDefault();
+        db.collection("reseñas").add({
+            ratingServicio: ratingService,
+            ratingInternet: ratingInternet,
+            ratingLimpieza:ratingNeatness,
+            mensaje: feedback
+        }).then(function (docRef) {
+            alert("Su reseña ha sido enviado existosamente")
+        }).catch(function (error) {
+                console.error("Error adding document: ", error);
+        });
      
         
     }
@@ -51,21 +79,21 @@ const Feedback = () => {
                 <StyledTitle >Satisfacción General Del Servicio</StyledTitle>
                 <ReactStars
                     count={5}
-                    onChange={ratingChanged}
+                    onChange={ratingChangedService}
                     size={30}
                     activeColor="#ffd700"
                 />
                 <StyledTitle >Servicio de Internet</StyledTitle>
                 <ReactStars
                     count={5}
-                    onChange={ratingChanged}
+                    onChange={ratingChangedInternet}
                     size={30}
                     activeColor="#ffd700"
                 />
                 <StyledTitle >Limpieza del Módulo</StyledTitle>
                 <ReactStars
                     count={5}
-                    onChange={ratingChanged}
+                    onChange={ratingChangedNeatness}
                     size={30}
                     activeColor="#ffd700"
                 />
@@ -73,8 +101,8 @@ const Feedback = () => {
 
                 <form action="" className="help__containerFlexRight">
 
-                    <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows="2" cols="10" />
-                    <button onClick={sendMessage}>Enviar Reseña</button>
+                    <textarea value={feedback} onChange={(e) => setFeedback(e.target.value)} rows="2" cols="10" />
+                    <button onClick={sendFeedback}>Enviar Reseña</button>
                     
                 </form>
             </StyledContainer>
