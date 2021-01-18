@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import BurgerNavBar from './BurgerNavBar';
+import BurgerNavBarSuper from './BurgerNavBarSuper';
+import BurgerNavBarEdi from './BurgerNavBarEdi';
 import "../css/Burger.css"
 import styled from 'styled-components';
 
@@ -44,9 +46,10 @@ const StyledBurger = styled.div`
   }
 `;
 
-function Burger() {
+function Burger({usertype}) {
 
     const [open, setOpen] = useState(false)
+  
 
     function handleClick () {
       setOpen(!open);
@@ -60,7 +63,8 @@ function Burger() {
                 <div className="burger__Item" />
 
             </StyledBurger>
-            <BurgerNavBar open={open} handle={handleClick}/>
+            
+            {(usertype === 'residente') ? <BurgerNavBar open={open} handle={handleClick}/>: (usertype === 'superadmin') ? <BurgerNavBarSuper open={open} handle={handleClick}/> : (usertype === 'edAdmin') ? <BurgerNavBarEdi open={open} handle={handleClick}/> : ''}
         </>
 
     )

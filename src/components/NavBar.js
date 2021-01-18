@@ -2,15 +2,17 @@ import React from 'react'
 import "../css/NavBar.css"
 //import "../img/biwo-logo.png"
 import { Link } from 'react-router-dom';
+import { useStateValue } from "./StateProvider";
 import Burger from './Burger';
 import { Avatar } from "@material-ui/core"
 import UserNavLinks from './NavLinks/UserNavLinks';
 import SuperAdminNavLinks from './NavLinks/SuperAdminNavLinks'
 import EdificioAdminNavLinks from './NavLinks/EdificioAdminNavLinks'
+import { auth } from '../firebase'
 
 function NavBar({ color, users, active, usertype }) {
 
-
+const [{ user }] = useStateValue();
 if (!users) {
     let className = 'navbar-landing'
     let className2 = 'navbar__loginlink'
@@ -55,7 +57,7 @@ else {
             </div>
 
 
-            <Burger />
+            <Burger usertype={usertype} />
 
 
         </nav>
