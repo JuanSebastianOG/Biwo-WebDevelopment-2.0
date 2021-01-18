@@ -1,7 +1,6 @@
 .lastBookingsactive{
-    height: 35%;
-    margin-bottom:5px ;
-    border-radius: 25px;
+    height: 40%;
+    border-radius: 15px;
     display: flex;
     place-items: center;
     justify-content: space-evenly; 
@@ -17,7 +16,7 @@
     flex-direction: column;
     place-items: center;
     color: white;
-    margin-left: 10px;
+    margin-left: 10%;
     margin-right: 10px;
 }
 .lastBookings__infoactive{
@@ -65,4 +64,23 @@
 .lastBookings__info > h6{
     color:#002980;
     opacity: 0.5;
+}
+
+.reviewButtonResponsive { 
+    display: none; 
+}
+
+.reviewButton
+{
+    color:#002980;
+    font-family: 'Neue Titles';
+}
+@media (max-width: 680px) {
+    .reviewButtonResponsive { 
+        display: inline-block; 
+        font-size: 2em;   
+        color:#002980;
+    font-family: 'Neue Titles'; 
+    }
+    .reviewButton { display: none; }
 }

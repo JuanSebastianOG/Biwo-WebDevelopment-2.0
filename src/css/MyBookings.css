@@ -58,7 +58,7 @@
     color:#002980;
     font-size:medium;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1100px) {
     .mybookings__middle {
         
          height: unset;
@@ -81,13 +81,14 @@
         text-align: center;
     }
 }
-@media only screen and (max-width: 380px) {
+@media only screen and (max-width: 680px) {
+
     
     .mybookings__middleCont {       
-        width: 90%;
+        width:90%;
     }
     .mybookings__middleContBookings {
-        width: 100%;
+        width: 90%;
     }
     .h4, h4 {
         font-size: 1.2rem !important;

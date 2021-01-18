@@ -21,7 +21,7 @@ const ResponsiveContainer = styled.div`
     display: flex;
     flex-direction: row; 
     
-    @media (max-width: 860px) {
+    @media (max-width: 650px) {
         flex-direction: column; 
        
          }
@@ -33,6 +33,7 @@ const ResponsiveCont1 = styled.div`
     display: flex;
     flex-direction: row; 
     height:100%;
+    
     
     @media (max-width: 550px) {
        
@@ -69,7 +70,7 @@ const DateField = styled.div`
         font-size: 20px;
         border-radius: 15px 0 0 15px;
         border-right: 2px solid  white;
-        @media (max-width: 860px) {
+        @media (max-width: 650px) {
             
             padding: 10px;
             
@@ -98,7 +99,7 @@ const LocationField = styled.div`
         border-right: 2px solid  white;
         span { display:inline-block; 
         line-height:1.2; }
-        @media (max-width: 860px) {
+        @media (max-width: 650px) {
             height:100%;
             padding: 10px;
             font-size: 18px;
@@ -128,6 +129,7 @@ const TimeField = styled.div`
         align-items:center;
         background-color: #002980;
         color:white;
+        font-family: 'Neue Titles'; 
         width:fit-content;
         h2{
             font-family: 'Helvetica Text';
@@ -141,7 +143,7 @@ const TimeField = styled.div`
             padding: 5px;
         }
          }
-        @media (max-width: 860px) {
+        @media (max-width: 650px) {
             display:none;
          }
       
@@ -149,7 +151,7 @@ const TimeField = styled.div`
         
     }`
 
-/*const EditButton = styled.div`
+const EditButton = styled.div`
     {
         display: flex;
         flex-direction: column; 
@@ -178,11 +180,11 @@ const TimeField = styled.div`
         
         }
 
-    }`*/
+    }`
 
 const TimeResponsive = styled.div`{
     display: none;
-    @media (max-width: 860px) {
+    @media (max-width: 650px) {
             display:flex;
             margin-top: 6px;
             font-family: 'Helvetica Text';
@@ -214,7 +216,7 @@ const DropButton = styled.div`
         border-radius: 15px  0 0 0;
 
         button{
-            font-family: 'Helvetica Text';
+            font-family: 'Neue Titles'; 
             font-size: 20px;
             border: 0px;
             background: #C5F8CE;
@@ -224,13 +226,17 @@ const DropButton = styled.div`
             color:#002980;
             border-right: 0px solid  white;
             border-radius: 0  15px 15px 0;
+            @media (max-width: 550px) {
+                border-radius: 0  0 15px 0;
+            }
+
 
 
         }
         @media (max-width: 550px) {
   
-            border-radius: 0  0 15px 0;
-            width:50%;
+            
+            width:100%;
             font-size: 12px;
             border-top: 1px;
         }
@@ -243,16 +249,15 @@ const DropButton = styled.div`
 function BookingBox({ day, month, building, module, hour, id }) {
 
     function releaseBooking() {
-        if (window.confirm("¿Esta seguro que desea eliminar esta reserva?")) {
 
-            db.collection("reservas").doc(id).delete().then(function () {
-                //window.location.reload();
-                console.log("Document successfully deleted!");
+        db.collection("reservas").doc(id).delete().then(function () {
+            //window.location.reload();
+            console.log("Document successfully deleted!");
 
-            }).catch(function (error) {
-                console.error("Error removing document: ", error);
-            });
-        }
+        }).catch(function (error) {
+            console.error("Error removing document: ", error);
+        });
+
     }
     return (
         <BookingContainer>
