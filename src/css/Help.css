@@ -28,6 +28,7 @@
 .help__containerFlexRight>h3{
     color: #002980;
     align-self: center;
+    text-align: center;
 }
 .help_containerFlexLeft{
     width: 200px;

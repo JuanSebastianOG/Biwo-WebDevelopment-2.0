@@ -131,7 +131,7 @@
     border: none;
     border-bottom: solid 3px #002980;
     color: #707070;
-
+    max-width: 130px;
 }
 .bking_containerFlexFormHours{
     display: flex;

@@ -17,10 +17,6 @@ const DropButton = styled.button`
             
             border-radius: 0  15px 15px 0;
 
-
-        
-      
-
 }`
 
 function LastBookings({ active, day, month, building, module, hour, idBooking }) {
