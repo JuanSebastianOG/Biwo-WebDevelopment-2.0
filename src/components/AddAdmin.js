@@ -48,9 +48,13 @@ function AddAdmin() {
     }
 
     const addEmailAdmin = () => {
+
+      if (window.confirm("Está seguro que quiere dar permisos de usuario edificio al usuario " + document.getElementById("emailEdi").value +"?"))
+      {
         var addAdminRole = functions.httpsCallable('addAdminRole');
         addAdminRole({ email: mailEdi }).then(result => {
             console.log(result)
+            window.location.reload();
         }).catch(function (error) {
             // Getting the Error details.
             var code = error.code;
@@ -58,16 +62,19 @@ function AddAdmin() {
             var details = error.details;
             console.error("Error adding ADMIN: ", code, message, details);
         });
+     
+      }
+
 
     }
     const addEmailSuperAdmin = () => {
-      if (window.confirm("Esta seguro que quiere bloquear al usuario?"))
+
+      if (window.confirm("Está seguro que quiere dar permisos de superadmin al usuario " +  document.getElementById("emailSuper").value +"?"))
       {
-        
-      }
         var addSuperAdminRole = functions.httpsCallable('addSuperAdminRole');
         addSuperAdminRole({ email: mailSuper }).then(result => {
             console.log(result)
+            window.location.reload();
         }).catch(function (error) {
             // Getting the Error details.
             var code = error.code;
@@ -75,6 +82,9 @@ function AddAdmin() {
             var details = error.details;
             console.error("Error adding ADMIN: ", code, message, details);
         });
+        
+      }
+        
 
     }
     return (
