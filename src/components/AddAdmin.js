@@ -61,6 +61,10 @@ function AddAdmin() {
 
     }
     const addEmailSuperAdmin = () => {
+      if (window.confirm("Esta seguro que quiere bloquear al usuario?"))
+      {
+        
+      }
         var addSuperAdminRole = functions.httpsCallable('addSuperAdminRole');
         addSuperAdminRole({ email: mailSuper }).then(result => {
             console.log(result)
