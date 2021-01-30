@@ -176,7 +176,7 @@ function ReceiptsPayment() {
         }
 
 
-    })
+    },[user])
 
     const renderRowSubComponent = row => {
         return (

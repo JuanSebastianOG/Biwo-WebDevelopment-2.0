@@ -47,7 +47,6 @@ const ExpandPayment = ({ row }) => {
                     totalMesAño = totalMesAño + doc.data().costoReserva
                     console.log(totalMesAño);
 
-
                 });
                 console.log(totalMesAño);
                 setTotalPayment(totalMesAño);
