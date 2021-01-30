@@ -9,6 +9,23 @@ const TEMPLATE_IDBOOKING = functions.config().sendgridbiwo.templatebooking;
 const TEMPLATE_IDHELP = functions.config().sendgridbiwo.templatehelp;
 const TEMPLATE_IDREGISTER = functions.config().sendgridbiwo.templateregister;
 
+exports.addSuperAdminRole = functions.https.onCall((data) => {
+
+    return admin.auth().getUserByEmail(data.email).then(user => {
+        return admin.auth().setCustomUserClaims(user.uid, {
+            superadmin: true
+        })
+    }).then(() => {
+
+
+        return {
+
+            message: `Success! ${user.uid} has been made an superadmin.`
+        }
+    }).catch(err => {
+        return err;
+    });
+});
 
 exports.addAdminRole = functions.https.onCall((data) => {
 
