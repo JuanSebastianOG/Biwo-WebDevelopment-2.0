@@ -26,38 +26,37 @@ const StyledContainer = styled(Container)`
 
 const ExpandPayment = ({ row }) => {
 
-    const [totalPayment, setTotalPayment] = useState([])
+    const [totalPayment, setTotalPayment] = useState('')
     const [fileUrl, setFileUrl] = useState('');
     const [idRec, setidRec] = useState('');
 
 
     useEffect(() => {
-        setidRec(row.original.idRecibo);
-        db.collection('reservas')
-            .where("mes", "==", row.original.mes)
-            .where("año", "==", row.original.año)
-           
-
-            .onSnapshot(function (querySnapshot) {
-                var totalMesAño = 0
-                querySnapshot.forEach(function (doc) {
-
-
-                    console.log(row.original.año, doc.data().year);
-                    totalMesAño = totalMesAño + doc.data().costoReserva
-                    console.log(totalMesAño);
-
-                });
-                console.log(totalMesAño);
-                setTotalPayment(totalMesAño);
-            })
-
-    }, [row.original.idRecibo,row.original.año,row.original.mes])
+        setidRec(row.original.idRecibo)
+        db.collection("edificios")
+        .doc(row.original.idEdificio)
+        .get()
+        .then(function(doc) {
+            if (doc.exists) {
+                setTotalPayment(doc.data().costoArriendo);
+                console.log(doc.data())
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+      
+              
+    }, [row.original.idRecibo])
 
     const uploadReceipt = async (e) => {
         const file = e.target.files[0]
+        console.log(file)
         const storageRef = firebaseConfig.storage().ref()
         const fileRef = storageRef.child(file.name)
+        console.log(fileRef)
         await fileRef.put(file)
         setFileUrl(await fileRef.getDownloadURL())
         console.log(fileUrl)
@@ -83,7 +82,6 @@ const ExpandPayment = ({ row }) => {
     const onSubmit = async (e) => {
 
         e.preventDefault()
-
         updateStorage()
 
     }

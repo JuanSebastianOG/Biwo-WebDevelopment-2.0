@@ -12,6 +12,7 @@ function AddBuilding() {
         nombre: '',
         numModulos: '',
         tarifa: '',
+        costoArriendo: '',
     });
     const [form, setform] = useState(false)
 
@@ -35,6 +36,7 @@ function AddBuilding() {
                 nombre: buildingData.nombre,
                 numModulos: buildingData.numModulos,
                 tarifa: buildingData.tarifa,
+                costoArriendo: buildingData.costoArriendo,
             }).then(function (docRef) {
                 console.log("aca estamos", docRef.id)
                 for (let i = 0; i < Number(buildingData.numModulos); i++) {
@@ -91,6 +93,8 @@ function AddBuilding() {
                     <input onChange={changeHandler} required type="number" name="numModulos" id="" min={1} max={15} placeholder="1-15" />
                     <label htmlFor="" className="form__label">Tarifa módulo por hora </label>
                     <input onChange={changeHandler} required type="number" name="tarifa" id="" min={1000} max={10000} placeholder="1000-10000" />
+                    <label htmlFor="" className="form__label">Costo Arriendo </label>
+                    <input onChange={changeHandler} required type="number" name="costoArriendo" id=""  placeholder="0" />
                     <button type="submit">Crear edificio</button>
                 </form>
             </div>
