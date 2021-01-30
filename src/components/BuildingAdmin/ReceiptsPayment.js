@@ -159,15 +159,30 @@ function ReceiptsPayment() {
 
         createReceipts()
 
+        var x = new Date().getFullYear().toString()
+        console.log(x)
+
         if (user) {
-            db.collection('recibos').where("idAdminEdificio", "==", user.uid)
+            db.collection('recibos')
+            .where("idAdminEdificio", "==", user.uid)
+            
                 .onSnapshot(function (querySnapshot) {
                     var receipts = []
                     querySnapshot.forEach(function (doc) {
 
                         var newReceipt = doc.data()
-                        newReceipt.idReceipt = doc.id
-                        receipts.push(newReceipt)
+                        if(newReceipt.año== x-1 &&newReceipt.mes == "Diciembre")
+                        {
+                            newReceipt.idReceipt = doc.id
+                            receipts.push(newReceipt)
+                        }
+                        if(newReceipt.año== x)
+                        {
+                            newReceipt.idReceipt = doc.id
+                            receipts.push(newReceipt)
+                        }
+                        
+                        
                     });
                     setReceiptsPayments(receipts);
 
