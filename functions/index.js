@@ -16,10 +16,7 @@ exports.addSuperAdminRole = functions.https.onCall((data) => {
             superadmin: true
         })
     }).then(() => {
-
-
         return {
-
             message: `Success! ${user.uid} has been made an superadmin.`
         }
     }).catch(err => {

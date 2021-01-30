@@ -163,6 +163,7 @@ function Register() {
                         email: userData.email,
                         idEdificio: edificioCode,
                         estado:true,
+                        tipoUsuario: 'Residente',
                     })
                         .catch(function (error) {
                             console.error("Error adding document: ", error);
