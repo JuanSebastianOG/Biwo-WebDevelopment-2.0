@@ -95,10 +95,8 @@ function ResidentList() {
         db.collection('usuarios')
             .onSnapshot(function (querySnapshot) {
                 var residents = []
-                var adminMail = "biwodev@gmail.com";
-
                 querySnapshot.forEach(function (doc) {
-                    if (!(adminMail === doc.data().email)) {
+                    if (doc.data().tipoUsuario.localeCompare('Residente')===0) {
                         var newdoc = doc.data()
                         newdoc.idUsuario = doc.id
                         residents.push(newdoc)
