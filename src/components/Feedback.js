@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from "reactstrap"
 import styled from 'styled-components';
 import ReactStars from "react-rating-stars-component";
@@ -54,6 +54,7 @@ const Feedback = ({ match }) => {
     const [ratingService, setRatingService] = useState('')
     const [ratingInternet, setRatingInternet] = useState('')
     const [ratingNeatness, setRatingNeatness] = useState('')
+
     const ratingChangedService = (newRating) => {
         setRatingService(newRating)
         console.log(newRating);
@@ -66,15 +67,33 @@ const Feedback = ({ match }) => {
         setRatingNeatness(newRating)
         console.log(newRating);
     };
+    useEffect(() => {
+        db.collection("reseñas").where("idBooking", "==", match.params.idBooking)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (docFeed) {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(docFeed.id, " => Cuando ya hay", docFeed.data());
+                    setFeedback(docFeed.data().mensaje)
+                    setRatingInternet(docFeed.data().ratingInternet)
+                    setRatingService(docFeed.data().rantingLimpieza)
+                    setRatingNeatness(docFeed.data().ratingServicio)
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
 
+    }, [])
     const sendFeedback = (e) => {
         console.log(match.params.idBooking)
         e.preventDefault();
-        db.collection('reseñas')
-            .where("idBooking", "==", match.params.idBooking)
-            .get()
-            .then(function (querySnapshot) {
-                if (querySnapshot.docs.length == 0) {
+        var docRef = db.collection("reservas").doc(match.params.idBooking);
+
+        docRef.get().then(function (doc) {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+                if (!doc.data().reseña) {
                     db.collection("reseñas")
                         .add({
                             idBooking: match.params.idBooking,
@@ -82,21 +101,32 @@ const Feedback = ({ match }) => {
                             ratingInternet: ratingInternet,
                             ratingLimpieza: ratingNeatness,
                             mensaje: feedback
-                        }).then(function (doc) {
-                            alert("Su reseña ha sido enviado exitosamente")
+                        }).then(function (docRes) {
+                            docRef.update({
+                                "reseña": true,
+                            })
+                                .then(function () {
+                                    console.log("Document successfully updated!");
+                                    alert("Su reseña ha sido enviado exitosamente")
+                                    window.location.reload();
+                                });
                             history.push("/misReservas");
                         }).catch(function (error) {
                             console.error("Error adding document: ", error);
                         });
-
-
-
-
                 } else {
-                    alert("Ya se realizo una reseña sobre esta reserva")
-                    history.push("/misReservas");
+
+
                 }
-            })
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+
+
     }
 
 

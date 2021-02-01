@@ -150,6 +150,7 @@ function Booking() {
                 nombreEdificio: buildingName,
                 nombreModulo: strselectedModule,
                 horaInicioFin: hourStartEnd,
+                reseña:false,
             }).then(function (docRef) {
                 db.collection("reservas")
                 .doc(docRef.id)
