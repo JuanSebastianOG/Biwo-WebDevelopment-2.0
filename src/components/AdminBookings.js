@@ -39,7 +39,9 @@ function AdminBookings() {
 
     useEffect(() => {
         if (currentUser) {
-            db.collection('reservas').where("idUsuario", "==", currentUser.uid)
+            db.collection('reservas')
+            .where("idUsuario", "==", currentUser.uid)
+            .where("estado", "==", true)
                 .onSnapshot(function (querySnapshot) {
                     var tempBookings = [];
                      var idBookings = [];
