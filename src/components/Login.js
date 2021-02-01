@@ -12,36 +12,46 @@ function Login() {
     const [password, setPassword] = useState("");
     const userLogIn = (e) => {
         e.preventDefault();
-        console.log( username, password)
+        console.log(username, password)
         auth.signInWithEmailAndPassword(username, password)
-        .then(()=>{
+            .then(() => {
 
-            auth.currentUser.getIdTokenResult()
-            .then((idTokenResult) => {
-              // Confirm the user is an Admin.
-              if (idTokenResult.claims.superadmin) {
-                history.push("/adminReservas");
-              } else if(idTokenResult.claims.admin) {
-                history.push("/edAdminPagos");
-              }
-              else{
-                history.push("/misReservas");
-              }
+                auth.currentUser.getIdTokenResult()
+                    .then((idTokenResult) => {
+                        // Confirm the user is an Admin.
+                        if (idTokenResult.claims.superadmin) {
+                            history.push("/adminReservas");
+                        } else if (idTokenResult.claims.admin) {
+                            history.push("/edAdminPagos");
+                        }
+                        else {
+                            history.push("/misReservas");
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
+
             })
-            .catch((error) => {
-              console.log(error);
-            });
-
-            
-        })
-        .catch((e)=> alert(e.message));
+            .catch((e) => alert(e.message));
 
     }
     const userRegister = (e) => {
         e.preventDefault();
-        console.log( username, password)
+        console.log(username, password)
 
         history.push("/registrarse");
+    }
+
+    const handlePassword = (e) => {
+        
+        auth.sendPasswordResetEmail(username).then(function () {
+            // Email sent.
+            alert('Se mando')
+        }).catch(function (error) {
+            // An error happened.
+        });
     }
     return (
         <div className="login">
@@ -59,13 +69,13 @@ function Login() {
                             className="login__containerFormPassword"
                             type="password" placeholder="Contraseña"
                             value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <label htmlFor="fname">Olvidé mi contraseña</label>
+                        <label htmlFor="fname" onClick={handlePassword}>Olvidé mi contraseña</label>
                     </div>
                     <div className="login__containerButtons">
                         <input onClick={userLogIn} className="login__containerFormLoginButton" type="submit" value="Iniciar Sesion" />
-                       
+
                         <input onClick={userRegister} className="login__containerFormRegisterButton" type="button" value="Registrarse" />
-                        
+
                     </div>
 
                 </form>

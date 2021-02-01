@@ -8,14 +8,14 @@ const DropButton = styled.button`
     
             font-family: 'Helvetica Text';
             font-size: 20px;
-            border: solid;
+            border: 0;
             background: #C5F8CE;
            
             width:20%;
             height:100%;
             color:#002980;
             
-            border-radius: 0  15px 15px 0;
+            border-radius: 0  10px 10px 0;
 
 }`
 

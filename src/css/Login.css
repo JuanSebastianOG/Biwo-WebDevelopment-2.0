@@ -87,7 +87,7 @@
     color: #00298078;
     margin-top: 10px;
     border-bottom: solid 1px #002980;
-
+    cursor: pointer;
 }
 .login__containerButtons{
     display: flex;

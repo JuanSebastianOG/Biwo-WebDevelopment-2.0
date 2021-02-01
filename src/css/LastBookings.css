@@ -7,6 +7,9 @@
     color: white;
     background-color: #002980;
     overflow-y: scroll;
+    margin-bottom: 1rem;
+    border: solid;
+
 }
 .lastBookingsactive::-webkit-scrollbar {
     display: none;
@@ -31,26 +34,35 @@
     opacity: 0.8;
 }
 .lastBookings{
-    height: 35%;
-    margin-bottom:5px ;
-    border-radius: 25px;
+    height: 40%;
+    margin-bottom:5px;
+    border-radius: 15px;
     display: flex;
     place-items: center;
     justify-content: space-evenly; 
     overflow-y: scroll;
     border-color:#0029807e;
-
+    margin-bottom: 1rem;
     border-style: solid ;
 }
 .lastBookings::-webkit-scrollbar {
     display: none;
   }
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
 .lastBookings__date{
     display: flex;
     flex-direction: column;
     place-items: center;
     color: #002980;
-    margin-left: 10px;
+    margin-left: 10%;
     margin-right: 10px;
 }
 .lastBookings__info{
