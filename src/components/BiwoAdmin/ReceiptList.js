@@ -142,14 +142,27 @@ function ReceiptList() {
 //useEffect con hacer query 
 useEffect(() => {
 
+    var x = new Date().getFullYear().toString()
     db.collection('recibos')
         .onSnapshot(function (querySnapshot) {
             var receipts = []
             querySnapshot.forEach(function (doc) {
 
-                var newReceipt = doc.data()
-                newReceipt.idReceipt = doc.id
-                receipts.push(newReceipt)
+               
+
+                    var newReceipt = doc.data()
+                    if(newReceipt.año== x-1 &&newReceipt.mes == "Diciembre")
+                    {
+                        newReceipt.idReceipt = doc.id
+                        receipts.push(newReceipt)
+                    }
+                    if(newReceipt.año== x)
+                    {
+                        newReceipt.idReceipt = doc.id
+                        receipts.push(newReceipt)
+                    }
+                    
+                    
             });
             setReceipts(receipts);
         })
