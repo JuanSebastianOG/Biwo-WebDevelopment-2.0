@@ -71,7 +71,9 @@ function BookingsBuildingList() {
         {
             db.collection("usuarios").doc(user.uid).get().then(function (doc) {
 
-                db.collection("reservas").where("idEdificio", "==", doc.data().idEdificio)
+                db.collection("reservas")
+                .where("idEdificio", "==", doc.data().idEdificio)
+                .where("estado", "!=", 'Bloqueo Administrador Biwo')
                     .onSnapshot(function (querySnapshot) {
     
                         var bookingsBuilding = []

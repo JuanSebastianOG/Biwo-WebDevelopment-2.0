@@ -52,7 +52,7 @@ function BookingsList() {
                 id: 'expander', // 'id' is required
                 Cell: ({ row }) => (
                     <span {...row.getToggleRowExpandedProps()}>
-                        <button  type="button" className="btn btn-success btn-sm btn-block"  > Ver</button>
+                        <button type="button" className="btn btn-success btn-sm btn-block"  > Ver</button>
                     </span>
                 )
 
@@ -66,6 +66,7 @@ function BookingsList() {
     useEffect(() => {
 
         db.collection('reservas')
+            .where("estado", "!=", 'Bloqueo Administrador Biwo')
             .onSnapshot(function (querySnapshot) {
                 var bookings = []
                 querySnapshot.forEach(function (doc) {
