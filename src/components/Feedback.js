@@ -105,31 +105,27 @@ const Feedback = ({ match }) => {
         docRef.get().then(function (doc) {
             if (doc.exists) {
                 console.log("Document data:", doc.data());
-                if (!doc.data().reseña) {
-                    db.collection("reseñas")
-                        .add({
-                            idBooking: match.params.idBooking,
-                            ratingServicio: ratingService,
-                            ratingInternet: ratingInternet,
-                            ratingLimpieza: ratingNeatness,
-                            mensaje: feedback
-                        }).then(function (docRes) {
-                            docRef.update({
-                                "reseña": true,
-                            })
-                                .then(function () {
-                                    console.log("Document successfully updated!");
-                                    alert("Su reseña ha sido enviado exitosamente")
-                                    window.location.reload();
-                                });
-                            history.push("/misReservas");
-                        }).catch(function (error) {
-                            console.error("Error adding document: ", error);
-                        });
-                } else {
+                db.collection("reseñas")
+                    .add({
+                        idBooking: match.params.idBooking,
+                        ratingServicio: ratingService,
+                        ratingInternet: ratingInternet,
+                        ratingLimpieza: ratingNeatness,
+                        mensaje: feedback
+                    }).then(function (docRes) {
+                        docRef.update({
+                            "reseña": true,
+                        })
+                            .then(function () {
+                                console.log("Document successfully updated!");
+                                alert("Su reseña ha sido enviado exitosamente")
+                                window.location.reload();
+                            });
+                        history.push("/misReservas");
+                    }).catch(function (error) {
+                        console.error("Error adding document: ", error);
+                    });
 
-
-                }
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -185,11 +181,10 @@ const Feedback = ({ match }) => {
                 <NavBar users active="misreservas"
                     usertype={"residente"}
                 />
+
                 <StyledContainer>
-                    <StyledTitle1 > Reseña de Reserva </StyledTitle1>
                     <StyledTitle2> Su reseña ya ha sido registrada</StyledTitle2>
                     <Link to={"/misreservas"}><StyledBtn> Volver a mis reservas </StyledBtn></Link>
-
                 </StyledContainer>
             </div>
         )
