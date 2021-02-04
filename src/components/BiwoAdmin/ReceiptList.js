@@ -120,59 +120,57 @@ function ReceiptList() {
                     if (storage === "")
                         return <StyledContainer>
                             <button onClick={() => openUrl(cellProps)} type="button" className="btn btn-secondary btn-block btn-sm " disabled>Descargar Recibo</button>
-                        <button onClick={() => markPayed(cellProps)} type="button" className="btn btn-secondary btn-primary btn-block btn-sm" disabled >Marcar como Pagado</button>
+                            <button onClick={() => markPayed(cellProps)} type="button" className="btn btn-secondary btn-primary btn-block btn-sm" disabled >Marcar como Pagado</button>
 
                         </StyledContainer>
                     else {
-                        return   <StyledContainer>
-                        <button onClick={() => openUrl(cellProps)} type="button" className="btn  btn-primary  btn-block btn-sm" >Descargar Recibo</button>
-                        <button onClick={() => markPayed(cellProps)} type="button" className="btn btn-success btn-primary btn-block btn-sm" >Marcar como Pagado</button>
-                   </StyledContainer>
-                           
-                       
+                        return <StyledContainer>
+                            <button onClick={() => openUrl(cellProps)} type="button" className="btn  btn-primary  btn-block btn-sm" >Descargar Recibo</button>
+                            <button onClick={() => markPayed(cellProps)} type="button" className="btn btn-success btn-primary btn-block btn-sm" >Marcar como Pagado</button>
+                        </StyledContainer>
+
+
                     }
                 }
             },
-           
+
 
         ],
-[]
+        []
     )
 
-//useEffect con hacer query 
-useEffect(() => {
+    //useEffect con hacer query 
+    useEffect(() => {
 
-    var x = new Date().getFullYear().toString()
-    db.collection('recibos')
-        .onSnapshot(function (querySnapshot) {
-            var receipts = []
-            querySnapshot.forEach(function (doc) {
+        var x = new Date().getFullYear().toString()
+        db.collection('recibos')
+            .onSnapshot(function (querySnapshot) {
+                var receipts = []
+                querySnapshot.forEach(function (doc) {
 
-               
+
 
                     var newReceipt = doc.data()
-                    if(newReceipt.año== x-1 &&newReceipt.mes == "Diciembre")
-                    {
+                    if (newReceipt.año == x - 1 && newReceipt.mes == "Diciembre") {
                         newReceipt.idReceipt = doc.id
                         receipts.push(newReceipt)
                     }
-                    if(newReceipt.año== x)
-                    {
+                    if (newReceipt.año == x) {
                         newReceipt.idReceipt = doc.id
                         receipts.push(newReceipt)
                     }
-                    
-                    
-            });
-            setReceipts(receipts);
-        })
 
-}, []);
-return (
-    <Container style={{ marginTop: 100 }}>
-        <TableContainer columns={columns} data={receipts} />
-    </Container>
-);
+
+                });
+                setReceipts(receipts);
+            })
+
+    }, []);
+    return (
+        <Container style={{ marginTop: 100 }}>
+            <TableContainer columns={columns} data={receipts} />
+        </Container>
+    );
 }
 
 export default ReceiptList;

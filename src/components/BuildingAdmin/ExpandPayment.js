@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import {  db, firebaseConfig } from '../../firebase';
+import { db, firebaseConfig } from '../../firebase';
 import { Container } from "reactstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import styled from 'styled-components';
@@ -34,21 +34,21 @@ const ExpandPayment = ({ row }) => {
     useEffect(() => {
         setidRec(row.original.idRecibo)
         db.collection("edificios")
-        .doc(row.original.idEdificio)
-        .get()
-        .then(function(doc) {
-            if (doc.exists) {
-                setTotalPayment(doc.data().costoArriendo);
-                console.log(doc.data())
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
-      
-              
+            .doc(row.original.idEdificio)
+            .get()
+            .then(function (doc) {
+                if (doc.exists) {
+                    setTotalPayment(doc.data().costoArriendo);
+                    console.log(doc.data())
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function (error) {
+                console.log("Error getting document:", error);
+            });
+
+
     }, [row.original.idRecibo])
 
     const uploadReceipt = async (e) => {
@@ -63,7 +63,6 @@ const ExpandPayment = ({ row }) => {
     }
 
     function updateStorage() {
-
         return db.collection('recibos')
             .doc(idRec)
             .update({
@@ -71,6 +70,7 @@ const ExpandPayment = ({ row }) => {
                 estado: "En Revision"
             }).then(function () {
                 console.log("Document successfully updated!");
+
             })
             .catch(function (error) {
                 // The document probably doesn't exist.
@@ -99,7 +99,9 @@ const ExpandPayment = ({ row }) => {
                         <StyledTitle>Elegir Archivo a Subir</StyledTitle>
                         <input type="file" onChange={uploadReceipt} />
                         <StyledText>    </StyledText>
-                        <button className="btn btn-success btn-sm btn-block" >Subir Recibo</button>
+                        {
+                            fileUrl?<button className="btn btn-success btn-sm btn-block" >Subir Recibo</button>:<br></br>
+                        }
 
                     </StyledContainer>
 
