@@ -120,7 +120,7 @@ exports.emailHelp = functions.firestore.document('/solicitudayudas/{solicitudayu
         db.collection('usuarios').doc(help.idUsuario).get().then(function (doc) {
             if (doc.exists) {
                 const msg = {
-                    to: doc.data().email, // Change to your recipient
+                    to: doc.data().email, // Change to your recipient biwoo when buy domain
                     from: 'biwodev@gmail.com', // Change to your verified sender
                     template_id: TEMPLATE_IDHELP,
                     subject: 'Thanks for Contacting Biwo',

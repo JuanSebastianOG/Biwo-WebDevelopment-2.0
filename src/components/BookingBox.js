@@ -249,15 +249,15 @@ const DropButton = styled.div`
 function BookingBox({ day, month, building, module, hour, id }) {
 
     function releaseBooking() {
+        if (window.confirm("¿Esta seguro que quiere liberar esta reserva?")) {
+            db.collection("reservas").doc(id).delete().then(function () {
+                //window.location.reload();
+                console.log("Document successfully deleted!");
 
-        db.collection("reservas").doc(id).delete().then(function () {
-            //window.location.reload();
-            console.log("Document successfully deleted!");
-
-        }).catch(function (error) {
-            console.error("Error removing document: ", error);
-        });
-
+            }).catch(function (error) {
+                console.error("Error removing document: ", error);
+            });
+        }
     }
     return (
         <BookingContainer>
