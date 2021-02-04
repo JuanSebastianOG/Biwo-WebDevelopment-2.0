@@ -114,7 +114,7 @@ function Booking() {
     }, [usersi]);
 
     const submitBooking = e => {
-        if (window.confirm("¿Esta seguro que quiere realizar esta reserva?")) {
+        if (window.confirm("¿Esta seguro que quiere realizar esta reserva? Costo: "+bookingCost+' pesos Tiempo: '+cantHours+' horas')) {
 
             let estado = true;
             let horaFin = endHours[document.getElementById('out_time_hr').value]
