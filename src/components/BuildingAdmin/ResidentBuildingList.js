@@ -104,7 +104,8 @@ function ResidentBuildingList() {
                     .onSnapshot(function (querySnapshot) {
                         var residentsBuilding = []
                         querySnapshot.forEach(function (doc) {
-                            if (!doc.data().esAdmin) {
+                            if (doc.data().tipoUsuario.localeCompare('Residente')===0) {           
+                                var newdoc = doc.data()
                                 var newdoc = doc.data()
                                 newdoc.idUsuario = doc.id
                                 residentsBuilding.push(newdoc)

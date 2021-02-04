@@ -335,7 +335,7 @@ function Booking() {
     } else {
         return (
             <div className="aver">
-                <h1>Cargando ... Iniciar sesion</h1>
+                <h1></h1>
             </div>
         )
 
