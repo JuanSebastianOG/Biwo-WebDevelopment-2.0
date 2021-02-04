@@ -10,6 +10,7 @@ import ExpandBooking from '../BiwoAdmin/ExpandBooking'
 function BookingsBuildingList() {
 
     const [bookingsBuild, setBookingsBuild] = useState([])
+    const [buildingState, setBuildingState] = useState(true)
 
     var user = auth.currentUser;
 
@@ -71,6 +72,11 @@ function BookingsBuildingList() {
         {
             db.collection("usuarios").doc(user.uid).get().then(function (doc) {
 
+                db.collection("edificios").doc(doc.data().idEdificio)
+                    .onSnapshot(function (querySnapshot) {
+                        setBuildingState(querySnapshot.data().estado)
+                    })
+
                 db.collection("reservas")
                 .where("idEdificio", "==", doc.data().idEdificio)
                 .where("estado", "!=", 'Bloqueo Administrador Biwo')
@@ -88,12 +94,19 @@ function BookingsBuildingList() {
 
     }, [user]);
 
-
+    if (buildingState)
     return (
         <Container style={{ marginTop: 100 }}>
             <TableContainer columns={columns} data={bookingsBuild} renderRowSubComponent={renderRowSubComponent} />
         </Container>
     )
+   
+    else
+        return (
+            <div className="bking__blocked">
+                <h5>No se pueden revisar las reservas, el servicio esta bloqueado. Comuníquese con Biwo para mas informacion </h5>
+            </div>
+        )
 }
 
 export default BookingsBuildingList
