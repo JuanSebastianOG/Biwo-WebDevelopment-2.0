@@ -32,7 +32,7 @@ const ExpandPayment = ({ row }) => {
 
 
     useEffect(() => {
-        setidRec(row.original.idRecibo)
+        setidRec(row.original.idReceipt)
         db.collection("edificios")
             .doc(row.original.idEdificio)
             .get()
@@ -49,7 +49,7 @@ const ExpandPayment = ({ row }) => {
             });
 
 
-    }, [row.original.idRecibo])
+    }, [row.original.idReceipt])
 
     const uploadReceipt = async (e) => {
         const file = e.target.files[0]

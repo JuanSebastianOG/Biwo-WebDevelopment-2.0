@@ -68,7 +68,7 @@ function ReceiptsPayment() {
                                 months.push(monthNames[dateStart.format('MM') - 1])
                                 dateStart.add(1, 'month')
                             }
-                            
+
                             return months
                         }
 
@@ -119,16 +119,10 @@ function ReceiptsPayment() {
                                                 nombreAdmin: nombreAdmin,
                                                 nombreEdificio: doc.data().nombre,
                                                 storage: "",
-                                                idRecibo: ""
                                             }
                                             db.collection("recibos").add(monthsWithYears[x])
                                                 .then(function (docRef) {
                                                     console.log("Document written with ID: ", docRef.id)
-                                                    db.collection("recibos")
-                                                        .doc(docRef.id)
-                                                        .update({
-                                                            idRecibo: docRef.id
-                                                        });
                                                 })
 
                                         }
@@ -164,25 +158,23 @@ function ReceiptsPayment() {
 
         if (user) {
             db.collection('recibos')
-            .where("idAdminEdificio", "==", user.uid)
-            
+                .where("idAdminEdificio", "==", user.uid)
+
                 .onSnapshot(function (querySnapshot) {
                     var receipts = []
                     querySnapshot.forEach(function (doc) {
 
                         var newReceipt = doc.data()
-                        if(newReceipt.año== x-1 &&newReceipt.mes == "Diciembre")
-                        {
+                        if (newReceipt.año == x - 1 && newReceipt.mes == "Diciembre") {
                             newReceipt.idReceipt = doc.id
                             receipts.push(newReceipt)
                         }
-                        if(newReceipt.año== x)
-                        {
+                        if (newReceipt.año == x) {
                             newReceipt.idReceipt = doc.id
                             receipts.push(newReceipt)
                         }
-                        
-                        
+
+
                     });
                     setReceiptsPayments(receipts);
 
@@ -191,7 +183,7 @@ function ReceiptsPayment() {
         }
 
 
-    },[user])
+    }, [user])
 
     const renderRowSubComponent = row => {
         return (

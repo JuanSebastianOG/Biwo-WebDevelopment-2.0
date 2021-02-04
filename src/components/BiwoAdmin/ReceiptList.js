@@ -53,7 +53,7 @@ function ReceiptList() {
 
     const markPayed = (cellProps) => {
         db.collection('recibos')
-            .doc(cellProps.row.original.idRecibo)
+            .doc(cellProps.row.original.idReceipt)
             .update({
                 estado: "Pagado"
             }).then(function () {
